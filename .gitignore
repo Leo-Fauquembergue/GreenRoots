@@ -1,0 +1,9 @@
+# Fichiers de dépendances et de build
+node_modules
+dist
+.pnpm-store
+# Fichiers d'environnement (TRÈS IMPORTANT)
+.env
+.env.*
+# Logs
+*.log
