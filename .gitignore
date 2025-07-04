@@ -4,6 +4,6 @@ dist
 .pnpm-store
 # Fichiers d'environnement (TRÈS IMPORTANT)
 .env
-.env.*
+.env.db
 # Logs
 *.log

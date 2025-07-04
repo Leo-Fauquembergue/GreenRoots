@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    
+    # INDIQUE À DOCKER COMPOSE D'UTILISER LE FICHIER .env.db
+    # pour les variables de ce service.
+    env_file:
+      - ./.env.db
+
+    ports:
+      - '5433:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
