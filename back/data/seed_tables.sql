@@ -1,83 +1,83 @@
-INSERT INTO utilisateur (nom, email, mot_de_passe, role)
+-- Début de la transaction pour assurer l'intégrité des données
+BEGIN;
+
+-- Vider les tables dans l'ordre inverse des dépendances pour éviter les erreurs.
+-- RESTART IDENTITY réinitialise les compteurs des ID (SERIAL).
+-- CASCADE propage la suppression aux tables dépendantes.
+TRUNCATE TABLE user, categorie, region, catalog_tree, order, planted_tree, tracking RESTART IDENTITY CASCADE;
+
+-- Insert users
+INSERT INTO user (name, email, password, role)
+VALUES 
+('Alice Green', 'alice@example.com', 'hashed_password_1', 'user'),
+('Bob Brown', 'bob@example.com', 'hashed_password_2', 'admin');
+
+-- Insert regions (adaptées aux espèces d'arbres)
+INSERT INTO region (name)
+VALUES 
+('Amazon Rainforest'),
+('Sahara Desert'),
+('Alps Mountains'),
+('Mediterranean Coast'),
+('Boreal Forest'),
+('Temperate Europe'),
+('Sub-Saharan Africa'),
+('Australian Outback'),
+('North American Forest'),
+('Coastal Mangroves');
+
+-- Insert categories (adaptées aux essences d’arbres)
+INSERT INTO category (name)
+VALUES 
+('Evergreen'),
+('Deciduous'),
+('Conifer'),
+('Tropical'),
+('Fruit Tree'),
+('Medicinal'),
+('Fast-growing'),
+('Endangered'),
+('Sacred'),
+('Urban-friendly');
+
+-- Insertion des arbres dans le catalogue (en français)
+INSERT INTO catalog_tree (
+    common_name, scientific_name, description, adult_height, image, price, category_id, region_id
+)
+VALUES 
+('Chêne', 'Quercus robur', 'Grand arbre caduc originaire d''Europe.', 25.00, 'chene.jpg', 15.00, 2, 6),
+('Pin', 'Pinus sylvestris', 'Conifère persistant à croissance rapide.', 30.00, 'pin.jpg', 12.00, 1, 5),
+('Baobab', 'Adansonia digitata', 'Arbre emblématique au tronc massif d''Afrique.', 18.00, 'baobab.jpg', 20.00, 4, 7),
+('Bouleau', 'Betula pendula', 'Arbre élégant à écorce blanche.', 15.00, 'bouleau.jpg', 2.00, 2, 6),
+('Érable', 'Acer saccharum', 'Connu pour sa sève sucrée sirop d''érable.', 20.00, 'erable.jpg', 14.00, 5, 6),
+('Cèdre', 'Cedrus libani', 'Arbre persistant parfumé des montagnes.', 28.00, 'cedre.jpg', 18.00, 1, 3),
+('Eucalyptus', 'Eucalyptus globulus', 'Arbre à croissance rapide d''Australie.', 35.00, 'eucalyptus.jpg', 16.00, 7, 8),
+('Saule pleureur', 'Salix babylonica', 'Arbre à longues branches tombantes.', 12.00, 'saule.jpg', 9.00, 2, 4),
+('Séquoia géant', 'Sequoiadendron giganteum', 'Un des plus hauts arbres de la planète.', 90.00, 'sequoia.jpg', 25.00, 7, 9),
+('Mangrove', 'Rhizophora mangle', 'Arbre des zones côtières salines.', 8.00, 'mangrove.jpg', 13.00, 1, 10);
+
+
+-- Insert orders
+INSERT INTO order (status, user_id)
+VALUES 
+('completed', 1),
+('pending', 2);
+
+-- Insert planted trees
+INSERT INTO planted_tree (personal_name, planting_date, planting_place, catalog_tree_id, order_id)
 VALUES
-('Alice Dupont', 'alice@example.com', 'hashedpwd1', 'admin'),
-('Bob Martin', 'bob@example.com', 'hashedpwd2', 'user'),
-('Clara Dubois', 'clara@example.com', 'hashedpwd3', 'user');
+('Little Oak', '2024-11-15', 'Bordeaux', 1, 1),
+('Desert Baobab', '2024-12-01', 'Agadir', 3, 1),
+('Family Birch', '2025-01-10', 'Strasbourg', 4, 2),
+('Majestic Pine', '2025-02-20', 'Annecy', 2, 2);
 
-INSERT INTO region (nom)
+-- Insert tracking entries
+INSERT INTO tracking (statement_date, condition, current_height, current_picture, planted_tree_id)
 VALUES
-('Europe de l\'Ouest'),
-('Méditerranée (Europe du Sud)'),
-('Asie de l\'Est'),
-('Amérique du Nord'),
-('Europe du Nord'),
-('Europe Centrale'),
-('Afrique du Nord'),
-('Amérique Centrale et Caraïbes'),
-('Australie et Nouvelle-Zélande'),
-('Asie du Sud-Est');
+('2025-03-01', 'Healthy', 1.20, 'oak_tracking1.jpg', 1),
+('2025-03-10', 'Growing well', 0.80, 'baobab_tracking1.jpg', 2),
+('2025-03-15', 'Needs water', 0.50, 'birch_tracking1.jpg', 3),
+('2025-03-22', 'Excellent', 1.50, 'pine_tracking1.jpg', 4);
 
-INSERT INTO categorie (nom)
-VALUES
-('Feuillus'),
-('Conifères'),
-('Méditerranéens'),
-('Exotiques'),
-('Ornementaux'),
-('Fruitier'),
-('Arbres à fleurs');
-
-INSERT INTO catalogue_arbre (nom_commun, nom_scientifique, description, hauteur_adulte, image, prix, categorie_id, region_id)
-VALUES
-("Chêne pédonculé", "Quercus robur", "Majestueux arbre à feuilles lobées.", 40.00, "chene.jpg", 65.00, 1, 1),
-("Sapin blanc", "Abies alba", "Conifère élancé des montagnes.", 50.00, "sapin.jpg", 55.00, 2, 1),
-("Olivier", "Olea europaea", "Arbre méditerranéen producteur d'olives.", 7.00, "olivier.jpg", 60.00, 6, 2),
-("Cerisier du Japon", "Prunus serrulata", "Floraison rose spectaculaire.", 8.00, "cerisier.jpg", 45.00, 7, 3),
-("Séquoia géant", "Sequoiadendron giganteum", "Arbre géant des forêts californiennes.", 80.00, "sequoia.jpg", 95.00, 4, 4),
-("Érable rouge", "Acer rubrum", "Feuillage flamboyant en automne.", 25.00, "erable.jpg", 40.00, 1, 1),
-("Pin parasol", "Pinus pinea", "Typique du sud de la France.", 20.00, "pin.jpg", 38.00, 2, 2),
-("Palmier dattier", "Phoenix dactylifera", "Palmier producteur de dattes.", 15.00, "palmier.jpg", 58.00, 6, 7),
-("Bouleau blanc", "Betula pendula", "Écorce blanche élégante.", 18.00, "bouleau.jpg", 42.00, 1, 5),
-("Magnolia", "Magnolia grandiflora", "Fleurs blanches parfumées.", 12.00, "magnolia.jpg", 50.00, 7, 8);
-
-
-INSERT INTO commande (code_commande, statut, utilisateur_id)
-VALUES
-('CMD001', 'validee', 1),
-('CMD002', 'en_cours', 2),
-('CMD003', 'validee', 2),
-('CMD004', 'en_cours', 3),
-('CMD005', 'validee', 3);
-
-
-INSERT INTO arbre_plante (code_plantation, nom_personnalise, date_plantation, lieu_plantation, catalogue_arbre_id, commande_id)
-VALUES
-('PLT001', 'Chêne Alice', '2024-07-01', 'Strasbourg', 1, 1),
-('PLT002', 'Sapin Bob', '2024-07-02', 'Mulhouse', 2, 2),
-('PLT003', 'Olivier Clara', '2024-07-03', 'Nice', 3, 4),
-('PLT004', 'Cerisier Bob', '2024-07-03', 'Rennes', 4, 3),
-('PLT005', 'Séquoia Alice', '2024-07-04', 'Colmar', 5, 1),
-('PLT006', 'Érable Clara', '2024-07-05', 'Brest', 6, 5),
-('PLT007', 'Pin Bob', '2024-07-06', 'Marseille', 7, 2),
-('PLT008', 'Palmier Clara', '2024-07-06', 'Toulon', 8, 4),
-('PLT009', 'Bouleau Alice', '2024-07-07', 'Nancy', 9, 1),
-('PLT010', 'Magnolia Clara', '2024-07-07', 'Avignon', 10, 5);
-
-INSERT INTO suivi (code_suivi, date_releve, etat, taille_actuelle, photo_actuelle, arbre_plante_id)
-VALUES
-('SUIV001', '2024-07-01 10:00:00', 'bon', 1.20, 'suivi1.jpg', 1),
-('SUIV002', '2024-07-02 11:00:00', 'excellent', 1.10, 'suivi2.jpg', 2),
-('SUIV003', '2024-07-03 09:30:00', 'bon', 0.80, 'suivi3.jpg', 3),
-('SUIV004', '2024-07-03 14:00:00', 'fragile', 0.65, 'suivi4.jpg', 4),
-('SUIV005', '2024-07-04 08:45:00', 'excellent', 1.50, 'suivi5.jpg', 5),
-('SUIV006', '2024-07-05 09:00:00', 'bon', 0.90, 'suivi6.jpg', 6),
-('SUIV007', '2024-07-06 10:15:00', 'moyen', 0.70, 'suivi7.jpg', 7),
-('SUIV008', '2024-07-06 11:00:00', 'bon', 0.75, 'suivi8.jpg', 8),
-('SUIV009', '2024-07-07 12:30:00', 'excellent', 1.00, 'suivi9.jpg', 9),
-('SUIV010', '2024-07-07 14:20:00', 'fragile', 0.60, 'suivi10.jpg', 10);
-
-
-
+-- Fin de la transaction, on valide toutes les insertions
 COMMIT;
-
-            

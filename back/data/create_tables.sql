@@ -1,94 +1,90 @@
--- Suppression des tables dans le bon ordre 
-DROP TABLE IF EXISTS suivi;
-DROP TABLE IF EXISTS arbre_plante;
-DROP TABLE IF EXISTS commande;
-DROP TABLE IF EXISTS catalogue_arbre;
-DROP TABLE IF EXISTS categorie;
+-- Drop tables in the correct order to respect foreign key constraints
+DROP TABLE IF EXISTS tracking;
+DROP TABLE IF EXISTS planted_tree;
+DROP TABLE IF EXISTS order;
+DROP TABLE IF EXISTS catalog_tree;
+DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS region;
-DROP TABLE IF EXISTS utilisateur;
+DROP TABLE IF EXISTS user;
 
--- Début de transaction 
+-- Begin transaction
 BEGIN;
 
--- Table UTILISATEUR
-CREATE TABLE utilisateur (
-    id SERIAL PRIMARY KEY,
-    nom TEXT NOT NULL,
+-- USER table
+CREATE TABLE user (
+    user_id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
-    mot_de_passe TEXT NOT NULL,
-    role TEXT DEFAULT 'user',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    password TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'user',
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Table COMMANDE
-CREATE TABLE commande (
-    id SERIAL PRIMARY KEY,
-    code_commande TEXT UNIQUE NOT NULL,
-    date_commande TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    statut TEXT DEFAULT 'en_cours',
-    utilisateur_id INTEGER REFERENCES utilisateur(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- ORDER table
+CREATE TABLE "order" (
+    order_id SERIAL PRIMARY KEY,
+    order_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    status TEXT DEFAULT 'pending',
+    user_id INTEGER REFERENCES "user"(user_id),
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Table REGION
+-- REGION table
 CREATE TABLE region (
-    id SERIAL PRIMARY KEY,
-    nom TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    region_id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Table CATEGORIE
-CREATE TABLE categorie (
-    id SERIAL PRIMARY KEY,
-    nom TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- CATEGORY table
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Table CATALOGUE_ARBRE
-CREATE TABLE catalogue_arbre (
-    id SERIAL PRIMARY KEY,
-    nom_commun TEXT NOT NULL,
-    nom_scientifique TEXT NOT NULL,
+-- CATALOG_TREE table
+CREATE TABLE catalog_tree (
+    catalog_tree_id SERIAL PRIMARY KEY,
+    common_name TEXT NOT NULL,
+    scientific_name TEXT NOT NULL,
     description TEXT,
-    hauteur_adulte NUMERIC(5,2),
+    adult_height NUMERIC(5,2),
     image TEXT,
-    prix NUMERIC(10,2),
-    categorie_id INTEGER REFERENCES categorie(id),
-    region_id INTEGER REFERENCES region(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    price NUMERIC(10,2),
+    category_id INTEGER REFERENCES category(category_id),
+    region_id INTEGER REFERENCES region(region_id),
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
-
--- Table ARBRE_PLANTE
-CREATE TABLE arbre_plante (
-    id SERIAL PRIMARY KEY,
-    code_plantation TEXT UNIQUE NOT NULL,
-    nom_personnalise TEXT,
-    date_plantation DATE,
-    lieu_plantation TEXT,
-    catalogue_arbre_id INTEGER REFERENCES catalogue_arbre(id),
-    commande_id INTEGER REFERENCES commande(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- PLANTED_TREE table
+CREATE TABLE planted_tree (
+    planted_tree_id SERIAL PRIMARY KEY,
+    personal_name TEXT,
+    planting_date DATE,
+    planting_place TEXT,
+    catalog_tree_id INTEGER REFERENCES catalog_tree(catalog_tree_id),
+    order_id INTEGER REFERENCES order(order_id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Table SUIVI
-CREATE TABLE suivi (
-    id SERIAL PRIMARY KEY,
-    code_suivi TEXT UNIQUE NOT NULL,
-    date_releve TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    etat TEXT NOT NULL,
-    taille_actuelle NUMERIC(5,2),
-    photo_actuelle TEXT,
-    arbre_plante_id INTEGER REFERENCES arbre_plante(id),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- TRACKING table
+CREATE TABLE tracking (
+    tracking_id SERIAL PRIMARY KEY,
+    statement_date TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    condition TEXT,
+    current_height NUMERIC(5,2),
+    current_picture TEXT,
+    planted_tree_id INTEGER REFERENCES planted_tree(planted_tree_id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
--- Fin de transaction
+-- Commit transaction
 COMMIT;
