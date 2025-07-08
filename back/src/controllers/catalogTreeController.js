@@ -7,9 +7,32 @@ import { idSchema, catalogTreeSchema, updateCatalogTreeSchema } from "../schemas
 import { HttpError } from "../errors/http-error.js";
 
 export async function getAllCatalogTrees(req, res) {
-  const trees = await CatalogTree.findAll({
+  // 1. On prépare un objet d'options vide pour notre requête Sequelize.
+  const options = {
     include: ["category", "region"]
-  });
+  };
+
+  // 2. On vérifie la présence du paramètre 'limit'.
+  const limit = parseInt(req.query.limit, 10);
+  // Si la conversion a réussi et que le nombre est plus grand que 0...
+  if (!Number.isNaN(limit) && limit > 0) {
+    // ...alors, et seulement alors, ajoute cette limite à la requête de la base de données.
+    options.limit = limit;
+  }
+
+  // 3. On vérifie la présence du paramètre 'order' et on le sécurise.
+  const orderDirection = req.query.order?.toUpperCase();
+  if (orderDirection === 'ASC' || orderDirection === 'DESC') {
+    // On trie par date de création.
+    options.order = [['createdAt', orderDirection]];
+  } else {
+    // Comportement par défaut : les plus récents en premier.
+    options.order = [['createdAt', 'DESC']];
+  }
+
+  // 4. On exécute la requête avec les options construites dynamiquement.
+  const trees = await CatalogTree.findAll(options);
+  
   res.json(trees);
 }
 
