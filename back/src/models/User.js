@@ -41,7 +41,7 @@ User.init({
 }, {
   sequelize,
   tableName: "user",
-  // Scopes pour la sécurité du mot de passe
+  // Scopes pour la sécurité du mot de passe (ajoute une couche de sécurité, à voir si on le garde)
   defaultScope: {
     attributes: { exclude: ["password"] },
   },

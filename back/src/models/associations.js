@@ -80,7 +80,7 @@ PlantedTree.belongsTo(Order, {
 // On ne peut pas supprimer une espèce du catalogue si des arbres de cette espèce ont déjà été plantés et sont suivis.
 CatalogTree.hasMany(PlantedTree, {
   foreignKey: 'catalogTreeId',
-  as: 'plantedInstances',
+  as: 'plantedTrees',
   onDelete: 'RESTRICT'
 });
 PlantedTree.belongsTo(CatalogTree, {
@@ -88,7 +88,7 @@ PlantedTree.belongsTo(CatalogTree, {
     name: 'catalogTreeId',
     allowNull: false
   },
-  as: 'species'
+  as: 'catalogTree'
 });
 
 // 6. PlantedTree <-> Tracking (One-to-Many)
@@ -96,7 +96,7 @@ PlantedTree.belongsTo(CatalogTree, {
 // Si un arbre planté est supprimé de la base de données, tout son historique de suivi est également supprimé.
 PlantedTree.hasMany(Tracking, {
   foreignKey: 'plantedTreeId',
-  as: 'trackingHistory',
+  as: 'trackings',
   onDelete: 'CASCADE'
 });
 Tracking.belongsTo(PlantedTree, {
