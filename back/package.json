@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "db:create": "node ./src/migrations/01.create-tables.js",
+    "db:seed": "node ./src/migrations/02.seed-tables.js",
+    "db:reset": "pnpm run db:create && pnpm run db:seed"
   },
   "keywords": [],
   "author": "",
