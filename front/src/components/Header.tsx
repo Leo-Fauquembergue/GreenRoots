@@ -1,19 +1,31 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/logoGreenRoots.png"
+import logo from "../assets/logoGreenRoots.png";
+import "../style/header.scss";
 
 export default function Header() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="bg-white-700 text-black p-4">
-      <div className="flex items-center justify-between w-full">
-        <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="Logo GreenRoots" className="h-40 w-auto" />
-          <span className="text-xl font-bold">GreenRoots</span>
+    <header className={`main-header ${scrolled ? "scrolled" : ""}`}>
+      <div className="container">
+        <Link to="/" className="logo-container">
+          <img src={logo} alt="Logo GreenRoots" className="logo" />
+          <span className="title">GreenRoots</span>
         </Link>
-        <nav className="flex gap-4">
-          <Link to="/" className="transition transform hover:scale-110">Accueil</Link>
-          <Link to="/catalog" className="transition transform hover:scale-110">Catalogue</Link>
-          <Link to="/cart" className="transition transform hover:scale-110">Panier</Link>
-          <Link to="/profile" className="transition transform hover:scale-110">Profil</Link>
+        <nav className="nav-links">
+          <Link to="/">Accueil</Link>
+          <Link to="/catalog">Catalogue</Link>
+          <Link to="/cart">Panier</Link>
+          <Link to="/profile">Profil</Link>
         </nav>
       </div>
     </header>
