@@ -1,4 +1,5 @@
-@import 'variables';
+@use 'variables' as *;
+@use 'utils' as *;
 
 body{
     font-family: $font_main;
@@ -6,9 +7,18 @@ body{
 
 .catalog{
     background-color: $color-bg;
-    padding-top:10rem;
+    padding-top:15rem;
 }
 .catalog-title{
    color: $color-dark;
+
+}
+.filter-bar{
+    background-color: $color-white;
+}
+
+.card-cat-reg{
+    color: #8b9e4d;
+
 
 }
