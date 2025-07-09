@@ -1,4 +1,4 @@
-import "../style/home.scss"
+import "../style/home.scss";
 
 export default function Home() {
   return (
@@ -6,14 +6,14 @@ export default function Home() {
       {/* Section principale */}
       <section className="hero">
         <div className="hero-text">
-          <h1>Plantez un arbre !<br />Respirez demain !</h1>
+          <h1>
+            Plantez un arbre !<br />
+            Respirez demain !
+          </h1>
           <p>
             Chez Greenroots, nous croyons qu'un petit geste peut avoir un grand impact. Planter un arbre, virgule, c'est bien plus qu'un acte symbolique. C'est lutter contre le réchauffement climatique en capturant le CO2, c'est restaurer la biodiversité en créant des habitats pour la faune, c'est préserver les sols et les ressources en eau, c'est soutenir les communautés locales grâce à des projets de reforestation durable.
           </p>
           <button>En savoir plus</button>
-        </div>
-        <div className="hero-image">
-          <img src="/path-to-your-image.jpg" alt="Plantation d'arbre" />
         </div>
       </section>
 
@@ -28,14 +28,14 @@ export default function Home() {
         </div>
         <div className="card">
           <img src="/path2.jpg" alt="Arbre tropical" />
-          <h3>Accès à la nature</h3>
+          <h3>Essences rares</h3>
           <p>
             Découvrez des essences rares, locales ou exotiques, adaptées à votre région et à vos envies de reforestation.
           </p>
         </div>
         <div className="card">
           <img src="/path3.jpg" alt="Arbre urbain" />
-          <h3>Accès à la nature</h3>
+          <h3>Projets urbains</h3>
           <p>
             Impliquez-vous dans des projets urbains ou ruraux pour contribuer à une planète plus verte dès aujourd’hui.
           </p>
