@@ -1,6 +1,8 @@
+/** biome-ignore-all lint/a11y/useButtonType: <explanation> */
 import "../style/catalog.scss"
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface CatalogTree {
   catalogTreeId: number;
@@ -32,11 +34,9 @@ interface Region {
   name: string;
 }
 
-// Configuration de l'API
-// const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 const API_BASE_URL = 'http://localhost:3000';
 
-// Hook personnalisé pour récupérer les données
+// Hook personnalisé avec axios
 const useCatalogData = () => {
   const [trees, setTrees] = useState<CatalogTree[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -48,30 +48,18 @@ const useCatalogData = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        
-        // Récupération parallèle des données
+
         const [treesResponse, categoriesResponse, regionsResponse] = await Promise.all([
-          fetch(`${API_BASE_URL}/catalog-trees`),
-          fetch(`${API_BASE_URL}/categories`), // voir avec Canap
-          fetch(`${API_BASE_URL}/regions`)     // voir avec Canap
+          axios.get(`${API_BASE_URL}/catalog-trees`),
+          axios.get(`${API_BASE_URL}/categories`),
+          axios.get(`${API_BASE_URL}/regions`)
         ]);
 
-        if (!treesResponse.ok || !categoriesResponse.ok || !regionsResponse.ok) {
-          throw new Error('Erreur lors de la récupération des données');
-        }
-
-        const [treesData, categoriesData, regionsData] = await Promise.all([
-          treesResponse.json(),
-          categoriesResponse.json(),
-          regionsResponse.json()
-        ]);
-
-        setTrees(treesData);
-        console.log(trees);
-        setCategories(categoriesData);
-        setRegions(regionsData);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+        setTrees(treesResponse.data);
+        setCategories(categoriesResponse.data);
+        setRegions(regionsResponse.data);
+      } catch (err: any) {
+        setError(err.message || 'Une erreur est survenue');
       } finally {
         setLoading(false);
       }
@@ -88,8 +76,8 @@ const Catalog: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
   const [filteredTrees, setFilteredTrees] = useState<CatalogTree[]>([]);
+  const [visibleCount, setVisibleCount] = useState(6);
 
-  // Filtrer les arbres selon la catégorie et la région sélectionnées
   useEffect(() => {
     let filtered = trees;
 
@@ -105,13 +93,15 @@ const Catalog: React.FC = () => {
   }, [trees, selectedCategory, selectedRegion]);
 
   const handleFilter = () => {
-    // La logique de filtrage se fait déjà automatiquement via useEffect
     console.log('Filtrage appliqué:', selectedCategory, selectedRegion);
+  };
+
+  const handleSeeMore = () => {
+    setVisibleCount(filteredTrees.length);
   };
 
   const handleLearnMore = (id: number) => {
     console.log('En savoir plus cliqué pour l\'arbre:', id);
-    // Ici tu peux ajouter la navigation vers une page détail
   };
 
   if (loading) {
@@ -147,20 +137,19 @@ const Catalog: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white py-20">
+    <div className="catalog min-h-screen bg-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Header */}
         <header className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-light text-emerald-900 mb-6 font-serif">
-            Catalogue
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Lorem ipsum dolor sit amet et delectus accommodare his consul copiosae.
+          <h1 className="catalog-title text-4xl md:text-5xl mb-6">Catalogue</h1>
+          <p className="text-lg max-w-2xl mx-auto leading-relaxed">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Commodi, voluptate incidunt odio amet doloremque nostrum odit repellat nihil, dolorem nesciunt temporibus earum veniam, in ad vero quos deleniti delectus fugiat.
           </p>
         </header>
 
         {/* Filters */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 bg-gray-50 p-6 rounded-lg mb-12">
+        <div className="filter-bar flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 p-6 rounded-lg mb-12">
           <div className="flex items-center gap-3">
             <label className="text-sm font-medium text-gray-700">Catégorie:</label>
             <select 
@@ -193,12 +182,6 @@ const Catalog: React.FC = () => {
             </select>
           </div>
 
-          <button 
-            className="px-6 py-2 bg-emerald-700 text-white rounded-full text-sm font-medium hover:bg-emerald-800 transition-all duration-300 hover:-translate-y-0.5"
-            onClick={handleFilter}
-          >
-            Filtrer
-          </button>
         </div>
 
         {/* Grid */}
@@ -213,7 +196,7 @@ const Catalog: React.FC = () => {
               <p className="text-gray-600">Aucun arbre trouvé pour ces critères</p>
             </div>
           ) : (
-            filteredTrees.map((tree) => (
+            filteredTrees.slice(0, visibleCount).map((tree) => (
               <div key={tree.catalogTreeId} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <div className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
                   <img 
@@ -224,32 +207,21 @@ const Catalog: React.FC = () => {
                       e.currentTarget.src = '/images/tree-placeholder.jpg';
                     }}
                   />
-                  {/* Placeholder icon when no image */}
-                  {!tree.image && (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
-                        <div className="w-6 h-6 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                  )}
                 </div>
-                
                 <div className="p-6">
                   <div className="mb-3">
-                    <span className="text-xs text-emerald-600 font-semibold uppercase tracking-wide">
+                    <span className="card-cat-reg text-xs italic tracking-wide">
                       {tree.category.name} / {tree.region.name}
                     </span>
                   </div>
                   <h3 className="text-xl font-semibold text-emerald-900 mb-2 leading-tight">
                     {tree.commonName}
                   </h3>
-             
                   <p className="text-gray-600 text-sm leading-relaxed mb-4">
                     {tree.description}
                   </p>
-                
                   <button 
-                    className="w-full px-6 py-3 bg-emerald-50 text-emerald-800 rounded-full text-sm font-medium hover:bg-emerald-600 hover:text-white transition-all duration-300 hover:-translate-y-0.5"
+                    className="btn-light w-full px-6 py-3 rounded-full text-sm font-medium hover:text-white transition-all duration-300 hover:-translate-y-0.5"
                     onClick={() => handleLearnMore(tree.catalogTreeId)}
                   >
                     En savoir plus
@@ -260,12 +232,17 @@ const Catalog: React.FC = () => {
           )}
         </div>
 
-        {/* Pagination */}
-        <div className="text-center">
-          <button className="px-8 py-4 bg-emerald-700 text-white rounded-full text-base font-medium hover:bg-emerald-800 transition-all duration-300 hover:-translate-y-0.5">
-            voir plus
-          </button>
-        </div>
+        {/* Bouton Voir plus */}
+        {visibleCount < filteredTrees.length && (
+          <div className="text-center">
+            <button 
+              className="btn-dark px-8 py-4 text-white rounded-full text-base font-medium  transition-all duration-300 hover:-translate-y-0.5"
+              onClick={handleSeeMore}
+            >
+              Voir plus
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

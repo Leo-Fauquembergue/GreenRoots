@@ -1,0 +1,17 @@
+@use 'variables' as *;
+
+.btn-dark{
+    background-color: $color-dark;
+}
+.btn-dark:hover{
+    background-color: $color-bg;
+    color: $color-dark;
+}
+
+.btn-light{
+    background-color: $color-bg;
+}
+.btn-light:hover{
+    color: $color-bg;
+    background-color: $color-dark;
+}
