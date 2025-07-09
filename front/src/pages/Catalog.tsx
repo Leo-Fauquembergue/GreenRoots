@@ -249,3 +249,4 @@ const Catalog: React.FC = () => {
 };
 
 export default Catalog;
+

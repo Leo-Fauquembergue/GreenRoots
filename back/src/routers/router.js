@@ -4,6 +4,8 @@ import { categoryRouter } from "./categoryRouter.js";
 import { plantedTreeRouter } from "./plantedTreeRouter.js";
 import { regionRouter } from "./regionRouter.js";
 import { orderRouter } from "./orderRouter.js";
+import { authRouter } from "./authRouter.js";
+import { userRouter } from "./userRouter.js";
 
 export const router = Router();
 
@@ -12,3 +14,5 @@ router.use("/categories", categoryRouter);
 router.use("/planted-trees", plantedTreeRouter);
 router.use("/regions", regionRouter);
 router.use("/orders", orderRouter);
+router.use("/auth", authRouter);
+router.use("/users", userRouter);

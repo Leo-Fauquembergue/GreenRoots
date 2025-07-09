@@ -1,0 +1,36 @@
+##
+# GET all trackings
+GET http://localhost:3000/api/trackings
+###
+
+###
+# GET one tracking
+GET http://localhost:3000/api/trackings/1
+###
+
+###
+# POST create tracking
+POST http://localhost:3000/api/trackings
+Content-Type: application/json
+
+{
+  "plantedTreeId": 123,
+  "status": "en cours",
+  "updatedAt": "2025-07-09T10:00:00Z"
+}
+###
+
+###
+# PATCH update tracking
+PATCH http://localhost:3000/api/trackings/1
+Content-Type: application/json
+
+{
+  "status": "terminé"
+}
+###
+
+###
+# DELETE tracking
+DELETE http://localhost:3000/api/trackings/1
+###

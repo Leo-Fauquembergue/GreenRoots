@@ -1,0 +1,40 @@
+
+###
+# GET all planted trees
+GET http://localhost:3000/api/planted-trees
+###
+
+###
+# GET one planted tree by ID
+GET http://localhost:3000/api/planted-trees/1
+###
+
+###
+# POST a new planted tree
+POST http://localhost:3000/api/planted-trees
+Content-Type: application/json
+
+{
+  "catalogTreeId": 1,
+  "orderId": 1,
+  "plantingDate": "2025-07-01",
+  "latitude": 48.5734,
+  "longitude": 7.7521
+}
+###
+
+###
+# PATCH (update) a planted tree
+PATCH http://localhost:3000/api/planted-trees/1
+Content-Type: application/json
+
+{
+  "latitude": 48.6,
+  "longitude": 7.75
+}
+###
+
+###
+# DELETE a planted tree
+DELETE http://localhost:3000/api/planted-trees/1
+###
