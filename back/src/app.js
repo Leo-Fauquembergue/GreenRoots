@@ -1,13 +1,22 @@
 import express from "express";
 import { router } from "./routers/router.js";
 import { errorHandler } from "./middlewares/errorHandler.js"
-
+import cors from "cors";
+import { xss } from "express-xss-sanitizer";
 
 export const app = express();
 
-// Utiliser un body parser pour spécifier qu'on reçoit du json dans les body des requêtes
+// Middleware CORS
+app.use(cors({
+  origin: process.env.CORS_ORIGIN, // Domaine(s) autorisé(s)
+  methods: ["GET", "POST", "PATCH", "DELETE"], // Méthodes autorisées
+}));
+
+// Middleware pour parser le JSON
 app.use(express.json());
 
+// Middleware anti-XSS
+app.use(xss());
 
 app.get("/", (req, res) => {
   res.json({
