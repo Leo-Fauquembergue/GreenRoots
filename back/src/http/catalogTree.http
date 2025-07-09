@@ -1,0 +1,39 @@
+###
+# GET all catalog trees
+GET http://localhost:3000/catalog-trees
+###
+
+###
+# GET one catalog tree (by ID)
+GET http://localhost:3000/catalog-trees/1
+###
+
+###
+# POST a new catalog tree
+POST http://localhost:3000/catalog-trees
+Content-Type: application/json
+
+{
+  "name": "Chêne Vert",
+  "description": "Arbre méditerranéen robuste",
+  "price": 12.50,
+  "image": "oak.jpg",
+  "regionId": 1,
+  "categoryId": 2
+}
+###
+
+###
+# PATCH (update) a catalog tree
+PATCH http://localhost:3000/catalog-trees/1
+Content-Type: application/json
+
+{
+  "price": 14.99
+}
+###
+
+###
+# DELETE a catalog tree
+DELETE http://localhost:3000/catalog-trees/1
+###

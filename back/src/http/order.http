@@ -1,0 +1,37 @@
+
+###
+# GET all orders
+GET http://localhost:3000/orders
+###
+
+###
+# GET one order by ID
+GET http://localhost:3000/orders/1
+###
+
+###
+# POST a new order
+POST http://localhost:3000/orders
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "totalPrice": 49.99
+}
+###
+
+###
+# PATCH (update) an order
+PATCH http://localhost:3000/orders/1
+Content-Type: application/json
+
+{
+  "totalPrice": 59.99
+}
+###
+
+###
+# DELETE an order
+DELETE http://localhost:3000/orders/1
+###
+

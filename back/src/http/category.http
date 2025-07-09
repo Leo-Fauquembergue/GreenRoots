@@ -1,0 +1,41 @@
+
+###
+# GET all categories
+GET http://localhost:3000/categories
+###
+
+###
+# GET one category by ID
+GET http://localhost:3000/categories/1
+###
+
+###
+# POST a new category
+POST http://localhost:3000/categories
+Content-Type: application/json
+
+{
+  "name": "Arbres fruitiers"
+}
+###
+
+###
+# PATCH (update) a category
+PATCH http://localhost:3000/categories/1
+Content-Type: application/json
+
+{
+  "name": "Arbres exotiques"
+}
+###
+
+###
+# DELETE a category
+DELETE http://localhost:3000/categories/1
+###
+
+###
+# GET all catalog trees for a specific category
+GET http://localhost:3000/categories/1/catalog-trees
+###
+
