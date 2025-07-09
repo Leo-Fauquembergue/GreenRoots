@@ -18,13 +18,15 @@ app.use(express.json());
 // Middleware anti-XSS
 app.use(xss());
 
+// Route "health check" pour vérifier que le serveur est en ligne
 app.get("/", (req, res) => {
   res.json({
     message: "GreenRoots API is running",
   });
 });
 
-app.use(router);
+// Toutes les routes de l'API seront préfixées par /api
+app.use("/api", router);
 
 // Middleware gestion d'erreur
 app.use(errorHandler);
