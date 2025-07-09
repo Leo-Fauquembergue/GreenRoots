@@ -1,80 +1,153 @@
-import React, { useState } from 'react';
+import "../style/catalog.scss"
 
-interface CatalogItem {
-  id: number;
-  title: string;
+import React, { useState, useEffect } from 'react';
+
+interface CatalogTree {
+  catalogTreeId: number;
+  commonName: string;
+  scientificName: string;
   description: string;
-  category: string;
-  region: string;
+  adultHeight: number;
   image: string;
+  price: number;
+  categoryId: number;
+  regionId: number;
+  category: {
+    categoryId: number;
+    name: string;
+  };
+  region: {
+    regionId: number;
+    name: string;
+  };
 }
 
-const Catalog: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('tropicaux');
-  const [selectedRegion, setSelectedRegion] = useState<string>('Montagneux');
+interface Category {
+  categoryId: number;
+  name: string;
+}
 
-  const catalogItems: CatalogItem[] = [
-    {
-      id: 1,
-      title: 'Blog title heading goes here',
-      description: 'Lorem ipsum dolor sit amet et delectus accommodare his consul copiosae.',
-      category: 'tropicaux',
-      region: 'Montagneux',
-      image: '/images/tree-placeholder.jpg'
-    },
-    {
-      id: 2,
-      title: 'Blog title heading goes here',
-      description: 'Lorem ipsum dolor sit amet et delectus accommodare his consul copiosae.',
-      category: 'tropicaux',
-      region: 'Montagneux',
-      image: '/images/tree-placeholder.jpg'
-    },
-    {
-      id: 3,
-      title: 'Blog title heading goes here',
-      description: 'Lorem ipsum dolor sit amet et delectus accommodare his consul copiosae.',
-      category: 'tropicaux',
-      region: 'Montagneux',
-      image: '/images/tree-placeholder.jpg'
-    },
-    {
-      id: 4,
-      title: 'Blog title heading goes here',
-      description: 'Lorem ipsum dolor sit amet et delectus accommodare his consul copiosae.',
-      category: 'tropicaux',
-      region: 'Montagneux',
-      image: '/images/tree-placeholder.jpg'
-    },
-    {
-      id: 5,
-      title: 'Blog title heading goes here',
-      description: 'Lorem ipsum dolor sit amet et delectus accommodare his consul copiosae.',
-      category: 'tropicaux',
-      region: 'Montagneux',
-      image: '/images/tree-placeholder.jpg'
-    },
-    {
-      id: 6,
-      title: 'Blog title heading goes here',
-      description: 'Lorem ipsum dolor sit amet et delectus accommodare his consul copiosae.',
-      category: 'tropicaux',
-      region: 'Montagneux',
-      image: '/images/tree-placeholder.jpg'
+interface Region {
+  regionId: number;
+  name: string;
+}
+
+// Configuration de l'API
+// const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+const API_BASE_URL = 'http://localhost:3000';
+
+// Hook personnalisé pour récupérer les données
+const useCatalogData = () => {
+  const [trees, setTrees] = useState<CatalogTree[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [regions, setRegions] = useState<Region[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        // Récupération parallèle des données
+        const [treesResponse, categoriesResponse, regionsResponse] = await Promise.all([
+          fetch(`${API_BASE_URL}/catalog-trees`),
+          fetch(`${API_BASE_URL}/categories`), // voir avec Canap
+          fetch(`${API_BASE_URL}/regions`)     // voir avec Canap
+        ]);
+
+        if (!treesResponse.ok || !categoriesResponse.ok || !regionsResponse.ok) {
+          throw new Error('Erreur lors de la récupération des données');
+        }
+
+        const [treesData, categoriesData, regionsData] = await Promise.all([
+          treesResponse.json(),
+          categoriesResponse.json(),
+          regionsResponse.json()
+        ]);
+
+        setTrees(treesData);
+        console.log(trees);
+        setCategories(categoriesData);
+        setRegions(regionsData);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return { trees, categories, regions, loading, error };
+};
+
+const Catalog: React.FC = () => {
+  const { trees, categories, regions, loading, error } = useCatalogData();
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedRegion, setSelectedRegion] = useState<string>('all');
+  const [filteredTrees, setFilteredTrees] = useState<CatalogTree[]>([]);
+
+  // Filtrer les arbres selon la catégorie et la région sélectionnées
+  useEffect(() => {
+    let filtered = trees;
+
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(tree => tree.category.name === selectedCategory);
     }
-  ];
+
+    if (selectedRegion !== 'all') {
+      filtered = filtered.filter(tree => tree.region.name === selectedRegion);
+    }
+
+    setFilteredTrees(filtered);
+  }, [trees, selectedCategory, selectedRegion]);
 
   const handleFilter = () => {
-    // Logic for filtering items based on selected category and region
-    console.log('Filtering with:', selectedCategory, selectedRegion);
+    // La logique de filtrage se fait déjà automatiquement via useEffect
+    console.log('Filtrage appliqué:', selectedCategory, selectedRegion);
   };
 
   const handleLearnMore = (id: number) => {
-    console.log('Learn more clicked for item:', id);
+    console.log('En savoir plus cliqué pour l\'arbre:', id);
+    // Ici tu peux ajouter la navigation vers une page détail
   };
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement du catalogue...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-600 mb-4">
+            <svg className="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="catalog min-h-screen bg-white py-20">
+    <div className="min-h-screen bg-white py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <header className="text-center mb-16">
@@ -89,28 +162,34 @@ const Catalog: React.FC = () => {
         {/* Filters */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 bg-gray-50 p-6 rounded-lg mb-12">
           <div className="flex items-center gap-3">
-            <label className="text-sm font-medium text-gray-700">Category:</label>
+            <label className="text-sm font-medium text-gray-700">Catégorie:</label>
             <select 
               className="px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-700 text-sm min-w-32 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
-              <option value="tropicaux">tropicaux</option>
-              <option value="urbain">urbain</option>
-              <option value="nature">nature</option>
+              <option value="all">Toutes les catégories</option>
+              {categories.map((category) => (
+                <option key={category.categoryId} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className="flex items-center gap-3">
-            <label className="text-sm font-medium text-gray-700">Region:</label>
+            <label className="text-sm font-medium text-gray-700">Région:</label>
             <select 
               className="px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-700 text-sm min-w-32 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
               value={selectedRegion}
               onChange={(e) => setSelectedRegion(e.target.value)}
             >
-              <option value="Montagneux">Montagneux</option>
-              <option value="Côtier">Côtier</option>
-              <option value="Continental">Continental</option>
+              <option value="all">Toutes les régions</option>
+              {regions.map((region) => (
+                <option key={region.regionId} value={region.name}>
+                  {region.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -118,49 +197,67 @@ const Catalog: React.FC = () => {
             className="px-6 py-2 bg-emerald-700 text-white rounded-full text-sm font-medium hover:bg-emerald-800 transition-all duration-300 hover:-translate-y-0.5"
             onClick={handleFilter}
           >
-            Filter
+            Filtrer
           </button>
         </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {catalogItems.map((item) => (
-            <div key={item.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
-                <img 
-                  src={item.image} 
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                />
-                {/* Placeholder icon when no image */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
-                    <div className="w-6 h-6 bg-white rounded-full"></div>
-                  </div>
-                </div>
+          {filteredTrees.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <div className="text-gray-400 mb-4">
+                <svg className="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
               </div>
-              
-              <div className="p-6">
-                <div className="mb-3">
-                  <span className="text-xs text-emerald-600 font-semibold uppercase tracking-wide">
-                    Category/region
-                  </span>
-                </div>
-                <h3 className="text-xl font-semibold text-emerald-900 mb-3 leading-tight">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6">
-                  {item.description}
-                </p>
-                <button 
-                  className="px-6 py-3 bg-emerald-50 text-emerald-800 rounded-full text-sm font-medium hover:bg-emerald-600 hover:text-white transition-all duration-300 hover:-translate-y-0.5"
-                  onClick={() => handleLearnMore(item.id)}
-                >
-                  En savoir plus
-                </button>
-              </div>
+              <p className="text-gray-600">Aucun arbre trouvé pour ces critères</p>
             </div>
-          ))}
+          ) : (
+            filteredTrees.map((tree) => (
+              <div key={tree.catalogTreeId} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
+                  <img 
+                    src={tree.image ? `/images/${tree.image}` : '/images/tree-placeholder.jpg'} 
+                    alt={tree.commonName}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = '/images/tree-placeholder.jpg';
+                    }}
+                  />
+                  {/* Placeholder icon when no image */}
+                  {!tree.image && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-12 bg-gray-300 rounded flex items-center justify-center">
+                        <div className="w-6 h-6 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="p-6">
+                  <div className="mb-3">
+                    <span className="text-xs text-emerald-600 font-semibold uppercase tracking-wide">
+                      {tree.category.name} / {tree.region.name}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-semibold text-emerald-900 mb-2 leading-tight">
+                    {tree.commonName}
+                  </h3>
+             
+                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                    {tree.description}
+                  </p>
+                
+                  <button 
+                    className="w-full px-6 py-3 bg-emerald-50 text-emerald-800 rounded-full text-sm font-medium hover:bg-emerald-600 hover:text-white transition-all duration-300 hover:-translate-y-0.5"
+                    onClick={() => handleLearnMore(tree.catalogTreeId)}
+                  >
+                    En savoir plus
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
 
         {/* Pagination */}
