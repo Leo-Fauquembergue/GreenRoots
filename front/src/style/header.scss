@@ -16,7 +16,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 2rem;
+    padding-left: 0;
   }
 
   .logo-container {
@@ -25,15 +25,15 @@
     text-decoration: none;
     color: white;
     transition: color 0.3s ease;
-
+    
     .logo {
-      height: 8rem;
+      height: 7rem;
       margin-right: 1rem;
     }
 
     .title {
       font-family: 'Dancing Script', cursive;
-      font-size: 4rem;
+      font-size: 3.5rem;
       font-weight: 700;
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
       transition: text-shadow 0.3s ease;
@@ -42,7 +42,7 @@
 
   .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
 
     a {
       color: white;

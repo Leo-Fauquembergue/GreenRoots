@@ -29,7 +29,6 @@ body {
   text-align: center;
   height: 80vh;  // réduit un peu sur mobile
   background-color: $color-dark;
-  background-image: url('/home/student/Desktop/html/saison-18/projet-green-roots/front/src/assets/pexels-pixabay-53435.jpg');
   background-size: cover;
   background-position: center;
   color: $color-white;
@@ -41,6 +40,7 @@ body {
   padding-top: 10rem;
   margin-top: 10rem;
   text-shadow: $text-shadow;
+  margin-bottom: 3rem;
 }
 
 .hero-text h1 {
