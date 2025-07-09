@@ -1,16 +1,16 @@
 ##
 # GET all trackings
-GET http://localhost:3000/trackings
+GET http://localhost:3000/api/trackings
 ###
 
 ###
 # GET one tracking
-GET http://localhost:3000/trackings/1
+GET http://localhost:3000/api/trackings/1
 ###
 
 ###
 # POST create tracking
-POST http://localhost:3000/trackings
+POST http://localhost:3000/api/trackings
 Content-Type: application/json
 
 {
@@ -22,7 +22,7 @@ Content-Type: application/json
 
 ###
 # PATCH update tracking
-PATCH http://localhost:3000/trackings/1
+PATCH http://localhost:3000/api/trackings/1
 Content-Type: application/json
 
 {
@@ -32,5 +32,5 @@ Content-Type: application/json
 
 ###
 # DELETE tracking
-DELETE http://localhost:3000/trackings/1
+DELETE http://localhost:3000/api/trackings/1
 ###
