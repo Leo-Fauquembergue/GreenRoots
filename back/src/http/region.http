@@ -1,0 +1,40 @@
+
+###
+# GET all regions
+GET http://localhost:3000/regions
+###
+
+###
+# GET one region by ID
+GET http://localhost:3000/regions/1
+###
+
+###
+# POST a new region
+POST http://localhost:3000/regions
+Content-Type: application/json
+
+{
+  "name": "Alsace"
+}
+###
+
+###
+# PATCH (update) a region
+PATCH http://localhost:3000/regions/1
+Content-Type: application/json
+
+{
+  "name": "Nouvelle-Aquitaine"
+}
+###
+
+###
+# DELETE a region
+DELETE http://localhost:3000/regions/1
+###
+
+###
+# GET catalog trees for a region
+GET http://localhost:3000/regions/1/catalog-trees
+###
