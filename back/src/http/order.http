@@ -1,17 +1,17 @@
 
 ###
 # GET all orders
-GET http://localhost:3000/orders
+GET http://localhost:3000/api/orders
 ###
 
 ###
 # GET one order by ID
-GET http://localhost:3000/orders/1
+GET http://localhost:3000/api/orders/1
 ###
 
 ###
 # POST a new order
-POST http://localhost:3000/orders
+POST http://localhost:3000/api/orders
 Content-Type: application/json
 
 {
@@ -22,7 +22,7 @@ Content-Type: application/json
 
 ###
 # PATCH (update) an order
-PATCH http://localhost:3000/orders/1
+PATCH http://localhost:3000/api/orders/1
 Content-Type: application/json
 
 {
@@ -32,6 +32,6 @@ Content-Type: application/json
 
 ###
 # DELETE an order
-DELETE http://localhost:3000/orders/1
+DELETE http://localhost:3000/api/orders/1
 ###
 

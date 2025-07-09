@@ -1,16 +1,16 @@
 ###
-# GET all catalog trees
-GET http://localhost:3000/catalog-trees
+# GET all  catalog trees
+GET http://localhost:3000/api/catalog-trees
 ###
 
 ###
-# GET one catalog tree (by ID)
-GET http://localhost:3000/catalog-trees/1
+# GET one  catalog tree (by ID)
+GET http://localhost:3000/api/catalog-trees/1
 ###
 
 ###
-# POST a new catalog tree
-POST http://localhost:3000/catalog-trees
+# POST a new  catalog tree
+POST http://localhost:3000/api/catalog-trees
 Content-Type: application/json
 
 {
@@ -24,8 +24,8 @@ Content-Type: application/json
 ###
 
 ###
-# PATCH (update) a catalog tree
-PATCH http://localhost:3000/catalog-trees/1
+# PATCH (update) a  catalog tree
+PATCH http://localhost:3000/api/catalog-trees/1
 Content-Type: application/json
 
 {
@@ -34,6 +34,6 @@ Content-Type: application/json
 ###
 
 ###
-# DELETE a catalog tree
-DELETE http://localhost:3000/catalog-trees/1
+# DELETE a  catalog tree
+DELETE http://localhost:3000/api/catalog-trees/1
 ###
