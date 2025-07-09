@@ -8,4 +8,3 @@ catalogTreeRouter.get("/:id", catalogTreeController.getOneCatalogTree);
 catalogTreeRouter.post("/", catalogTreeController.createCatalogTree);
 catalogTreeRouter.patch("/:id", catalogTreeController.updateCatalogTree);
 catalogTreeRouter.delete("/:id", catalogTreeController.deleteCatalogTree);
-
