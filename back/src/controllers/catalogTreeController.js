@@ -24,10 +24,10 @@ export async function getAllCatalogTrees(req, res) {
   const orderDirection = req.query.order?.toUpperCase();
   if (orderDirection === 'ASC' || orderDirection === 'DESC') {
     // On trie par date de création.
-    options.order = [['createdAt', orderDirection]];
+    options.order = [['created_at', orderDirection]];
   } else {
     // Comportement par défaut : les plus récents en premier.
-    options.order = [['createdAt', 'DESC']];
+    options.order = [['created_at', 'DESC']];
   }
 
   // 4. On exécute la requête avec les options construites dynamiquement.
