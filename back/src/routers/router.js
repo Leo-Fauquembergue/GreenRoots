@@ -6,6 +6,7 @@ import { regionRouter } from "./regionRouter.js";
 import { orderRouter } from "./orderRouter.js";
 import { authRouter } from "./authRouter.js";
 import { userRouter } from "./userRouter.js";
+import { trackingRouter } from "./trackingRouter.js";
 
 export const router = Router();
 
@@ -16,3 +17,4 @@ router.use("/regions", regionRouter);
 router.use("/orders", orderRouter);
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
+router.use("/tracking", trackingRouter);
