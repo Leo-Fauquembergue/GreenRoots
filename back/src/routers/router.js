@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { catalogTreeRouter, categoryRouter } from "./catalogTreeRouter.js";
+import { catalogTreeRouter} from "./catalogTreeRouter.js";
+import { categoryRouter } from "./categoryRouter.js";
 
 export const router = Router();
 
