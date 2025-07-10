@@ -3,10 +3,10 @@ import Home from "./pages/Home";
 import Catalog from "./pages/Catalog";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PanierPage from "./pages/PanierPage";
 
 function App() {
 	return (
@@ -18,7 +18,7 @@ function App() {
 					<Route path="/catalog" element={<Catalog />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
-					<Route path="/cart" element={<Cart />} />
+					<Route path="/PanierPage" element={<PanierPage />} />
 					<Route path="/profile" element={<Profile />} />
 				</Routes>
 			</main>
