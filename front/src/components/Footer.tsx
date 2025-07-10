@@ -13,7 +13,7 @@ export default function Footer() {
 				{/* Logo et nom */}
 				<Link to="/" className="flex items-center space-x-3 justify-center md:justify-start">
 					<img src={logo} alt="Logo GreenRoots" className="logo" />
-					<h2 className="text-2xl greenroots font-bold text-white">Green Roots</h2>
+					<h2 className="text-2xl greenroots font-bold text-white">GreenRoots</h2>
 				</Link>
 				
 				{/* Slogan */}

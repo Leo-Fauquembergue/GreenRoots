@@ -207,8 +207,7 @@ const Catalog: React.FC = () => {
                   description={tree.description}
                   image={tree.image}
                   categoryName={tree.category.name}
-                  regionName={tree.region.name}
-                  onLearnMore={handleLearnMore}
+                  regionName={tree.region.name}           
                 />
               ))
             )}
