@@ -7,7 +7,7 @@ import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import TreeDetailPage from "./pages/TreeDetails";
+import TreeDetails from "./pages/TreeDetails";
 
 function App() {
 	return (
@@ -17,7 +17,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/catalog" element={<Catalog />} />
-					<Route path="/catalog/:id" element={<TreeDetailPage />} />
+					<Route path="/catalog/:id" element={<TreeDetails />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="/cart" element={<Cart />} />
