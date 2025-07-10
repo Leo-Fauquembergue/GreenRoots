@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/a11y/useButtonType: <explanation> */
 import "../style/catalog.scss"
+import TreeCard from './../components/TreeCard.tsx';
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -189,51 +190,30 @@ const Catalog: React.FC = () => {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {filteredTrees.length === 0 ? (
-            <div className="col-span-full text-center py-12">
-              <div className="text-gray-400 mb-4">
-                <svg className="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              <p className="text-gray-600">Aucun arbre trouvé pour ces critères</p>
-            </div>
-          ) : (
-            filteredTrees.slice(0, visibleCount).map((tree) => (
-              <div key={tree.catalogTreeId} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <div className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
-                  <img 
-                    src={tree.image ? `/images/${tree.image}` : '/images/tree-placeholder.jpg'} 
-                    alt={tree.commonName}
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = '/images/tree-placeholder.jpg';
-                    }}
-                  />
+            {filteredTrees.length === 0 ? (
+              <div className="col-span-full text-center py-12">
+                <div className="text-gray-400 mb-4">
+                  <svg className="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
                 </div>
-                <div className="p-6">
-                  <div className="mb-3">
-                    <span className="card-cat-reg text-xs italic tracking-wide">
-                      {tree.category.name} / {tree.region.name}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-semibold text-emerald-900 mb-2 leading-tight">
-                    {tree.commonName}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                    {tree.description}
-                  </p>
-                  <button 
-                    className="btn-light w-full px-6 py-3 rounded-full text-sm font-medium hover:text-white transition-all duration-300 hover:-translate-y-0.5"
-                    onClick={() => handleLearnMore(tree.catalogTreeId)}
-                  >
-                    En savoir plus
-                  </button>
-                </div>
+                <p className="text-gray-600">Aucun arbre trouvé pour ces critères</p>
               </div>
-            ))
-          )}
-        </div>
+            ) : (
+              filteredTrees.slice(0, visibleCount).map((tree) => (
+                <TreeCard
+                  key={tree.catalogTreeId}
+                  catalogTreeId={tree.catalogTreeId}
+                  commonName={tree.commonName}
+                  description={tree.description}
+                  image={tree.image}
+                  categoryName={tree.category.name}
+                  regionName={tree.region.name}
+                  onLearnMore={handleLearnMore}
+                />
+              ))
+            )}
+          </div>
 
         {/* Bouton Voir plus */}
         {visibleCount < filteredTrees.length && (
