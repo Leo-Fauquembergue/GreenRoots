@@ -1,0 +1,14 @@
+@import './variables';
+
+.logo {
+    height: 3rem;
+    margin-right: 0.7rem;
+  }
+
+  .footer-bg{
+    background-color: $color-dark;
+  }
+
+  .footer-icon{
+    color: $color-footer-icon;
+  }
