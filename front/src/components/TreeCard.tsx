@@ -25,7 +25,9 @@ const TreeCard: React.FC<TreeCardProps> = ({
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
       <div className="h-48 bg-gray-100 flex items-center justify-center relative overflow-hidden">
         <img 
-          src={image ? `/images/${image}` : '/images/tree-placeholder.jpg'} 
+          // On passe directement l'URL complète que l'on reçoit de l'API.
+          // Si l'image n'existe pas, on utilise l'image de remplacement.
+          src={image || '/images/tree-placeholder.jpg'}  
           alt={commonName}
           className="w-full h-full object-cover"
           onError={(e) => {
