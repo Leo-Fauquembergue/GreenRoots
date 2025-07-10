@@ -7,7 +7,7 @@ import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import TreeDetailPage from "./pages/TreeDetailPage";
+import TreeDetailPage from "./pages/TreeDetails";
 
 function App() {
 	return (

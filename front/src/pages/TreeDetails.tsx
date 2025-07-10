@@ -7,7 +7,7 @@ import { ShoppingCart } from 'lucide-react'; // Icône pour le bouton
 
 const API_BASE_URL = 'http://localhost:3000/api';
 
-const TreeDetailPage: React.FC = () => {
+const TreeDetails: React.FC = () => {
   // Récupère le paramètre 'id' depuis l'URL.
   const { id } = useParams<{ id: string }>(); 
   
@@ -135,4 +135,4 @@ const TreeDetailPage: React.FC = () => {
   );
 };
 
-export default TreeDetailPage;
+export default TreeDetails;
