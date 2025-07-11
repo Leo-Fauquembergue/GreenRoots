@@ -1,0 +1,27 @@
+###
+# POST Créer un nouvel utilisateur (REGISTER)
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Jane Doe",
+  "email": "jane.doe@example.com",
+  "password": "Password123!"
+}
+###
+
+###
+# POST Connexion d'un utilisateur (LOGIN)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "jane.doe@example.com",
+  "password": "Password123!"
+}
+###
+
+###
+# POST Déconnexion d'un utilisateur (LOGOUT)
+POST http://localhost:3000/api/auth/logout
+###

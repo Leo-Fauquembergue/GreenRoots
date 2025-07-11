@@ -1,4 +1,3 @@
-
 ###
 # GET all orders
 GET http://localhost:3000/api/orders
@@ -15,8 +14,7 @@ POST http://localhost:3000/api/orders
 Content-Type: application/json
 
 {
-  "userId": 1,
-  "totalPrice": 49.99
+  "userId": 1
 }
 ###
 
@@ -26,7 +24,7 @@ PATCH http://localhost:3000/api/orders/1
 Content-Type: application/json
 
 {
-  "totalPrice": 59.99
+  "status": "completed"
 }
 ###
 
@@ -34,4 +32,3 @@ Content-Type: application/json
 # DELETE an order
 DELETE http://localhost:3000/api/orders/1
 ###
-

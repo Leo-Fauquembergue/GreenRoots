@@ -17,4 +17,4 @@ router.use("/regions", regionRouter);
 router.use("/orders", orderRouter);
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
-router.use("/tracking", trackingRouter);
+router.use("/trackings", trackingRouter);
