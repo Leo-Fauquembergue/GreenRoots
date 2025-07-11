@@ -17,7 +17,7 @@ Content-Type: application/json
   "name": "Chêne Vert",
   "description": "Arbre méditerranéen robuste",
   "price": 12.50,
-  "image": "oak.jpg",
+  "image": "chene-vert.jpg",
   "regionId": 1,
   "categoryId": 2
 }
