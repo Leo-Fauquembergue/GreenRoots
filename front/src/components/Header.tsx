@@ -46,7 +46,7 @@ export default function Header() {
 					<Link to="/catalog">Catalogue</Link>
 					<Link to="/Login">Connexion</Link>
 					<Link to="/Register">S'inscrire</Link>
-					<Link to="/PanierPage" className="flex items-center gap-2">
+					<Link to="/cart" className="flex items-center gap-2">
 						<img src={cartIcon} alt="Panier" className="w-6 h-6" />
 						<span>Panier</span>
 					</Link>
