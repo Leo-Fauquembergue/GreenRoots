@@ -7,12 +7,31 @@ import { idSchema, catalogTreeSchema, updateCatalogTreeSchema } from "../schemas
 import { HttpError } from "../errors/http-error.js";
 
 export async function getAllCatalogTrees(req, res) {
-  // 1. On prépare un objet d'options vide pour notre requête Sequelize.
+  // On prépare un objet d'options vide pour notre requête Sequelize.
   const options = {
-    include: ["category", "region"]
+    include: ["category", "region"],
+    where: {}  //On initialise un objet `where` vide. si cet objet reste vide, Sequelize n'appliquera aucun filtre.
   };
 
-  // 2. On vérifie la présence du paramètre 'limit'.
+    // On récupère les filtres potentiels depuis les paramètres de l'URL (query parameters).
+  const { categoryId, regionId } = req.query;
+
+  if (categoryId && categoryId !== 'all') {
+    const numericCategoryId = parseInt(categoryId, 10);
+    if (!Number.isNaN(numericCategoryId)) {
+      options.where.categoryId = numericCategoryId;
+    }
+  }
+
+
+  if (regionId && regionId !== 'all') {
+    const numericRegionId = parseInt(regionId, 10);
+    if (!Number.isNaN(numericRegionId)) {
+      options.where.regionId = numericRegionId;
+    }
+  }
+
+  //  On vérifie la présence du paramètre 'limit'.
   const limit = parseInt(req.query.limit, 10);
   // Si la conversion a réussi et que le nombre est plus grand que 0...
   if (!Number.isNaN(limit) && limit > 0) {
@@ -20,7 +39,7 @@ export async function getAllCatalogTrees(req, res) {
     options.limit = limit;
   }
 
-  // 3. On vérifie la présence du paramètre 'order' et on le sécurise.
+  //  On vérifie la présence du paramètre 'order' et on le sécurise.
   const orderDirection = req.query.order?.toUpperCase();
   if (orderDirection === 'ASC' || orderDirection === 'DESC') {
     // On trie par date de création.
@@ -30,7 +49,7 @@ export async function getAllCatalogTrees(req, res) {
     options.order = [['created_at', 'DESC']];
   }
 
-  // 4. On exécute la requête avec les options construites dynamiquement.
+  //On exécute la requête avec les options construites dynamiquement.
   const trees = await CatalogTree.findAll(options);
   
   res.json(trees);
