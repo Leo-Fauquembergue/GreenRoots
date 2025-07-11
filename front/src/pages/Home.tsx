@@ -87,15 +87,13 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {trees.map((tree) => (
 			<TreeCard
-				categoryName={tree.category.name}
 				key={tree.catalogTreeId}
-				catalogTreeId={tree.catalogTreeId}
-				commonName={tree.commonName}
-				description={tree.description}
-				image={tree.image}
-				regionName={tree.region.name}
-				
-			
+        catalogTreeId={tree.catalogTreeId}
+        commonName={tree.commonName}
+        description={tree.description}
+        image={tree.image}
+        categoryName={tree.category.name}
+        regionName={tree.region.name}
 />          ))}
         </div>
       </section>
