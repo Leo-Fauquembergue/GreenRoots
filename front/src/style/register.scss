@@ -11,7 +11,7 @@ body{
   padding: 2rem;
   background-color: $color-white;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
   font-family: $font_main;
   margin-top: 15rem;
 }
@@ -20,6 +20,7 @@ body{
   text-align: center;
   margin-bottom: 1.5rem;
   color: $color-dark;
+  font-size: 1.2rem;
 }
 
 .register-form {
@@ -57,7 +58,8 @@ body{
 }
 
 .register-form button:hover {
-  background-color: $color-card-shadow;
+  background-color: $color-bg;
+  color: $color-black;
 }
 
 /* ---------- Responsive ---------- */

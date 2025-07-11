@@ -18,11 +18,11 @@ export default function Footer() {
 				
 				{/* Slogan */}
 				<div className="text-center">
-					<p className="font-serif">Planter des arbres, sauver notre planète</p>
+					<p>Planter des arbres, sauver notre planète</p>
 				</div>
 				
 				{/* Informations de contact */}
-				<div className="flex flex-col space-y-2 items-center md:items-end font-serif">
+				<div className="flex flex-col space-y-2 items-center md:items-end">
 					<div className="flex items-center space-x-2">
 					<Phone className="w-4 h-4 footer-icon" />
 					<span>56789990</span>
