@@ -64,17 +64,3 @@ export async function deleteRegion(req, res) {
   // 6. On envoie une réponse 204 No Content pour signifier que la suppression a réussi
   res.status(204).end();
 }
-
-// 🌱 GET /regions/:id/catalog-trees - Arbres d'une région
-export async function getTreesByRegion(req, res) {
-  const { id } = idSchema.parse(req.params);
-  const region = await Region.findByPk(id);
-  if (!region) throw new HttpError(404, "Région non trouvée.");
-
-  const trees = await CatalogTree.findAll({
-    where: { regionId: id },
-    include: ["category"] // Facultatif : tu peux inclure d'autres associations ici
-  });
-
-  res.json(trees);
-}

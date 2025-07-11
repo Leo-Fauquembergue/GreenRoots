@@ -64,17 +64,3 @@ export async function deleteCategory(req, res) {
   // 6. On envoie une réponse 204 No Content pour signifier que la suppression a réussi
   res.status(204).end();
 }
-
-// 🌱 GET /categories/:id/catalog-trees - Arbres d'une catégorie
-export async function getTreesByCategory(req, res) {
-  const { id } = idSchema.parse(req.params);
-  const category = await Category.findByPk(id);
-  if (!category) throw new HttpError(404, "Catégorie non trouvée.");
-
-  const trees = await CatalogTree.findAll({
-    where: { categoryId: id },
-    include: ["region"] // Tu peux inclure ce que tu veux ici
-  });
-
-  res.json(trees);
-}
