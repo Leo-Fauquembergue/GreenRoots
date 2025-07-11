@@ -32,8 +32,3 @@ Content-Type: application/json
 # DELETE a region
 DELETE http://localhost:3000/api/regions/1
 ###
-
-###
-# GET catalog trees for a specific region
-GET http://localhost:3000/api/regions/1/catalog-trees
-###

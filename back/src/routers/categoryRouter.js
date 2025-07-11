@@ -8,4 +8,3 @@ categoryRouter.get("/:id", categoryController.getOneCategory);
 categoryRouter.post("/", categoryController.createCategory);
 categoryRouter.patch("/:id", categoryController.updateCategory);
 categoryRouter.delete("/:id", categoryController.deleteCategory);
-categoryRouter.get("/:id/catalog-trees", categoryController.getTreesByCategory);

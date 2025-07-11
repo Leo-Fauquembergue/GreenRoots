@@ -8,6 +8,3 @@ regionRouter.get("/:id", regionController.getOneRegion);
 regionRouter.post("/", regionController.createRegion);
 regionRouter.patch("/:id", regionController.updateRegion);
 regionRouter.delete("/:id", regionController.deleteRegion);
-
-// 🌱 Arbres associés à une région
-regionRouter.get("/:id/catalog-trees", regionController.getTreesByRegion);

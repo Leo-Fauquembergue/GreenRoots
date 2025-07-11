@@ -32,8 +32,3 @@ Content-Type: application/json
 # DELETE a category
 DELETE http://localhost:3000/api/categories/1
 ###
-
-###
-# GET all catalog trees for a specific category
-GET http://localhost:3000/api/categories/1/catalog-trees
-###
