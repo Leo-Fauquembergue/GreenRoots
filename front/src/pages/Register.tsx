@@ -6,6 +6,7 @@ export default function Register() {
 	const [firstName, setFirstName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 
 	const [success, setSuccess] = useState(false);
 	const [error, setError] = useState('');
@@ -15,9 +16,31 @@ export default function Register() {
 		setSuccess(false);
 		setError('');
 
+		// --- VALIDATION FRONT ---
+		if (!firstName.trim()) {
+			setError("Le prénom est requis.");
+			return;
+		}
+
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(email)) {
+			setError("L'adresse email est invalide.");
+			return;
+		}
+
+		if (password.length < 6) {
+			setError("Le mot de passe doit contenir au moins 6 caractères.");
+			return;
+		}
+
+		if (password !== confirmPassword) {
+			setError("Les mots de passe ne correspondent pas.");
+			return;
+		}
+
+		// --- ENVOI AU BACKEND ---
 		try {
 			const response = await fetch("http://localhost:3000/api/auth/register", {
-
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -32,6 +55,14 @@ export default function Register() {
 
 			if (!response.ok) {
 				const errorData = await response.json();
+				console.error("Erreur backend :", errorData);
+
+				if (errorData.errors) {
+					errorData.errors.forEach((err: any) => {
+						console.error("Champ en erreur :", err.path, "-", err.message);
+					});
+				}
+
 				throw new Error(errorData.message || "Une erreur est survenue.");
 			}
 
@@ -40,6 +71,7 @@ export default function Register() {
 			setFirstName('');
 			setEmail('');
 			setPassword('');
+			setConfirmPassword('');
 		} catch (err: any) {
 			setError(err.message);
 		}
@@ -86,6 +118,16 @@ export default function Register() {
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
+						required
+					/>
+				</label>
+
+				<label>
+					Confirmer le mot de passe
+					<input
+						type="password"
+						value={confirmPassword}
+						onChange={(e) => setConfirmPassword(e.target.value)}
 						required
 					/>
 				</label>
