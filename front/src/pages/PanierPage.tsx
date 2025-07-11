@@ -1,7 +1,7 @@
 import { useState } from "react";
-import "../style/cart.scss";
+import "../style/panier.scss";
 
-export default function Cart() {
+export default function PanierPage() {
   const [cart, setCart] = useState([
     {
       commonName: "Nom de l'arbre",
