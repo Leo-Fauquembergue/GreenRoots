@@ -39,105 +39,120 @@ interface Region {
 const API_BASE_URL = 'http://localhost:3000/api';
 
 
-// Hook personnalisé avec axios
-const useCatalogData = () => {
-  const [trees, setTrees] = useState<CatalogTree[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [regions, setRegions] = useState<Region[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-
-        const [treesResponse, categoriesResponse, regionsResponse] = await Promise.all([
-          axios.get(`${API_BASE_URL}/catalog-trees`),
-          axios.get(`${API_BASE_URL}/categories`),
-          axios.get(`${API_BASE_URL}/regions`)
-        ]);
-
-        setTrees(treesResponse.data);
-        setCategories(categoriesResponse.data);
-        setRegions(regionsResponse.data);
-      } catch (err: any) {
-        setError(err.message || 'Une erreur est survenue');
-      } finally {
-        setLoading(false);
-      }
+    
+    const useCatalogData = (categoryId: string, regionId: string) => {
+      const [trees, setTrees] = useState<CatalogTree[]>([]);
+      // On ne charge les catégories et régions qu'une seule fois
+      const [categories, setCategories] = useState<Category[]>([]);
+      const [regions, setRegions] = useState<Region[]>([]);
+      const [loading, setLoading] = useState(true);
+      const [error, setError] = useState<string | null>(null);
+    
+      // Effet pour charger les catégories et régions (une seule fois)
+      useEffect(() => {
+        const fetchFilters = async () => {
+          try {
+            const [categoriesResponse, regionsResponse] = await Promise.all([
+              axios.get(`${API_BASE_URL}/categories`),
+              axios.get(`${API_BASE_URL}/regions`),
+            ]);
+            setCategories(categoriesResponse.data);
+            setRegions(regionsResponse.data);
+          } catch (err: any) {
+            setError(err.message || 'Erreur lors du chargement des filtres.');
+          }
+        };
+        fetchFilters();
+      }, []); // Dépendance vide pour ne s'exécuter qu'au montage
+    
+      // Effet pour charger les ARBRES en fonction des filtres
+      useEffect(() => {
+        const fetchTrees = async () => {
+          try {
+            setLoading(true);
+            
+            // Construire les paramètres de requête dynamiquement
+            const params = new URLSearchParams();
+            if (categoryId && categoryId !== 'all') {
+              params.append('categoryId', categoryId);
+            }
+            if (regionId && regionId !== 'all') {
+              params.append('regionId', regionId);
+            }
+    
+            const queryString = params.toString();
+            const url = `${API_BASE_URL}/catalog-trees${queryString ? `?${queryString}` : ''}`;
+            
+            console.log("Appel API vers :", url); // Pour le débogage
+    
+            const treesResponse = await axios.get(url);
+            setTrees(treesResponse.data);
+    
+          } catch (err: any) {
+            setError(err.message || 'Une erreur est survenue lors du chargement des arbres.');
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        fetchTrees();
+      }, [categoryId, regionId]); // <-- Se redéclenche si categoryId ou regionId change !
+    
+      return { trees, categories, regions, loading, error };
     };
 
-    fetchData();
-  }, []);
+    const Catalog: React.FC = () => {
+    const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    const [selectedRegion, setSelectedRegion] = useState<string>('all');
+  
+    // Le hook reçoit les filtres et renvoie les données déjà filtrées !
+    const { trees, categories, regions, loading, error } = useCatalogData(selectedCategory, selectedRegion);
+    const [visibleCount, setVisibleCount] = useState(6);
 
-  return { trees, categories, regions, loading, error };
-};
+     // À chaque changement de filtre, on réinitialise le nombre d'éléments visibles
+    useEffect(() => {
+      setVisibleCount(6);
 
-const Catalog: React.FC = () => {
-  const { trees, categories, regions, loading, error } = useCatalogData();
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [selectedRegion, setSelectedRegion] = useState<string>('all');
-  const [filteredTrees, setFilteredTrees] = useState<CatalogTree[]>([]);
-  const [visibleCount, setVisibleCount] = useState(6);
+    }, [trees]);
 
-  useEffect(() => {
-    let filtered = trees;
 
-    if (selectedCategory !== 'all') {
-      filtered = filtered.filter(tree => tree.category.name === selectedCategory);
-    }
+    const handleSeeMore = () => {
+      // La variable `trees` contient DÉJÀ les arbres filtrés.
+      setVisibleCount(trees.length);
+    };
 
-    if (selectedRegion !== 'all') {
-      filtered = filtered.filter(tree => tree.region.name === selectedRegion);
-    }
-
-    setFilteredTrees(filtered);
-  }, [trees, selectedCategory, selectedRegion]);
-
-  const handleFilter = () => {
-    console.log('Filtrage appliqué:', selectedCategory, selectedRegion);
-  };
-
-  const handleSeeMore = () => {
-    setVisibleCount(filteredTrees.length);
-  };
-
-  const handleLearnMore = (id: number) => {
-    console.log('En savoir plus cliqué pour l\'arbre:', id);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement du catalogue...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-red-600 mb-4">
-            <svg className="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+    if (loading) {
+      return (
+        <div className="min-h-screen bg-white flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Chargement du catalogue...</p>
           </div>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <button 
-            onClick={() => window.location.reload()} 
-            className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
-          >
-            Réessayer
-          </button>
         </div>
-      </div>
-    );
-  }
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="min-h-screen bg-white flex items-center justify-center">
+          <div className="text-center">
+            <div className="text-red-600 mb-4">
+              <svg className="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+            >
+              Réessayer
+            </button>
+          </div>
+        </div>
+      );
+    }
 
   return (
     <div className="catalog min-h-screen bg-white py-20">
@@ -162,7 +177,7 @@ const Catalog: React.FC = () => {
             >
               <option value="all">Toutes les catégories</option>
               {categories.map((category) => (
-                <option key={category.categoryId} value={category.name}>
+                <option key={category.categoryId} value={category.categoryId}>
                   {category.name}
                 </option>
               ))}
@@ -178,7 +193,7 @@ const Catalog: React.FC = () => {
             >
               <option value="all">Toutes les régions</option>
               {regions.map((region) => (
-                <option key={region.regionId} value={region.name}>
+                <option key={region.regionId} value={region.regionId}>
                   {region.name}
                 </option>
               ))}
@@ -189,17 +204,16 @@ const Catalog: React.FC = () => {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {filteredTrees.length === 0 ? (
+            {loading ? (
               <div className="col-span-full text-center py-12">
-                <div className="text-gray-400 mb-4">
-                  <svg className="h-16 w-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <p className="text-gray-600">Aucun arbre trouvé pour ces critères</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
               </div>
+           ) : trees.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+                <p className="text-gray-600">Aucun arbre trouvé pour ces critères</p>
+            </div>
             ) : (
-              filteredTrees.slice(0, visibleCount).map((tree) => (
+              trees.slice(0, visibleCount).map((tree) => (
                 <TreeCard
                   key={tree.catalogTreeId}
                   catalogTreeId={tree.catalogTreeId}
@@ -214,11 +228,10 @@ const Catalog: React.FC = () => {
           </div>
 
         {/* Bouton Voir plus */}
-        {visibleCount < filteredTrees.length && (
+        {visibleCount < trees.length && !loading && (
           <div className="text-center">
-            <button 
-              className="btn-dark px-8 py-4 text-white rounded-full text-base font-medium  transition-all duration-300 hover:-translate-y-0.5"
-              onClick={handleSeeMore}
+            <button onClick={handleSeeMore}
+              className="btn-dark px-8 py-4 text-white rounded-full text-base font-medium  transition-all duration-300 hover:-translate-y-0.5" 
             >
               Voir plus
             </button>
