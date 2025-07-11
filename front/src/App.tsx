@@ -3,11 +3,12 @@ import Home from "./pages/Home";
 import Catalog from "./pages/Catalog";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Cart from "./pages/Cart";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Cart from "./pages/Cart";
 import TreeDetails from "./pages/TreeDetails";
+
 
 function App() {
 	return (
