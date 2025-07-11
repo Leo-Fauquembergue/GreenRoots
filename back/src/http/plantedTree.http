@@ -1,4 +1,3 @@
-
 ###
 # GET all planted trees
 GET http://localhost:3000/api/planted-trees
@@ -17,9 +16,9 @@ Content-Type: application/json
 {
   "catalogTreeId": 1,
   "orderId": 1,
+  "personalName": "Mon premier chêne",
   "plantingDate": "2025-07-01",
-  "latitude": 48.5734,
-  "longitude": 7.7521
+  "plantingPlace": "Jardin de l'Orangerie, Strasbourg, France"
 }
 ###
 
@@ -29,8 +28,7 @@ PATCH http://localhost:3000/api/planted-trees/1
 Content-Type: application/json
 
 {
-  "latitude": 48.6,
-  "longitude": 7.75
+  "personalName": "Mon premier chêne majestueux"
 }
 ###
 

@@ -1,4 +1,3 @@
-
 ###
 # GET all regions
 GET http://localhost:3000/api/regions
@@ -35,6 +34,6 @@ DELETE http://localhost:3000/api/regions/1
 ###
 
 ###
-# GET catalog trees for a region
+# GET catalog trees for a specific region
 GET http://localhost:3000/api/regions/1/catalog-trees
 ###

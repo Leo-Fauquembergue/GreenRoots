@@ -1,4 +1,3 @@
-
 ###
 # GET all categories
 GET http://localhost:3000/api/categories
@@ -38,4 +37,3 @@ DELETE http://localhost:3000/api/categories/1
 # GET all catalog trees for a specific category
 GET http://localhost:3000/api/categories/1/catalog-trees
 ###
-

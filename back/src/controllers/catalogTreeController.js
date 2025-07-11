@@ -2,7 +2,7 @@
 // "Exécute le fichier associations.js pour t'assurer que tous les modèles
 // (CatalogTree, Category, Region, etc.) sont bien définis et liés entre eux,
 // PUIS, donne-moi accès aux variables exportées dont j'ai besoin."
-import { CatalogTree, Category, Region } from "./../models/associations.js";
+import { CatalogTree, PlantedTree, Category, Region } from "./../models/associations.js";
 import { idSchema, catalogTreeSchema, updateCatalogTreeSchema } from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";
 
@@ -58,8 +58,32 @@ export async function updateCatalogTree(req, res) {
 }
 
 export async function deleteCatalogTree(req, res) {
+  // 1. On valide l'ID de la requête
   const { id } = idSchema.parse(req.params);
-  const deleted = await CatalogTree.destroy({ where: { catalogTreeId: id } });
-  if (!deleted) throw new HttpError(404, "Arbre du catalogue non trouvé.");
+
+  // 2. On vérifie si cet arbre du catalogue est utilisé dans la table "planted_tree"
+  const associatedPlantedTreesCount = await PlantedTree.count({
+    where: { catalogTreeId: id } 
+  });
+
+  // 3. Si l'arbre est utilisé, on refuse la suppression avec une erreur 409 (Conflit)
+  if (associatedPlantedTreesCount > 0) {
+    throw new HttpError(
+      409, // 409 Conflict est le statut HTTP sémantiquement correct ici.
+      `Impossible de supprimer cet arbre du catalogue (ID: ${id}) car il est associé à ${associatedPlantedTreesCount} arbre(s) planté(s).`
+    );
+  }
+
+  // 4. Si l'arbre n'est pas utilisé, on procède à la suppression
+  const deleted = await CatalogTree.destroy({
+    where: { catalogTreeId: id } 
+  });
+
+  // 5. Si 'destroy' renvoie 0, c'est que l'arbre n'a pas été trouvé
+  if (!deleted) {
+    throw new HttpError(404, "Arbre du catalogue non trouvé.");
+  }
+
+  // 6. On envoie une réponse 204 No Content pour signifier que la suppression a réussi
   res.status(204).end();
 }
