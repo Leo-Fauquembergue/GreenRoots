@@ -9,7 +9,8 @@
 }
 
 .btn-light{
-    background-color: $color-bg;
+    background-color: $color-green-Pistachio;
+    color: white;
 }
 .btn-light:hover{
     color: $color-bg;
@@ -17,7 +18,6 @@
 }
 .greenroots {
     font-family: $font-title;
-   
     font-weight: 700;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
     transition: text-shadow 0.3s ease;

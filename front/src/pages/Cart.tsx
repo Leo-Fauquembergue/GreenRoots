@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../style/cart.scss";
+import { Minus, Plus, Trash2 } from "lucide-react";
 
 export default function Cart() {
 	const [cart, setCart] = useState([
@@ -65,7 +66,7 @@ export default function Cart() {
 										onClick={() => decrementQty(index)}
 										className="btn-qty"
 									>
-										-
+										<Minus className="w-5 h-5" />
 									</button>
 									<span>{product.quantity || 1}</span>
 									<button
@@ -73,7 +74,7 @@ export default function Cart() {
 										onClick={() => incrementQty(index)}
 										className="btn-qty"
 									>
-										+
+										<Plus className="w-5 h-5" />
 									</button>
 								</div>
 								<div className="cart-item-price">
@@ -86,14 +87,14 @@ export default function Cart() {
 										aria-label="Supprimer cet article"
 										className="btn-trash"
 									>
-										🗑️
+										<Trash2 className="w-5 h-5" />
 									</button>
 								</div>
 							</li>
 						))}
 					</ul>
 					<h3>Total : {total.toFixed(2)} €</h3>
-					<button onClick={handleFinaliser} className="btn-submit">
+					<button type="button" onClick={handleFinaliser} className="btn-submit">
 						Finaliser et payer
 					</button>
 				</>

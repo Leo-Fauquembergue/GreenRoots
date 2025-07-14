@@ -1,42 +1,12 @@
-/** biome-ignore-all lint/a11y/useButtonType: <explanation> */
-import "../style/catalog.scss";
-import TreeCard from "./../components/TreeCard.tsx";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import type { CatalogTree, Category, Region} from "../hooks/types"; 
+import "../style/catalog.scss";
+import TreeCard from "./../components/TreeCard.tsx";
+import { AlertCircle, Search } from "lucide-react";
 
-interface CatalogTree {
-	catalogTreeId: number;
-	commonName: string;
-	scientificName: string;
-	description: string;
-	adultHeight: number;
-	image: string;
-	price: number;
-	categoryId: number;
-	regionId: number;
-	category: {
-		categoryId: number;
-		name: string;
-	};
-	region: {
-		regionId: number;
-		name: string;
-	};
-}
-
-interface Category {
-	categoryId: number;
-	name: string;
-}
-
-interface Region {
-	regionId: number;
-	name: string;
-}
-
-// Configuration de l'API
-const API_BASE_URL = "http://localhost:3000/api";
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const useCatalogData = (categoryId: string, regionId: string) => {
 	const [trees, setTrees] = useState<CatalogTree[]>([]);
@@ -51,13 +21,17 @@ const useCatalogData = (categoryId: string, regionId: string) => {
 		const fetchFilters = async () => {
 			try {
 				const [categoriesResponse, regionsResponse] = await Promise.all([
-					axios.get(`${API_BASE_URL}/categories`),
-					axios.get(`${API_BASE_URL}/regions`),
+					axios.get(`${apiBaseUrl}/categories`),
+					axios.get(`${apiBaseUrl}/regions`),
 				]);
 				setCategories(categoriesResponse.data);
 				setRegions(regionsResponse.data);
-			} catch (err: any) {
-				setError(err.message || "Erreur lors du chargement des filtres.");
+			} catch (err: unknown) {  //remplacé any par unknown
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Erreur lors du chargement des filtres.");
+        }
 			}
 		};
 		fetchFilters();
@@ -79,17 +53,19 @@ const useCatalogData = (categoryId: string, regionId: string) => {
 				}
 
 				const queryString = params.toString();
-				const url = `${API_BASE_URL}/catalog-trees${queryString ? `?${queryString}` : ""}`;
+				const url = `${apiBaseUrl}/catalog-trees${queryString ? `?${queryString}` : ""}`;
 
 				console.log("Appel API vers :", url); // Pour le débogage
 
 				const treesResponse = await axios.get(url);
 				setTrees(treesResponse.data);
-			} catch (err: any) {
-				setError(
-					err.message ||
-						"Une erreur est survenue lors du chargement des arbres.",
-				);
+
+			} catch (err: unknown) { //utilisé unknown à la place de "any"
+				if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Une erreur est survenue lors du chargement des arbres.");
+        }
 			} finally {
 				setLoading(false);
 			}
@@ -115,7 +91,7 @@ const Catalog: React.FC = () => {
 	// À chaque changement de filtre, on réinitialise le nombre d'éléments visibles
 	useEffect(() => {
 		setVisibleCount(6);
-	}, [trees]);
+	}, []);
 
 	const handleSeeMore = () => {
 		// La variable `trees` contient DÉJÀ les arbres filtrés.
@@ -138,22 +114,10 @@ const Catalog: React.FC = () => {
 			<div className="min-h-screen bg-white flex items-center justify-center">
 				<div className="text-center">
 					<div className="text-red-600 mb-4">
-						<svg
-							className="h-16 w-16 mx-auto"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								strokeWidth={2}
-								d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-							/>
-						</svg>
+						 <AlertCircle className="h-16 w-16 text-red-600 mx-auto" />
 					</div>
 					<p className="text-gray-600 mb-4">{error}</p>
-					<button
+					<button type="button"
 						onClick={() => window.location.reload()}
 						className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
 					>
@@ -181,10 +145,11 @@ const Catalog: React.FC = () => {
 				{/* Filters */}
 				<div className="filter-bar flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 p-6 rounded-lg mb-12">
 					<div className="flex items-center gap-3">
-						<label className="text-sm font-medium text-gray-700">
+						<label htmlFor="category-select" className="text-sm font-medium text-gray-700">
 							Catégorie:
 						</label>
 						<select
+              id="category-select"
 							className="px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-700 text-sm min-w-32 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
 							value={selectedCategory}
 							onChange={(e) => setSelectedCategory(e.target.value)}
@@ -199,8 +164,9 @@ const Catalog: React.FC = () => {
 					</div>
 
 					<div className="flex items-center gap-3">
-						<label className="text-sm font-medium text-gray-700">Région:</label>
+						<label htmlFor="region-select" className="text-sm font-medium text-gray-700">Région:</label>
 						<select
+              id="region-select"
 							className="px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-700 text-sm min-w-32 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
 							value={selectedRegion}
 							onChange={(e) => setSelectedRegion(e.target.value)}
@@ -219,7 +185,7 @@ const Catalog: React.FC = () => {
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
 					{loading ? (
 						<div className="col-span-full text-center py-12">
-							<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
+							 <Search className="h-16 w-16 mx-auto text-gray-600" aria-hidden="true" />
 						</div>
 					) : trees.length === 0 ? (
 						<div className="col-span-full text-center py-12">
@@ -247,7 +213,7 @@ const Catalog: React.FC = () => {
 				{/* Bouton Voir plus */}
 				{visibleCount < trees.length && !loading && (
 					<div className="text-center">
-						<button
+						<button type="button"
 							onClick={handleSeeMore}
 							className="btn-dark px-8 py-4 text-white rounded-full text-base font-medium  transition-all duration-300 hover:-translate-y-0.5"
 						>

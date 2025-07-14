@@ -27,3 +27,13 @@ export interface Region {
 	regionId: number;
 	name: string;
 }
+
+export interface TreeCardProps {
+  catalogTreeId: number;
+  commonName: string;
+  scientificName?: string;
+  description: string;
+  image?: string;
+  categoryName: string;
+  regionName: string;
+}
