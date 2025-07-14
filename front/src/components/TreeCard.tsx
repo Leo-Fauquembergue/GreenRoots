@@ -1,15 +1,8 @@
 import type React from "react";
 import { Link } from "react-router-dom";
+import type { TreeCardProps } from "../hooks/types";
 
-interface TreeCardProps {
-	catalogTreeId: number;
-	commonName: string;
-	scientificName?: string;
-	description: string;
-	image?: string;
-	categoryName: string;
-	regionName: string;
-}
+
 
 const TreeCard: React.FC<TreeCardProps> = ({
 	catalogTreeId,
