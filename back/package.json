@@ -1,33 +1,33 @@
 {
-  "name": "back",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "db:create": "node ./src/migrations/01.create-tables.js",
-    "db:seed": "node ./src/migrations/02.seed-tables.js",
-    "db:reset": "pnpm run db:create && pnpm run db:seed"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.11.0",
-  "dependencies": {
-    "argon2": "^0.43.0",
-    "cors": "^2.8.5",
-    "dotenv": "^17.0.1",
-    "express": "^5.1.0",
-    "express-xss-sanitizer": "^2.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "pg": "^8.16.3",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.7",
-    "zod": "^3.25.75"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.10"
-  }
+	"name": "back",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "nodemon src/index.js",
+		"db:create": "node ./src/migrations/01.create-tables.js",
+		"db:seed": "node ./src/migrations/02.seed-tables.js",
+		"db:reset": "pnpm run db:create && pnpm run db:seed"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"packageManager": "pnpm@10.11.0",
+	"dependencies": {
+		"argon2": "^0.43.0",
+		"cors": "^2.8.5",
+		"dotenv": "^17.0.1",
+		"express": "^5.1.0",
+		"express-xss-sanitizer": "^2.0.0",
+		"jsonwebtoken": "^9.0.2",
+		"pg": "^8.16.3",
+		"pg-hstore": "^2.3.4",
+		"sequelize": "^6.37.7",
+		"zod": "^3.25.75"
+	},
+	"devDependencies": {
+		"nodemon": "^3.1.10"
+	}
 }

@@ -9,7 +9,6 @@ import Footer from "./components/Footer";
 import Cart from "./pages/Cart";
 import TreeDetails from "./pages/TreeDetails";
 
-
 function App() {
 	return (
 		<div className="min-h-screen flex flex-col">
