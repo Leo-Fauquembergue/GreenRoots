@@ -1,5 +1,5 @@
 import { Router } from "express";
-import * as regionController from "../controllers/regionController.js"
+import * as regionController from "../controllers/regionController.js";
 
 export const regionRouter = Router();
 

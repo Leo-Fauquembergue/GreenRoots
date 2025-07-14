@@ -1,20 +1,22 @@
 import { useState } from "react";
 import "../style/register.scss";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-	const [lastname, setLastName] = useState('');
-	const [firstName, setFirstName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
+	const [lastname, setLastName] = useState("");
+	const [firstName, setFirstName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 
 	const [success, setSuccess] = useState(false);
-	const [error, setError] = useState('');
+	const navigate = useNavigate();
+	const [error, setError] = useState("");
 
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setSuccess(false);
-		setError('');
+		setError("");
 
 		// --- VALIDATION FRONT ---
 		if (!firstName.trim()) {
@@ -46,7 +48,7 @@ export default function Register() {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					lastname,
+					name: `${firstName} ${lastname}`,
 					firstName,
 					email,
 					password,
@@ -58,20 +60,25 @@ export default function Register() {
 				console.error("Erreur backend :", errorData);
 
 				if (errorData.errors) {
-					errorData.errors.forEach((err: any) => {
-						console.error("Champ en erreur :", err.path, "-", err.message);
-					});
+					const messages = errorData.errors.map(
+						(err: any) => `• ${err.path.join(".")} : ${err.message}`,
+					);
+					throw new Error(messages.join("\n"));
 				}
 
 				throw new Error(errorData.message || "Une erreur est survenue.");
 			}
 
 			setSuccess(true);
-			setLastName('');
-			setFirstName('');
-			setEmail('');
-			setPassword('');
-			setConfirmPassword('');
+			setLastName("");
+			setFirstName("");
+			setEmail("");
+			setPassword("");
+			setConfirmPassword("");
+
+			setTimeout(() => {
+				navigate("/login"); //Redirection sur la page connexion après succès
+			}, 1000);
 		} catch (err: any) {
 			setError(err.message);
 		}
@@ -136,7 +143,13 @@ export default function Register() {
 			</form>
 
 			{success && <p className="success-message">Compte créé avec succès ✅</p>}
-			{error && <p className="error-message">{error}</p>}
+			{error && (
+				<div className="error-message">
+					{error.split("\n").map((line, index) => (
+						<p key={index}>{line}</p>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }

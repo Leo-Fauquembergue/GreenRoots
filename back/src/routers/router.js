@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { catalogTreeRouter} from "./catalogTreeRouter.js";
+import { catalogTreeRouter } from "./catalogTreeRouter.js";
 import { categoryRouter } from "./categoryRouter.js";
 import { plantedTreeRouter } from "./plantedTreeRouter.js";
 import { regionRouter } from "./regionRouter.js";
