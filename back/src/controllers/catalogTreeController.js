@@ -2,17 +2,8 @@
 // "Exécute le fichier associations.js pour t'assurer que tous les modèles
 // (CatalogTree, Category, Region, etc.) sont bien définis et liés entre eux,
 // PUIS, donne-moi accès aux variables exportées dont j'ai besoin."
-import {
-	CatalogTree,
-	PlantedTree,
-	Category,
-	Region,
-} from "./../models/associations.js";
-import {
-	idSchema,
-	catalogTreeSchema,
-	updateCatalogTreeSchema,
-} from "../schemas/index.js";
+import { CatalogTree, PlantedTree, Category, Region } from "./../models/associations.js";
+import { idSchema, catalogTreeSchema, updateCatalogTreeSchema } from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";
 
 export async function getAllCatalogTrees(req, res) {
