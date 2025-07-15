@@ -18,11 +18,11 @@ export default function Home() {
 				);
 				setTrees(response.data);
 			} catch (err: unknown) {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError("Erreur de chargement");
-          }
+				if (err instanceof Error) {
+					setError(err.message);
+				} else {
+					setError("Erreur de chargement");
+				}
 			} finally {
 				setLoading(false);
 			}
@@ -46,19 +46,23 @@ export default function Home() {
 					<p>
 						Chez Greenroots, nous croyons qu'un petit geste peut avoir un grand
 						impact. Planter un arbre, c'est bien plus qu'un acte symbolique.
-						C'est lutter contre le réchauffement climatique en capturant le
-						CO2, c'est restaurer la biodiversité en créant des habitats pour
-						la faune, c'est préserver les sols et les ressources en eau,
-						c'est soutenir les communautés locales grâce à des projets de
+						C'est lutter contre le réchauffement climatique en capturant le CO2,
+						c'est restaurer la biodiversité en créant des habitats pour la
+						faune, c'est préserver les sols et les ressources en eau, c'est
+						soutenir les communautés locales grâce à des projets de
 						reforestation durable.
 					</p>
-					<button type="button">En savoir plus</button>
+					<button className="more-button" type="button">
+						En savoir plus
+					</button>
 				</div>
 			</section>
 
 			{/* Section des 3 derniers arbres */}
 			<section className="cards-section">
-				<h2 className="text-center text-2xl font-bold mb-6">Derniers arbres ajoutés</h2>
+				<h2 className="text-center text-2xl font-bold mb-6">
+					Derniers arbres ajoutés
+				</h2>
 
 				{loading && <p>Chargement...</p>}
 				{error && <p className="text-red-500">{error}</p>}
