@@ -1,5 +1,4 @@
 // On importe tous les modèles et l'instance sequelize depuis notre fichier central.
-// C'est le seul import nécessaire.
 import {
 	User,
 	Region,
@@ -10,6 +9,8 @@ import {
 	Tracking,
 	sequelize,
 } from "./../models/associations.js";
+
+import argon2 from "argon2"; // Importer argon2
 
 // On utilise une fonction asynchrone auto-exécutée (IIFE) pour
 // pouvoir utiliser await et bien gérer les erreurs.
@@ -22,17 +23,21 @@ import {
 
 		// 🧑 Utilisateurs
 		console.log("🚧 Ajout des utilisateurs...");
+		// On hache les mots de passe avant de les insérer
+		const hashedPassword1 = await argon2.hash("Password123!");
+		const hashedPassword2 = await argon2.hash("AdminPassword123!");
+		
 		const [alice, bob] = await Promise.all([
 			User.create({
 				name: "Alice Green",
 				email: "alice@example.com",
-				password: "hashed_password_1",
+				password: hashedPassword1, // Utiliser le mot de passe haché
 				role: "user",
 			}),
 			User.create({
 				name: "Bob Brown",
 				email: "bob@example.com",
-				password: "hashed_password_2",
+				password: hashedPassword2, // Utiliser le mot de passe haché
 				role: "admin",
 			}),
 		]);
@@ -176,8 +181,8 @@ import {
 		// 🧾 Commandes
 		console.log("🚧 Ajout des commandes...");
 		const [order1, order2] = await Promise.all([
-			Order.create({ status: "completed", userId: alice.userId }),
-			Order.create({ status: "pending", userId: bob.userId }),
+			Order.create({ status: "cart", userId: alice.userId }),
+			Order.create({ status: "completed", userId: bob.userId }),
 		]);
 
 		// 🌱 Arbres plantés

@@ -24,6 +24,7 @@ export default function Footer() {
 					{/* Slogan */}
 					<div className="text-center">
 						<p>Planter des arbres, sauver notre planète</p>
+						<p className="text-sm pt-4">© 2025 GreenRoots - Tous droits réservés</p>
 					</div>
 
 					{/* Informations de contact */}
