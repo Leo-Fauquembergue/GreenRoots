@@ -48,7 +48,7 @@ export default function Header() {
 					<Link to="/Login">Connexion</Link>
 					<Link to="/Register">S'inscrire</Link>
 					<Link to="/cart" className="flex items-center gap-2">
-						<ShoppingCart className="w-6 h-6 text-gray-700" aria-hidden="true" />
+						<ShoppingCart className="w-7 h-7 text-gray-700" aria-hidden="true" />
 						<span>Panier</span>
 					</Link>
 				</nav>
