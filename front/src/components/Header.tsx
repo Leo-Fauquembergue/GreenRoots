@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
+import api from '../services/api';
 import logo from "../assets/logoGreenRoots.png";
 import "../style/header.scss";
 import { ShoppingCart } from "lucide-react";
@@ -7,6 +10,15 @@ import { ShoppingCart } from "lucide-react";
 export default function Header() {
 	const [scrolled, setScrolled] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
+	const { user, setUser } = useAuth();
+  const { cartItemCount } = useCart();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await api.post('/auth/logout');
+    setUser(null);
+    navigate('/');
+	};
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -45,16 +57,22 @@ export default function Header() {
 				<nav className={`nav-links ${menuOpen ? "open" : ""}`}>
 					<Link to="/">Accueil</Link>
 					<Link to="/catalog">Catalogue</Link>
-					<Link to="/Login">Connexion</Link>
-					<Link to="/Register">S'inscrire</Link>
-					<Link to="/cart" className="flex items-center gap-2">
-
-						<ShoppingCart
-							className="w-6 h-6 text-gray-700"
-							aria-hidden="true"
-						/>
-
-						<span>Panier</span>
+					{user ? (
+            <>
+              <Link to="/profile">Profil</Link>
+              <button type="button" onClick={handleLogout} className="logout-button">Déconnexion</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">Connexion</Link>
+              <Link to="/register">S'inscrire</Link>
+            </>
+          )}
+					<Link to="/cart" className="cart-link">
+						<ShoppingCart size={24} />
+						{cartItemCount > 0 && (
+              <span className="cart-badge">{cartItemCount}</span>
+            )}
 					</Link>
 				</nav>
 			</div>

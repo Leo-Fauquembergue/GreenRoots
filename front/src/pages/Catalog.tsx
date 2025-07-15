@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import type React from "react";
+import { useState, useEffect } from "react";
+import api from "../services/api";
 import type { CatalogTree, Category, Region } from "../hooks/types";
 import "../style/catalog.scss";
 import Pagination from "./../components/Pagination.tsx"; 
 import TreeCard from "./../components/TreeCard.tsx";
 import { AlertCircle, Search } from "lucide-react";
 
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const ITEMS_PER_PAGE = 6; // Nombre d'arbres par page
 
-const useCatalogData = (categoryId: string, regionId: string, page: number, limit: number,) => {
+const useCatalogData = (categoryId: string, regionId: string, page: number) => {
 	const [trees, setTrees] = useState<CatalogTree[]>([]);
 	// On ne charge les catégories et régions qu'une seule fois
 	const [categories, setCategories] = useState<Category[]>([]);
@@ -23,8 +23,8 @@ const useCatalogData = (categoryId: string, regionId: string, page: number, limi
 		const fetchFilters = async () => {
 			try {
 				const [categoriesResponse, regionsResponse] = await Promise.all([
-					axios.get(`${apiBaseUrl}/categories`),
-					axios.get(`${apiBaseUrl}/regions`),
+					api.get("/categories"),
+					api.get("/regions"),
 				]);
 				setCategories(categoriesResponse.data);
 				setRegions(regionsResponse.data);
@@ -43,49 +43,37 @@ const useCatalogData = (categoryId: string, regionId: string, page: number, limi
 	// --- Effet pour charger les ARBRES (modifié pour la pagination) ---
 	useEffect(() => {
 		const fetchTrees = async () => {
+			setLoading(true);
+			setError(null);
 			try {
-				setLoading(true);
-				setError(null); // Réinitialiser l'erreur à chaque nouvel appel
+				// On construit l'objet de paramètres pour axios
+				const params = {
+					page: page,
+					limit: ITEMS_PER_PAGE,
+					// On n'ajoute les filtres que s'ils ne sont pas "all"
+					categoryId: categoryId !== "all" ? categoryId : undefined,
+					regionId: regionId !== "all" ? regionId : undefined,
+				};
+				
+				// axios gère automatiquement les paramètres undefined
+				const response = await api.get("/catalog-trees", { params }); // <-- CORRIGÉ : utilise api et l'objet params
 
-				const params = new URLSearchParams();
-				if (categoryId && categoryId !== "all") {
-					params.append("categoryId", categoryId);
-				}
-				if (regionId && regionId !== "all") {
-					params.append("regionId", regionId);
-				}
-				// Ajout des paramètres de pagination à l'appel API
-				params.append("page", String(page));
-				params.append("limit", String(limit));
-
-				const queryString = params.toString();
-				const url = `${apiBaseUrl}/catalog-trees?${queryString}`;
-
-				console.log("Appel API paginé vers :", url);
-
-
-				const response = await axios.get(url);
-				const { data, totalCount } = response.data; // Déstructurer la réponse
-
-				setTrees(data);
-				setTotalPages(Math.ceil(totalCount / limit));
-			} catch (err: unknown) {
-
-				if (err instanceof Error) {
-					setError(err.message);
-				} else {
-					setError("Une erreur est survenue lors du chargement des arbres.");
-				}
+				// La réponse du backend doit être un objet { data: [...], totalCount: X }
+				setTrees(response.data.data);
+				setTotalPages(Math.ceil(response.data.totalCount / ITEMS_PER_PAGE));
+			} catch (err: any) {
+				setError(err.response?.data?.message || "Erreur de chargement des arbres.");
 			} finally {
 				setLoading(false);
 			}
 		};
 
 		fetchTrees();
-	}, [categoryId, regionId, page, limit]); // Dépendances mises à jour
+	}, [categoryId, regionId, page]); // Dépendances de l'effet
 
-	return { trees, categories, regions, loading, error, totalPages }; // Renvoyer totalPages
+	return { trees, categories, regions, loading, error, totalPages };
 };
+
 
 // --- Le composant Catalog mis à jour ---
 const Catalog: React.FC = () => {
@@ -95,10 +83,11 @@ const Catalog: React.FC = () => {
 
 	// Le hook reçoit maintenant la page actuelle
 	const { trees, categories, regions, loading, error, totalPages } =
-		useCatalogData(selectedCategory, selectedRegion, currentPage, ITEMS_PER_PAGE);
+		useCatalogData(selectedCategory, selectedRegion, currentPage);
 
 	// Réinitialiser à la page 1 si les filtres changent
-	useEffect(() => {
+	// biome-ignore lint/correctness/useExhaustiveDependencies: <Je veux que cet effet se déclenche quand selectedCategory OU selectedRegion change, afin de réinitialiser la page à 1.>
+		useEffect(() => {
 		setCurrentPage(1);
 	}, [selectedCategory, selectedRegion]);
 
@@ -214,15 +203,7 @@ const Catalog: React.FC = () => {
 					) : (
 						// On affiche directement les arbres de la page, plus besoin de .slice()
 						trees.map((tree) => (
-							<TreeCard
-								key={tree.catalogTreeId}
-								catalogTreeId={tree.catalogTreeId}
-								commonName={tree.commonName}
-								description={tree.description}
-								image={tree.image}
-								categoryName={tree.category.name}
-								regionName={tree.region.name}
-							/>
+							<TreeCard key={tree.catalogTreeId} tree={tree} />
 						))
 					)}
 				</div>
@@ -233,7 +214,7 @@ const Catalog: React.FC = () => {
 					<Pagination
 						currentPage={currentPage}
 						totalPages={totalPages}
-						onPageChange={(page) => setCurrentPage(page)}
+						onPageChange={(page: React.SetStateAction<number>) => setCurrentPage(page)}
 					/>
 				</div>
 
