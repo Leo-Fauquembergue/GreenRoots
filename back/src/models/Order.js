@@ -15,9 +15,9 @@ Order.init(
 			defaultValue: DataTypes.NOW,
 		},
 		status: {
-			type: DataTypes.ENUM("pending", "completed", "cancelled"),
+			type: DataTypes.ENUM("cart", "completed", "cancelled"),
 			allowNull: false,
-			defaultValue: "pending",
+			defaultValue: "cart",
 		},
 	},
 	{

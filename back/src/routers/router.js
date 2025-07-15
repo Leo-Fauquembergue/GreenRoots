@@ -7,6 +7,7 @@ import { orderRouter } from "./orderRouter.js";
 import { authRouter } from "./authRouter.js";
 import { userRouter } from "./userRouter.js";
 import { trackingRouter } from "./trackingRouter.js";
+import { cartRouter } from "./cartRouter.js";
 
 export const router = Router();
 
@@ -18,3 +19,4 @@ router.use("/orders", orderRouter);
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
 router.use("/trackings", trackingRouter);
+router.use("/cart", cartRouter);
