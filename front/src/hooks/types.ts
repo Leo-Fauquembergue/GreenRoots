@@ -29,13 +29,13 @@ export interface Region {
 }
 
 export interface TreeCardProps {
-  catalogTreeId: number;
-  commonName: string;
-  scientificName?: string;
-  description: string;
-  image?: string;
-  categoryName: string;
-  regionName: string;
+	catalogTreeId: number;
+	commonName: string;
+	scientificName?: string;
+	description: string;
+	image?: string;
+	categoryName: string;
+	regionName: string;
 }
 
 export interface PaginationProps {

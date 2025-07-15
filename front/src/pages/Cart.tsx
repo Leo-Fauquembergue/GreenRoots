@@ -94,7 +94,11 @@ export default function Cart() {
 						))}
 					</ul>
 					<h3>Total : {total.toFixed(2)} €</h3>
-					<button type="button" onClick={handleFinaliser} className="btn-submit">
+					<button
+						type="button"
+						onClick={handleFinaliser}
+						className="btn-submit"
+					>
 						Finaliser et payer
 					</button>
 				</>

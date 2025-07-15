@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import type { CatalogTree, Category, Region} from "../hooks/types"; 
+import type { CatalogTree, Category, Region } from "../hooks/types";
 import "../style/catalog.scss";
 import Pagination from "./../components/Pagination.tsx"; 
 import TreeCard from "./../components/TreeCard.tsx";
@@ -29,12 +28,13 @@ const useCatalogData = (categoryId: string, regionId: string, page: number, limi
 				]);
 				setCategories(categoriesResponse.data);
 				setRegions(regionsResponse.data);
-			} catch (err: unknown) {  //remplacé any par unknown
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Erreur lors du chargement des filtres.");
-        }
+			} catch (err: unknown) {
+				//remplacé any par unknown
+				if (err instanceof Error) {
+					setError(err.message);
+				} else {
+					setError("Erreur lors du chargement des filtres.");
+				}
 			}
 		};
 		fetchFilters();
@@ -63,12 +63,14 @@ const useCatalogData = (categoryId: string, regionId: string, page: number, limi
 
 				console.log("Appel API paginé vers :", url);
 
+
 				const response = await axios.get(url);
 				const { data, totalCount } = response.data; // Déstructurer la réponse
 
 				setTrees(data);
 				setTotalPages(Math.ceil(totalCount / limit));
 			} catch (err: unknown) {
+
 				if (err instanceof Error) {
 					setError(err.message);
 				} else {
@@ -147,7 +149,10 @@ const Catalog: React.FC = () => {
 				{/* Filters */}
 				<div className="filter-bar flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 p-6 rounded-lg mb-12">
 					<div className="flex items-center gap-3">
-						<label htmlFor="category-select" className="text-sm font-medium text-gray-700">
+						<label
+							htmlFor="category-select"
+							className="text-sm font-medium text-gray-700"
+						>
 							Catégorie:
 						</label>
 						<select
@@ -166,7 +171,13 @@ const Catalog: React.FC = () => {
 					</div>
 
 					<div className="flex items-center gap-3">
-						<label htmlFor="region-select" className="text-sm font-medium text-gray-700">
+
+						<label
+							htmlFor="region-select"
+							className="text-sm font-medium text-gray-700"
+						>
+
+
 							Région:
 						</label>
 						<select
@@ -189,7 +200,10 @@ const Catalog: React.FC = () => {
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
 					{loading ? ( // Afficher un spinner léger lors du changement de page
 						<div className="col-span-full text-center py-12">
+
+
 							<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
+
 						</div>
 					) : trees.length === 0 ? (
 						<div className="col-span-full text-center py-12">
@@ -213,6 +227,7 @@ const Catalog: React.FC = () => {
 					)}
 				</div>
 
+
 				{/* Section Pagination (remplace le bouton "Voir plus") */}
 				<div className="flex justify-center mt-12">
 					<Pagination
@@ -221,6 +236,7 @@ const Catalog: React.FC = () => {
 						onPageChange={(page) => setCurrentPage(page)}
 					/>
 				</div>
+
 			</div>
 		</div>
 	);
