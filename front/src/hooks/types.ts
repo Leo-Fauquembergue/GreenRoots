@@ -37,3 +37,9 @@ export interface TreeCardProps {
   categoryName: string;
   regionName: string;
 }
+
+export interface PaginationProps {
+	currentPage: number;
+	totalPages: number;
+	onPageChange: (page: number) => void;
+}
