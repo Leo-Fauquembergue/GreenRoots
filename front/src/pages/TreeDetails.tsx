@@ -1,11 +1,10 @@
-import type React from "react";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Hook pour lire les paramètres de l'URL (comme :id)
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom"; // Hook pour lire les paramètres de l'URL (comme :id)
+import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
 import type { CatalogTree } from "../hooks/types"; // Interface de type pour un arbre
 import { ShoppingCart } from "lucide-react"; // Icône pour le bouton
-
-const API_BASE_URL = "http://localhost:3000/api";
+import api from "../services/api"; // Utiliser notre instance Axios
 
 const TreeDetails: React.FC = () => {
 	// Récupère le paramètre 'id' depuis l'URL.
@@ -16,6 +15,10 @@ const TreeDetails: React.FC = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
 
+	const { user } = useAuth();
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
+
 	// Ce hook s'exécute une fois que le composant est monté, ou si l'ID dans l'URL change.
 	useEffect(() => {
 		if (!id) return;
@@ -23,7 +26,7 @@ const TreeDetails: React.FC = () => {
 		const fetchTreeDetails = async () => {
 			try {
 				setLoading(true); // On commence le chargement
-				const response = await axios.get(`${API_BASE_URL}/catalog-trees/${id}`);
+				const response = await api.get(`/catalog-trees/${id}`);
 				setTree(response.data); // On met à jour l'état avec les données reçues de l'API
 			} catch (err: any) {
 				// En cas d'erreur (ex: l'arbre n'existe pas, erreur 404), on stocke le message d'erreur.
@@ -36,6 +39,22 @@ const TreeDetails: React.FC = () => {
 
 		fetchTreeDetails();
 	}, [id]); // Dépendance : ce code se ré-exécute si l'ID change
+
+	const handleAddToCart = async () => {
+    if (!user) {
+      alert("Vous devez être connecté pour ajouter un article au panier.");
+      navigate('/login');
+      return;
+    }
+    if (tree) {
+      try {
+        await addToCart(tree.catalogTreeId);
+        alert(`${tree.commonName} a été ajouté au panier !`);
+      } catch (error) {
+        alert("Une erreur est survenue.");
+      }
+    }
+  };
 
 	// Pendant le chargement, on affiche un spinner.
 	if (loading) {
@@ -61,13 +80,6 @@ const TreeDetails: React.FC = () => {
 	// Les données JSON transforment souvent les nombres décimaux en chaînes de caractères (ex: "15.00").
 	// On doit donc s'assurer de reconvertir le prix en un vrai type `number` avant d'utiliser .toFixed().
 	const priceAsNumber = parseFloat(tree.price as any) || 0;
-
-	// Fonction pour gérer le clic sur le bouton "Ajouter au panier"
-	const handleAddToCart = () => {
-		console.log(`Ajout de ${tree.commonName} au panier !`);
-		alert(`${tree.commonName} a été ajouté au panier !`);
-		// Ici, il faudra ajouter la logique pour mettre à jour l'état global du panier.
-	};
 
 	// Si tout s'est bien passé, on affiche les détails de l'arbre.
 	return (
