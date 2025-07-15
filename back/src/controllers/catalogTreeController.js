@@ -16,11 +16,27 @@ import {
 import { HttpError } from "../errors/http-error.js";
 
 export async function getAllCatalogTrees(req, res) {
-	// On prépare un objet d'options vide pour notre requête Sequelize.
+	// Récupération et validation des paramètres de pagination ---
+	// On récupère 'page' et 'limit' depuis la requête.
+	// On utilise parseInt pour les convertir en nombres.
+	// On définit des valeurs par défaut si elles ne sont pas fournies.
+	const page = parseInt(req.query.page, 10) || 1;
+	const limit = parseInt(req.query.limit, 10) || 6; // 6 correspond au ITEMS_PER_PAGE du front
+
+	// On calcule l'offset (le nombre d'éléments à "sauter" pour arriver à la bonne page).
+	// Pour la page 1, offset = 0. Pour la page 2, on saute les 6 premiers, etc.
+	const offset = (page - 1) * limit;
+
+	//Construction des options de la requête Sequelize ---
 	const options = {
 		include: ["category", "region"],
-		where: {}, //On initialise un objet `where` vide. si cet objet reste vide, Sequelize n'appliquera aucun filtre.
+		where: {}, // Objet pour les filtres (catégorie, région)/On initialise un objet `where` vide. si cet objet reste vide, Sequelize n'appliquera aucun filtre.
+		// On ajoute les options de pagination directement ici
+		limit: limit,
+		offset: offset,
 	};
+
+
 
 	// On récupère les filtres potentiels depuis les paramètres de l'URL (query parameters).
 	const { categoryId, regionId } = req.query;
@@ -39,13 +55,7 @@ export async function getAllCatalogTrees(req, res) {
 		}
 	}
 
-	//  On vérifie la présence du paramètre 'limit'.
-	const limit = parseInt(req.query.limit, 10);
-	// Si la conversion a réussi et que le nombre est plus grand que 0...
-	if (!Number.isNaN(limit) && limit > 0) {
-		// ...alors, et seulement alors, ajoute cette limite à la requête de la base de données.
-		options.limit = limit;
-	}
+
 
 	//  On vérifie la présence du paramètre 'order' et on le sécurise.
 	const orderDirection = req.query.order?.toUpperCase();
@@ -57,10 +67,18 @@ export async function getAllCatalogTrees(req, res) {
 		options.order = [["created_at", "DESC"]];
 	}
 
-	//On exécute la requête avec les options construites dynamiquement.
-	const trees = await CatalogTree.findAll(options);
+	// ---Exécution de la requête avec findAndCountAll ---
+	// `findAndCountAll` retourne un objet avec deux propriétés :
+	// - `count`: Le nombre TOTAL d'enregistrements qui correspondent aux filtres `where`, en ignorant `limit` et `offset`.
+	// - `rows`: Un tableau des enregistrements pour la page actuelle, en respectant `limit` et `offset`.
+	const { count, rows } = await CatalogTree.findAndCountAll(options);
 
-	res.json(trees);
+	// ---Envoi de la réponse au format attendu par le frontend ---
+	// Le frontend a besoin de `{ totalCount, data }`
+	res.json({
+		totalCount: count, // Le nombre total pour calculer le nombre de pages
+		data: rows,        // Les arbres de la page actuelle
+	});
 }
 
 export async function getOneCatalogTree(req, res) {
