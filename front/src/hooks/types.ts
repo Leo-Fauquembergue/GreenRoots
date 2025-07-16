@@ -43,3 +43,9 @@ export interface PaginationProps {
 	totalPages: number;
 	onPageChange: (page: number) => void;
 }
+
+export interface User {
+	name: string,
+	email: string,
+	role: string,
+}
