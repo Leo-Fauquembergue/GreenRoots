@@ -17,7 +17,7 @@ export default function Login() {
 		try {
 			const response = await api.post('/auth/login', { email, password });
 			setUser(response.data.user); // Met à jour l'état global
-			navigate('/profile'); // Redirige vers le profil
+			navigate('/'); // Redirige vers la page d'accueil
 		} catch (err: any) {
 			setError(err.response?.data?.message || "Erreur de connexion.");
 		}
