@@ -63,3 +63,44 @@ export async function deleteOrder(req, res) {
 	}
 	res.status(204).end();
 }
+
+
+export async function getUserOrders(req, res) {
+	// Vérification de la session utilisateur
+	if (!req.session.user) {
+	  throw new HttpError(401, "Vous devez être connecté pour voir vos commandes.");
+	}
+	
+	const userId = req.session.user.id;
+	
+	const orders = await Order.findAll({
+	  where: { 
+		userId: userId,
+		status: ['completed', 'cancelled'] // Exclure les paniers en cours
+	  },
+	  include: [
+		{
+		  association: "plantedTrees",
+		  include: [
+			{
+			  association: "catalogTree",
+			  attributes: ["catalogTreeId", "commonName", "scientificName", "price", "description", "image", "adultHeight"],
+			  include: [
+				{
+				  association: "category",
+				  attributes: ["categoryId", "name"]
+				},
+				{
+				  association: "region", 
+				  attributes: ["regionId", "name"]
+				}
+			  ]
+			}
+		  ]
+		}
+	  ],
+	  order: [["orderDate", "DESC"]] // Trier par date de commande décroissante
+	});
+  
+	res.json(orders);
+  }
