@@ -45,6 +45,13 @@ export interface CartData {
   plantedTrees: PlantedTree[];
 }
 
+export interface Order {
+  orderId: number;
+  orderDate: string; // La date sera une chaîne de caractères (format ISO)
+  status: "cart", "completed", "cancelled"; 
+  plantedTrees: PlantedTree[]; 
+}
+
 // =====================================
 // Interfaces pour les Props des Composants
 // =====================================
@@ -77,3 +84,5 @@ export interface CartContextType {
   checkout: () => Promise<any>;
   cartItemCount: number;
 }
+
+

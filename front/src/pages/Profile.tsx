@@ -63,7 +63,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-100 px-4">
+    <div className="main min-h-screen flex items-center justify-center  px-4">
       <div className="max-w-4xl w-full bg-white rounded-lg shadow-md p-6 flex flex-col md:flex-row gap-8">
         {/* Section Profil */}
         <section className="flex-1">
