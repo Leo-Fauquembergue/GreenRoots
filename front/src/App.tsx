@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Cart from "./pages/Cart";
 import TreeDetails from "./pages/TreeDetails";
+import CookieBanner from "./pages/CookieBanner";
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 				</Routes>
 			</main>
 			<Footer />
+			<CookieBanner />
 		</div>
 	);
 }
