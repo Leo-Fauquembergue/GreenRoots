@@ -1,5 +1,8 @@
 @use 'variables' as *;
-
+body {
+    background-color: $color-bg;
+    padding-top:15rem;
+}
 .btn-dark {
     background-color: $color-dark;
     color: $color-white; // <-- AJOUT : On force le texte en blanc
