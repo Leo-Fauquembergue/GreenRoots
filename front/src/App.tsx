@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Cart from "./pages/Cart";
 import TreeDetails from "./pages/TreeDetails";
 import CookieBanner from "./pages/CookieBanner";
+import LegalMentions from "./pages/LegalMentions";
 
 function App() {
 	return (
@@ -23,6 +24,7 @@ function App() {
 					<Route path="/register" element={<Register />} />
 					<Route path="/cart" element={<Cart />} />
 					<Route path="/profile" element={<Profile />} />
+					<Route path="/legal-mentions" element={<LegalMentions />} />
 				</Routes>
 			</main>
 			<Footer />
