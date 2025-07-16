@@ -7,10 +7,12 @@ import "../style/footer.scss";
 export default function Footer() {
 	return (
 		<footer className="footer-bg text-white px-6 py-8">
-			<div className=" max-w-6xl mx-auto">
-				{/* Section principale */}
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center mb-6">
-					{/* Logo et nom */}
+			<div className="max-w-6xl mx-auto">
+				
+				{/* Section principale avec logo, slogan et contact */}
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center mb-6">
+					
+					{/* Colonne 1 : Logo et nom */}
 					<Link
 						to="/"
 						className="flex items-center space-x-3 justify-center md:justify-start"
@@ -21,36 +23,44 @@ export default function Footer() {
 						</h2>
 					</Link>
 
-					{/* Slogan */}
+					{/* Colonne 2 : Slogan */}
 					<div className="text-center">
-						<p>Planter des arbres, sauver notre planète</p>
-						<p className="text-sm pt-4">© 2025 GreenRoots - Tous droits réservés</p>
+						<p className="font-serif text-lg">Planter des arbres, sauver notre planète !</p>
 					</div>
 
-					{/* Informations de contact */}
+					{/* Colonne 3 : Informations de contact */}
 					<div className="flex flex-col space-y-2 items-center md:items-end">
 						<div className="flex items-center space-x-2">
 							<Phone className="w-4 h-4 footer-icon" />
-							<span>56789990</span>
+							<span>+33 1 23 45 67 89</span>
 						</div>
 						<div className="flex items-center space-x-2">
 							<Mail className="w-4 h-4 footer-icon" />
-							<span>contact@greenroots.fr</span>
+							<span>contact@greenroots-fictif.fr</span>
 						</div>
 						<div className="flex items-center space-x-2">
 							<Instagram className="w-4 h-4 footer-icon" />
-							<span>greenroots</span>
+							<span>@greenroots</span>
 						</div>
 					</div>
 				</div>
 
-				{/* Ligne de séparation */}
-				<div className="border-t opacity-50 pt-4">
-					<div className="text-center">
-						<p className="text-sm">© 2025 GreenRoots - Tous droits réservés</p>
-					</div>
+				{/* Ligne de séparation et liens légaux */}
+				<div className="border-t border-white border-opacity-20 pt-6 mt-8">
+          <div className="text-center text-sm text-gray-300">
+            <span>© 2025 GreenRoots - Tous droits réservés</span>
+            <span className="mx-2">|</span>
+            <Link to="/legal-mentions" className="hover:underline">
+              Mentions Légales
+            </Link>
+						<span className="mx-2">|</span>
+						<Link to="/privacy-policy" className="hover:underline">
+							Politique de Confidentialité
+						</Link>
+          </div>
 				</div>
-			</div>
-		</footer>
+
+			</div> 
+		</footer> 
 	);
 }

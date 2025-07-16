@@ -22,7 +22,7 @@ export default function Cart() {
   const totalPrice = cart?.plantedTrees?.reduce((sum, item) => sum + parseFloat(item.catalogTree.price), 0) || 0;
 
 	return (
-    <div className="container-cart">
+    <div className="main container-cart">
       <h2 className="text-3xl font-bold mb-6">Votre Panier ({cartItemCount} article(s))</h2>
       {cartItemCount === 0 ? (
         <p>Votre panier est vide.</p>
