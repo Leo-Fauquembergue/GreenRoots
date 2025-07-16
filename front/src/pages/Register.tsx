@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "../style/register.scss";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 export default function Register() {
-	const [lastname, setLastName] = useState("");
-	const [firstName, setFirstName] = useState("");
+	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,8 +19,8 @@ export default function Register() {
 		setError("");
 
 		// --- VALIDATION FRONT ---
-		if (!firstName.trim()) {
-			setError("Le prénom est requis.");
+		if (!name.trim()) {
+			setError("Le nom est requis.");
 			return;
 		}
 
@@ -31,7 +31,7 @@ export default function Register() {
 		}
 
 		if (password.length < 8) {
-			setError("Le mot de passe doit contenir au moins 6 caractères.");
+			setError("Le mot de passe doit contenir au moins 8 caractères.");
 			return;
 		}
 
@@ -42,45 +42,18 @@ export default function Register() {
 
 		// --- ENVOI AU BACKEND ---
 		try {
-			const response = await fetch("http://localhost:3000/api/auth/register", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					name: `${firstName} ${lastname}`,
-					firstName,
-					email,
-					password,
-				}),
-			});
-
-			if (!response.ok) {
-				const errorData = await response.json();
-				console.error("Erreur backend :", errorData);
-
-				if (errorData.errors) {
-					const messages = errorData.errors.map(
-						(err: any) => `• ${err.path.join(".")} : ${err.message}`,
-					);
-					throw new Error(messages.join("\n"));
-				}
-
-				throw new Error(errorData.message || "Une erreur est survenue.");
-			}
+			// --- ENVOI AU BACKEND AVEC `api` ---
+			// C'est plus propre et cohérent.
+			await api.post("/auth/register", { name, email, password });
 
 			setSuccess(true);
-			setLastName("");
-			setFirstName("");
-			setEmail("");
-			setPassword("");
-			setConfirmPassword("");
-
 			setTimeout(() => {
-				navigate("/login"); //Redirection sur la page connexion après succès
-			}, 1000);
+				navigate("/login");
+			}, 2000);
+
 		} catch (err: any) {
-			setError(err.message);
+			// La gestion d'erreur d'axios est un peu plus directe
+			setError(err.response?.data?.message || "Une erreur est survenue.");
 		}
 	};
 
@@ -93,18 +66,8 @@ export default function Register() {
 					Nom
 					<input
 						type="text"
-						value={lastname}
-						onChange={(e) => setLastName(e.target.value)}
-						required
-					/>
-				</label>
-
-				<label>
-					Prénom
-					<input
-						type="text"
-						value={firstName}
-						onChange={(e) => setFirstName(e.target.value)}
+						value={name}
+						onChange={(e) => setName(e.target.value)}
 						required
 					/>
 				</label>
@@ -142,14 +105,8 @@ export default function Register() {
 				<button type="submit">S'inscrire</button>
 			</form>
 
-			{success && <p className="success-message">Compte créé avec succès ✅</p>}
-			{error && (
-				<div className="error-message">
-					{error.split("\n").map((line, index) => (
-						<p key={index}>{line}</p>
-					))}
-				</div>
-			)}
+			{success && <p className="success-message">Compte créé avec succès ! ✅ Vous allez être redirigé.</p>}
+			{error && <p className="error-message">{error}</p>}
 		</div>
 	);
 }

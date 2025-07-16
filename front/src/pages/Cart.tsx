@@ -1,108 +1,57 @@
-import { useState } from "react";
+import { useCart } from '../contexts/CartContext';
+import { useNavigate } from 'react-router-dom';
+import { Trash2 } from 'lucide-react';
 import "../style/cart.scss";
-import { Minus, Plus, Trash2 } from "lucide-react";
 
 export default function Cart() {
-	const [cart, setCart] = useState([
-		{
-			commonName: "Nom de l'arbre",
-			description: "Description courte de l'arbre.",
-			scientificName: "Nom scientifique",
-			price: 12.34,
-			quantity: 1,
-		},
-		{
-			commonName: "Un autre arbre",
-			description: "Une autre description.",
-			scientificName: "Autre nom scientifique",
-			price: 45.67,
-			quantity: 2,
-		},
-	]);
+  const { cart, deleteFromCart, checkout, cartItemCount } = useCart();
+  const navigate = useNavigate();
 
-	const incrementQty = (index) => {
-		const newCart = [...cart];
-		newCart[index].quantity = (newCart[index].quantity || 1) + 1;
-		setCart(newCart);
-	};
-
-	const decrementQty = (index) => {
-		const newCart = [...cart];
-		if ((newCart[index].quantity || 1) > 1) {
-			newCart[index].quantity -= 1;
-			setCart(newCart);
-		}
-	};
-
-	const removeProduct = (index) => {
-		const newCart = cart.filter((_, i) => i !== index);
-		setCart(newCart);
-	};
-
-	const total = cart.reduce((sum, p) => sum + p.price * (p.quantity || 1), 0);
-
-	const handleFinaliser = () => {
-		alert("Redirection vers la page paiement (à coder)");
-	};
+  const handleCheckout = async () => {
+    if (!window.confirm("Êtes-vous sûr de vouloir passer cette commande ?")) return;
+    try {
+      const data = await checkout();
+      alert("Commande passée avec succès !");
+      // On redirige vers une future page de confirmation de commande
+      navigate(`/profile`); // Rediriger vers la page de profil pour voir les commandes
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Impossible de passer la commande.");
+    }
+  };
+  
+  const totalPrice = cart?.plantedTrees?.reduce((sum, item) => sum + parseFloat(item.catalogTree.price), 0) || 0;
 
 	return (
-		<div className="register-container">
-			<h2>Finaliser votre commande</h2>
-			{cart.length === 0 ? (
-				<p>Votre panier est vide.</p>
-			) : (
-				<>
-					<ul className="cart-list">
-						{cart.map((product, index) => (
-							<li key={index} className="cart-item">
-								<div className="cart-item-info">
-									<strong>{product.commonName}</strong>
-									<p>{product.description}</p>
-									<small>{product.scientificName}</small>
-								</div>
-								<div className="cart-item-qty">
-									<button
-										type="button"
-										onClick={() => decrementQty(index)}
-										className="btn-qty"
-									>
-										<Minus className="w-5 h-5" />
-									</button>
-									<span>{product.quantity || 1}</span>
-									<button
-										type="button"
-										onClick={() => incrementQty(index)}
-										className="btn-qty"
-									>
-										<Plus className="w-5 h-5" />
-									</button>
-								</div>
-								<div className="cart-item-price">
-									{(product.price * (product.quantity || 1)).toFixed(2)} €
-								</div>
-								<div className="cart-item-remove">
-									<button
-										type="button"
-										onClick={() => removeProduct(index)}
-										aria-label="Supprimer cet article"
-										className="btn-trash"
-									>
-										<Trash2 className="w-5 h-5" />
-									</button>
-								</div>
-							</li>
-						))}
-					</ul>
-					<h3>Total : {total.toFixed(2)} €</h3>
-					<button
-						type="button"
-						onClick={handleFinaliser}
-						className="btn-submit"
-					>
-						Finaliser et payer
-					</button>
-				</>
-			)}
-		</div>
-	);
+    <div className="container-cart">
+      <h2 className="text-3xl font-bold mb-6">Votre Panier ({cartItemCount} article(s))</h2>
+      {cartItemCount === 0 ? (
+        <p>Votre panier est vide.</p>
+      ) : (
+        <>
+          <ul className="space-y-4">
+            {cart?.plantedTrees.map((item) => (
+              <li key={item.plantedTreeId} className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+                <div className="flex items-center gap-4">
+                  <img src={item.catalogTree.image} alt={item.catalogTree.commonName} className="w-16 h-16 object-cover rounded"/>
+                  <div>
+                    <strong className="font-semibold text-xl">{item.catalogTree.commonName}</strong>
+                    <p className="text-base text-gray-600">{parseFloat(item.catalogTree.price).toFixed(2)} €</p>
+                  </div>
+                </div>
+                <button type="button" onClick={() => deleteFromCart(item.plantedTreeId)} className="text-red-500 hover:text-red-700">
+                  <Trash2 size={20} />
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-8 text-right">
+            <h3 className="text-2xl font-bold">Total : {totalPrice.toFixed(2)} €</h3>
+            <button type="button" onClick={handleCheckout} className="btn-dark mt-4 px-8 py-3">
+              Finaliser et Payer
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }

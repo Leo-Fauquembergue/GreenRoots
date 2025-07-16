@@ -1,37 +1,25 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext';
+import api from '../services/api';
 import "../style/login.scss";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState("");
+	const [error, setError] = useState<string | null>(null);
+	const { setUser } = useAuth();
 	const navigate = useNavigate();
 
-	const handleLogin = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		setError("");
-
+		setError(null);
 		try {
-			const response = await fetch("http://localhost:3000/api/auth/login", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ email, password }),
-				credentials: "include",
-			});
-
-			if (!response.ok) {
-				const data = await response.json();
-				throw new Error(data.message || "Erreur lors de la connexion");
-			}
-
-			const userData = await response.json();
-			localStorage.setItem("user", JSON.stringify(userData));
-			navigate("/");
+			const response = await api.post('/auth/login', { email, password });
+			setUser(response.data.user); // Met à jour l'état global
+			navigate('/'); // Redirige vers la page d'accueil
 		} catch (err: any) {
-			setError(err.message);
+			setError(err.response?.data?.message || "Erreur de connexion.");
 		}
 	};
 
@@ -42,7 +30,7 @@ export default function Login() {
 				Connectez-vous pour commander, suivre vos arbres plantés et gérer votre
 				espace personnel !
 			</p>
-			<form onSubmit={handleLogin}>
+			<form onSubmit={handleSubmit}>
 				<label>
 					Email
 					<input

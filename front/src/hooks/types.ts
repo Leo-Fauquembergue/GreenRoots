@@ -1,51 +1,79 @@
-export interface CatalogTree {
-	catalogTreeId: number;
-	commonName: string;
-	scientificName: string;
-	description: string;
-	adultHeight: number;
-	image: string;
-	price: number;
-	categoryId: number;
-	regionId: number;
-	category: {
-		categoryId: number;
-		name: string;
-	};
-	region: {
-		regionId: number;
-		name: string;
-	};
+// =====================================
+// Interfaces pour les Données de l'API
+// =====================================
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
 }
 
 export interface Category {
-	categoryId: number;
-	name: string;
+  categoryId: number;
+  name: string;
 }
 
 export interface Region {
-	regionId: number;
-	name: string;
+  regionId: number;
+  name: string;
 }
 
+export interface CatalogTree {
+  catalogTreeId: number;
+  commonName: string;
+  scientificName: string;
+  description: string;
+  adultHeight: number;
+  image: string;
+  price: string; // Le JSON envoie des chaînes pour les décimaux, c'est plus sûr
+  category: Category; // Utilisation de l'interface factorisée
+  region: Region;     // Utilisation de l'interface factorisée
+}
+
+export interface PlantedTree {
+  plantedTreeId: number;
+  personalName: string | null;
+  plantingDate: string | null;
+  plantingPlace: string | null;
+  catalogTree: CatalogTree; // L'objet complet de l'espèce
+}
+
+export interface CartData {
+  orderId: number;
+  status: string;
+  plantedTrees: PlantedTree[];
+}
+
+// =====================================
+// Interfaces pour les Props des Composants
+// =====================================
+
 export interface TreeCardProps {
-	catalogTreeId: number;
-	commonName: string;
-	scientificName?: string;
-	description: string;
-	image?: string;
-	categoryName: string;
-	regionName: string;
+  tree: CatalogTree;
 }
 
 export interface PaginationProps {
-	currentPage: number;
-	totalPages: number;
-	onPageChange: (page: number) => void;
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
 }
 
-export interface User {
-	name: string,
-	email: string,
-	role: string,
+// =====================================
+// Interfaces pour les Contextes
+// =====================================
+
+export interface AuthContextType {
+  user: User | null;
+  setUser: (user: User | null) => void;
+  isLoading: boolean;
+}
+
+export interface CartContextType {
+  cart: CartData | null;
+  fetchCart: () => Promise<void>;
+  addToCart: (catalogTreeId: number) => Promise<void>;
+  deleteFromCart: (plantedTreeId: number) => Promise<void>;
+  checkout: () => Promise<any>;
+  cartItemCount: number;
 }
