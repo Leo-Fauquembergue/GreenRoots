@@ -8,6 +8,7 @@ import { authRouter } from "./authRouter.js";
 import { userRouter } from "./userRouter.js";
 import { trackingRouter } from "./trackingRouter.js";
 import { cartRouter } from "./cartRouter.js";
+import { contactRouter } from "./contactRouter.js";
 
 export const router = Router();
 
@@ -20,3 +21,4 @@ router.use("/auth", authRouter);
 router.use("/users", userRouter);
 router.use("/trackings", trackingRouter);
 router.use("/cart", cartRouter);
+router.use("/contact", contactRouter);
