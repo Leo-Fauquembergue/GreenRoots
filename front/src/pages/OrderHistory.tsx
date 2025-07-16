@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import api from "../services/api";
-import "../style/catalog.scss";
+import "../style/orderHistory.scss";
 
 // Importez l'interface Order depuis votre fichier de types centralisé
 import type { Order } from "../hooks/types"; 
@@ -95,15 +95,6 @@ export default function OrderHistory() {
                     <p className="font-semibold text-xl">
                       {calculateTotal(order).toFixed(2)} €
                     </p>
-                    <span
-                      className={`inline-block mt-1 px-2 py-1 text-xs font-semibold rounded-full ${
-                        order.status === 'completed'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {order.status === 'completed' ? 'Terminée' : 'Annulée'}
-                    </span>
                   </div>
                 </div>
               </Link>

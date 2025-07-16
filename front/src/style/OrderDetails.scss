@@ -1,0 +1,13 @@
+@use 'utils' as *;
+@use 'variables' as *;
+
+.return-to-orders{
+    color: $color-green-Pistachio;
+}
+.return-to-orders:hover{
+    color: $color-dark;
+}
+
+.tree-title{
+    color: $color-dark;
+}

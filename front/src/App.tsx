@@ -10,6 +10,7 @@ import Cart from "./pages/Cart";
 import TreeDetails from "./pages/TreeDetails";
 import CookieBanner from "./pages/CookieBanner";
 import OrderHistory from "./pages/OrderHistory";
+import OrderDetailPage from "./pages/OrderDetail";
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 					<Route path="/cart" element={<Cart />} />
 					<Route path="/profile" element={<Profile />} />
 					<Route path="/orders" element={<OrderHistory />} /> 
+					<Route path="/orders/:orderId" element={<OrderDetailPage />} />
 
 				</Routes>
 			</main>
