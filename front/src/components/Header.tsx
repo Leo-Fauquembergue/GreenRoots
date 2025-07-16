@@ -74,6 +74,7 @@ export default function Header() {
               <span className="cart-badge">{cartItemCount}</span>
             )}
 					</Link>
+					<Link to="/contact">Contact</Link>
 				</nav>
 			</div>
 		</header>

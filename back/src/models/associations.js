@@ -8,7 +8,7 @@ import { CatalogTree } from "./CatalogTree.js";
 import { Order } from "./Order.js";
 import { PlantedTree } from "./PlantedTree.js";
 import { Tracking } from "./Tracking.js";
-
+import { Contact } from "./Contact.js";
 // --- Définition des associations avec contraintes et comportements ---
 
 // 1. User <-> Order (One-to-Many)
@@ -117,4 +117,5 @@ export {
 	PlantedTree,
 	Tracking,
 	sequelize,
+	Contact,
 };
