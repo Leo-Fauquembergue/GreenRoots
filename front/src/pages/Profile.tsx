@@ -92,8 +92,8 @@ export default function Profile() {
             Mes commandes
           </Link>
           <Link
-            to="/planted-trees"
-            className="block text-center md:text-left px-4 py-3 btn-light text-white rounded-lg transition"
+            to="/planted-trees/user"
+            className="block text-center md:text-left px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 transition"
           >
             Mes arbres plantés
           </Link>
