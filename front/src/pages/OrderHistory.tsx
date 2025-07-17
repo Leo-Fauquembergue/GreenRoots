@@ -64,8 +64,8 @@ export default function OrderHistory() {
   }
 
   return (
-    <div className="main min-h-screen  p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
+    <div className=" min-h-screen  p-4 md:p-8">
+      <div className="order-container max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Mes Commandes</h1>
         {orders.length === 0 ? (
           <p>Vous n'avez pas encore de commande finalisée.</p>

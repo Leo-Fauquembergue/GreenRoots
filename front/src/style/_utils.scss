@@ -1,7 +1,7 @@
 @use 'variables' as *;
 body {
     background-color: $color-bg;
-    padding-top:15rem;
+
 }
 .btn-dark {
     background-color: $color-dark;
@@ -14,7 +14,7 @@ body {
 }
 
 .btn-dark:hover {
-    background-color: $color-bg;
+    background-color: $color-green-Pistachio;
     color: $color-dark;
 }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import type { User } from "../hooks/types";
-
+import "../style/profile.scss";
 
 export default function Profile() {
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -87,7 +87,7 @@ export default function Profile() {
         <section className="flex-1 flex flex-col justify-center space-y-4">
           <Link
             to="/orders"
-            className="block text-center md:text-left px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+            className="block text-center md:text-left px-4 py-3 btn-dark rounded-md text-white transition"
           >
             Mes commandes
           </Link>

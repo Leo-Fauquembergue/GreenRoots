@@ -81,7 +81,7 @@ export default function OrderDetailPage() {
   // --- Affichage des détails ---
   return (
     <div className="min-h-screen p-4 md:p-8">
-      <div className=" max-w-4xl mx-auto">
+      <div className=" order-detail-container max-w-4xl mx-auto">
         <Link to="/orders" className="return-to-orders mb-6 inline-block">
           ← Retour à l'historique
         </Link>
