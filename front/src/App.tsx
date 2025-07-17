@@ -14,6 +14,7 @@ import LegalMentions from "./pages/LegalMentions";
 import OrderHistory from "./pages/OrderHistory";
 import OrderDetailPage from "./pages/OrderDetail";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import PlantedTreesPage from "./pages/PlantedTree";
 
 function App() {
 	return (
@@ -32,6 +33,7 @@ function App() {
 					<Route path="/legal-mentions" element={<LegalMentions />} />
 					<Route path="/orders" element={<OrderHistory />} /> 
 					<Route path="/orders/:orderId" element={<OrderDetailPage />} />
+					<Route path="/planted-trees/user" element={<PlantedTreesPage />} />
 					<Route path="/privacy-policy" element={<PrivacyPolicy />} />
 				</Routes>
 			</main>

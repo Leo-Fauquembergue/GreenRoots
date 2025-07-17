@@ -63,3 +63,32 @@ export async function deletePlantedTree(req, res) {
 	}
 	res.status(204).end();
 }
+
+
+export async function getUserPlantedTrees(req, res) {
+  if (!req.session.user) {
+    throw new HttpError(401, "Vous devez être connecté pour voir vos arbres plantés.");
+  }
+
+  const userId = req.session.user.id;
+
+  const plantedTrees = await PlantedTree.findAll({
+    include: [
+      {
+        association: "order",
+        where: {
+          userId: userId,
+          status: ['completed', 'cancelled'],
+        },
+        attributes: [], // On n’a pas besoin des infos de la commande ici
+      },
+      {
+        association: "catalogTree",
+        attributes: ["catalogTreeId", "commonName", "image"], // Réduit à l'essentiel
+      },
+    ],
+    order: [["created_at", "DESC"]],
+  });
+
+  res.json(plantedTrees);
+}
