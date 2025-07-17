@@ -1,6 +1,9 @@
 @use 'utils' as *;
 @use 'variables' as *;
 
+.order-detail-container{
+    margin-top: 7rem;
+}
 .return-to-orders{
     color: $color-green-Pistachio;
 }
