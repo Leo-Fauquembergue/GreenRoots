@@ -41,10 +41,10 @@ export default function Contact() {
 			{/* Bloc haut : infos + carte */}
 			<div className="map-container">
 				<h1>Contact</h1>
-				<p className="p-email">Email : contact@greenroots.com</p>
-				<p className="p-telephone">Téléphone : +33 1 23 45 78 89</p>
-				<p className="p-adresse">Adresse : 123 Rue des Forêts, 75000 Paris</p>
-				<h3>Où nous trouver</h3>
+				<p className="p-email">Email : contact@greenroots-fictif.fr</p>
+				<p className="p-telephone">Téléphone : +33 1 23 45 67 89</p>
+				<p className="p-adresse">Adresse : 23 Rue des Forêts, 75011 Paris</p>
+				<h3>Où nous trouver : ↓</h3>
 				<iframe
 				title="Parc Monceau"
 				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5247.747477241557!2d2.306380077041797!3d48.879683471335085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fbe98f714c3%3A0xe62425fddeddc402!2sParc%20Monceau!5e0!3m2!1sfr!2sfr!4v1752669649917!5m2!1sfr!2sfr"

@@ -79,7 +79,7 @@ const PrivacyPolicy: React.FC = () => {
           </p>
           <div className="info-block">
             <p>Association GreenRoots – DPO, Alex Foret</p>
-            <p>15 Rue des Arbres 75011 Paris</p>
+            <p>23 rue des forêts 75011 Paris</p>
             <p>Email : contact@greenroots-fictif.fr</p>
           </div>
           <p>

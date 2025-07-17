@@ -1,4 +1,25 @@
+@use 'variables' as *;
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Fjalla+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.logo-and-welcome {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  .welcome-message {
+    font-size: 2rem;
+    font-weight: 500;
+    color: $color-white;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    margin-left: 1rem;
+    white-space: nowrap;
+    margin-top: 1.3rem;
+
+    &:hover {
+      color: $color-bg;
+    }
+  }
+}
 
 .main-header {
   position: fixed;
@@ -23,9 +44,9 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: white;
+    color: $color-white;
     transition: color 0.3s ease;
-    
+
     .logo {
       height: 7rem;
       margin-right: 1rem;
@@ -45,7 +66,7 @@
     gap: 1rem;
 
     a {
-      color: white;
+      color: $color-white;
       text-decoration: none;
       font-weight: 600;
       font-size: 1.2rem;
@@ -56,7 +77,22 @@
         text-decoration: underline;
       }
     }
-    
+
+    .logout-button {
+      background: none;
+      border: none;
+      color: $color-white;
+      font-weight: 600;
+      font-size: 1.2rem;
+      cursor: pointer;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     /* === Responsive menu burger === */
     &.open {
       display: flex !important;
@@ -73,9 +109,10 @@
       z-index: 101;
       align-items: flex-end;
 
-      a {
+      a,
+      .logout-button {
         font-size: 1.5rem;
-        color: white;
+        color: $color-white;
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
       }
     }
@@ -95,7 +132,7 @@
     .burger-line {
       width: 100%;
       height: 0.3rem;
-      background-color: white;
+      background-color: $color-white;
       border-radius: 10px;
       transition: all 0.3s ease;
     }
@@ -112,16 +149,18 @@
   }
 
   &.scrolled {
-    background-color: white;
+    background-color: $color-white;
 
     .logo-container,
-    .nav-links a {
-      color: black;
+    .nav-links a,
+    .nav-links .logout-button,
+    .welcome-message {
+      color: $color-black;
       text-shadow: none;
     }
 
     .burger .burger-line {
-      background-color: black;
+      background-color: $color-black;
     }
   }
 
@@ -132,7 +171,8 @@
       display: none;
       gap: 0;
 
-      a {
+      a,
+      .logout-button {
         text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
       }
     }

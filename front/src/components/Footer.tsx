@@ -25,7 +25,7 @@ export default function Footer() {
 
 					{/* Colonne 2 : Slogan */}
 					<div className="text-center">
-						<p className="font-serif text-lg">Planter des arbres, sauver notre planète !</p>
+						<p>Planter des arbres, sauver notre planète !</p>
 					</div>
 
 					{/* Colonne 3 : Informations de contact */}
