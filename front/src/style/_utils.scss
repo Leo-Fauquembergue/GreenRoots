@@ -1,20 +1,17 @@
 @use 'variables' as *;
 body {
     background-color: $color-bg;
-
+    padding-top:15rem;
 }
 .btn-dark {
     background-color: $color-dark;
-    color: $color-white; // <-- AJOUT : On force le texte en blanc
-    // On peut aussi ajouter un peu de padding par défaut pour tous les boutons sombres
-    padding: 0.75rem 1.5rem;
-    border-radius: 9999px; // pour un effet "pilule"
-    font-weight: 600; // un peu plus gras
-    transition: background-color 0.3s, color 0.3s; // On ajoute la transition
+    color: $color-white; 
+    font-weight: 600; 
+    transition: background-color 0.3s, color 0.3s; 
 }
 
 .btn-dark:hover {
-    background-color: $color-green-Pistachio;
+    background-color: $color-bg;
     color: $color-dark;
 }
 
