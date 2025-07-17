@@ -4,19 +4,11 @@ import { Trash2 } from 'lucide-react';
 import "../style/cart.scss";
 
 export default function Cart() {
-  const { cart, deleteFromCart, checkout, cartItemCount } = useCart();
+  const { cart, deleteFromCart, cartItemCount } = useCart();
   const navigate = useNavigate();
 
-  const handleCheckout = async () => {
-    if (!window.confirm("Êtes-vous sûr de vouloir passer cette commande ?")) return;
-    try {
-      const data = await checkout();
-      alert("Commande passée avec succès !");
-      // On redirige vers une future page de confirmation de commande
-      navigate(`/profile`); // Rediriger vers la page de profil pour voir les commandes
-    } catch (error: any) {
-      alert(error.response?.data?.message || "Impossible de passer la commande.");
-    }
+  const handleGoToCheckout = () => {
+    navigate('/checkout');
   };
   
   const totalPrice = cart?.plantedTrees?.reduce((sum, item) => sum + parseFloat(item.catalogTree.price), 0) || 0;
@@ -46,8 +38,8 @@ export default function Cart() {
           </ul>
           <div className="mt-8 text-right">
             <h3 className="text-2xl font-bold">Total : {totalPrice.toFixed(2)} €</h3>
-            <button type="button" onClick={handleCheckout} className="btn-dark mt-4 px-8 py-3">
-              Finaliser et Payer
+            <button type="button" onClick={handleGoToCheckout} className="btn-dark mt-4 px-8 py-3">
+              Finaliser la commande
             </button>
           </div>
         </>

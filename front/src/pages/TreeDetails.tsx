@@ -5,6 +5,7 @@ import { useCart } from '../contexts/CartContext';
 import type { CatalogTree } from "../hooks/types"; // Interface de type pour un arbre
 import { ShoppingCart } from "lucide-react"; // Icône pour le bouton
 import api from "../services/api"; // Utiliser notre instance Axios
+import { toastRef } from '../App';
 
 const TreeDetails: React.FC = () => {
 	// Récupère le paramètre 'id' depuis l'URL.
@@ -49,9 +50,9 @@ const TreeDetails: React.FC = () => {
     if (tree) {
       try {
         await addToCart(tree.catalogTreeId);
-        alert(`${tree.commonName} a été ajouté au panier !`);
+        toastRef.current?.showToast(`${tree.commonName} a été ajouté au panier !`, 'success');
       } catch (error) {
-        alert("Une erreur est survenue.");
+        toastRef.current?.showToast("Une erreur est survenue.", 'error');
       }
     }
   };
