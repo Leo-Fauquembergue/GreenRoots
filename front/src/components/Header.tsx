@@ -38,10 +38,16 @@ export default function Header() {
 	return (
 		<header className={`main-header ${scrolled ? "scrolled" : ""}`}>
 			<div className="container">
-				<Link to="/" className="logo-container">
-					<img src={logo} alt="Logo GreenRoots" className="logo" />
-					<span className="title">GreenRoots</span>
-				</Link>
+				<div className="logo-and-welcome">
+					<Link to="/" className="logo-container">
+						<img src={logo} alt="Logo GreenRoots" className="logo" />
+						<span className="title">GreenRoots</span>
+					</Link>
+
+					{user && (
+						<p className="welcome-message">Bienvenue, {user.name.split(" ")[0]}</p>
+					)}
+				</div>
 
 				<button
 					type="button"
