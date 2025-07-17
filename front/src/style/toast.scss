@@ -1,0 +1,47 @@
+@use 'variables' as *;
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// On utilise un conteneur "wrapper" pour le centrage
+.toast-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%; // Prend toute la largeur de la page
+  display: flex; // Utilise Flexbox...
+  justify-content: center; // ...pour centrer son contenu horizontalement
+  padding: 2rem;
+  pointer-events: none; // Permet de cliquer "à travers" la zone vide du wrapper
+  z-index: 1000;
+}
+
+// Le toast lui-même n'a plus besoin de se soucier du positionnement
+.toast {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: $color-white;
+  font-weight: 500;
+  animation: slideInUp 0.5s ease-out forwards;
+  pointer-events: all; // Le toast, lui, doit être cliquable
+
+  &.success {
+    background-color: #22c55e; // Vert
+  }
+
+  &.error {
+    background-color: #ef4444; // Rouge
+  }
+}
