@@ -100,7 +100,7 @@ const Checkout: React.FC = () => {
               {/* Affichage de l'erreur de formulaire */}
               {formError && <p className="form-error">{formError}</p>}
               
-              <button type="submit" className="btn-dark w-full mt-4" disabled={isProcessing}>
+              <button type="submit" className="btn-dark p-3 w-full mt-4" disabled={isProcessing}>
                 {isProcessing ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mx-auto"></div>
                 ) : (

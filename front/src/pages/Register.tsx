@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "../style/register.scss";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
@@ -59,9 +58,9 @@ export default function Register() {
 
 	return (
 		<div className="gr-container">
-			<h2>Créer un compte</h2>
+			<h2 className="text-center mb-6 text-dark text-2xl">Créer un compte</h2>
 
-			<form onSubmit={handleSubmit} className="register-form">
+			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
 				<label>
 					Nom
 					<input
@@ -102,7 +101,7 @@ export default function Register() {
 					/>
 				</label>
 
-				<button type="submit">S'inscrire</button>
+				<button className="btn-dark p-3" type="submit">S'inscrire</button>
 			</form>
 
 			{success && <p className="success-message">Compte créé avec succès ! ✅ Vous allez être redirigé.</p>}
