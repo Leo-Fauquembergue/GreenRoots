@@ -15,8 +15,10 @@ export async function getAllOrders(req, res) {
 }
 
 export async function getOneOrder(req, res) {
-	const { id } = idSchema.parse(req.params);
-	const order = await Order.findByPk(id, {
+	const { id: orderId } = idSchema.parse(req.params);
+	const user = req.session.user;
+
+	const order = await Order.findByPk(orderId, {
 		include: [
 			// Le scope par défaut du user s'applique (pas de mdp)
 			{ association: "user" }, // Relation directe : Order -> User
@@ -30,9 +32,22 @@ export async function getOneOrder(req, res) {
 			},
 		],
 	});
+
 	if (!order) {
 		throw new HttpError(404, "Commande non trouvée.");
 	}
+
+	// --- CONTRÔLE D'ACCÈS CRUCIAL ---
+	// L'utilisateur peut voir la commande si :
+	// 1. Il est un admin.
+	// 2. OU si l'ID de l'utilisateur de la commande (order.userId) est le même que son ID de session.
+	if (user.role !== "admin" && order.userId !== user.id) {
+		throw new HttpError(
+			403,
+			"Accès refusé. Vous ne pouvez voir que vos propres commandes.",
+		);
+	}
+
 	res.json(order);
 }
 
@@ -64,43 +79,53 @@ export async function deleteOrder(req, res) {
 	res.status(204).end();
 }
 
-
 export async function getUserOrders(req, res) {
 	// Vérification de la session utilisateur
 	if (!req.session.user) {
-	  throw new HttpError(401, "Vous devez être connecté pour voir vos commandes.");
+		throw new HttpError(
+			401,
+			"Vous devez être connecté pour voir vos commandes.",
+		);
 	}
-	
+
 	const userId = req.session.user.id;
-	
+
 	const orders = await Order.findAll({
-	  where: { 
-		userId: userId,
-		status: ['completed', 'cancelled'] // Exclure les paniers en cours
-	  },
-	  include: [
-		{
-		  association: "plantedTrees",
-		  include: [
+		where: {
+			userId: userId,
+			status: ["completed", "cancelled"], // Exclure les paniers en cours
+		},
+		include: [
 			{
-			  association: "catalogTree",
-			  attributes: ["catalogTreeId", "commonName", "scientificName", "price", "description", "image", "adultHeight"],
-			  include: [
-				{
-				  association: "category",
-				  attributes: ["categoryId", "name"]
-				},
-				{
-				  association: "region", 
-				  attributes: ["regionId", "name"]
-				}
-			  ]
-			}
-		  ]
-		}
-	  ],
-	  order: [["orderDate", "DESC"]] // Trier par date de commande décroissante
+				association: "plantedTrees",
+				include: [
+					{
+						association: "catalogTree",
+						attributes: [
+							"catalogTreeId",
+							"commonName",
+							"scientificName",
+							"price",
+							"description",
+							"image",
+							"adultHeight",
+						],
+						include: [
+							{
+								association: "category",
+								attributes: ["categoryId", "name"],
+							},
+							{
+								association: "region",
+								attributes: ["regionId", "name"],
+							},
+						],
+					},
+				],
+			},
+		],
+		order: [["orderDate", "DESC"]], // Trier par date de commande décroissante
 	});
-  
+
 	res.json(orders);
-  }
+}

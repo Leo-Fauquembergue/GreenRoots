@@ -1,16 +1,18 @@
 import { Router } from "express";
 import * as orderController from "../controllers/orderController.js";
+import { isAuthenticated, isAdmin } from "../middlewares/authMiddleware.js";
 
 export const orderRouter = Router();
 
-orderRouter.get("/", orderController.getAllOrders);
+// Route admin pour voir TOUTES les commandes
+orderRouter.get("/", isAuthenticated, isAdmin, orderController.getAllOrders);
 
-//la route la plus spécifique en premier
-orderRouter.get('/my-orders', orderController.getUserOrders); 
+// Route utilisateur pour voir SES commandes
+orderRouter.get("/my-orders", isAuthenticated, orderController.getUserOrders);
 
-//la route dynamique (plus générale) après
-orderRouter.get("/:id", orderController.getOneOrder); 
+// Route pour voir le détail d'UNE commande (avec vérification de permission dans le contrôleur)
+orderRouter.get("/:id", isAuthenticated, orderController.getOneOrder);
 
-orderRouter.post("/", orderController.createOrder);
-orderRouter.patch("/:id", orderController.updateOrder);
-orderRouter.delete("/:id", orderController.deleteOrder);
+// Routes admin pour modifier ou supprimer une commande
+orderRouter.patch("/:id", isAuthenticated, isAdmin, orderController.updateOrder);
+orderRouter.delete("/:id", isAuthenticated, isAdmin, orderController.deleteOrder);

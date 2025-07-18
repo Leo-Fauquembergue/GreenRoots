@@ -20,17 +20,26 @@ export async function getAllPlantedTrees(req, res) {
 }
 
 export async function getOnePlantedTree(req, res) {
-	const { id } = idSchema.parse(req.params);
-	const tree = await PlantedTree.findByPk(id, {
+  const { id: plantedTreeId } = idSchema.parse(req.params);
+  const user = req.session.user;
+
+  const tree = await PlantedTree.findByPk(plantedTreeId, {
 		include: [
 			{ association: "order" },
 			{ association: "catalogTree" },
 			{ association: "trackings" },
 		],
 	});
+
 	if (!tree) {
 		throw new HttpError(404, "Arbre planté non trouvé.");
 	}
+
+  // L'utilisateur peut voir l'arbre si il est admin OU si la commande associée lui appartient.
+  if (user.role !== 'admin' && tree.order.userId !== user.id) {
+    throw new HttpError(403, "Accès refusé.");
+  }
+
 	res.json(tree);
 }
 
@@ -41,25 +50,34 @@ export async function createPlantedTree(req, res) {
 }
 
 export async function updatePlantedTree(req, res) {
-  try {
-    const { id } = idSchema.parse(req.params);
-    const data = updatePlantedTreeSchema.parse(req.body);
+  const { id: plantedTreeId } = idSchema.parse(req.params);
+  const user = req.session.user;
+  const data = updatePlantedTreeSchema.parse(req.body);
 
-    const [updated] = await PlantedTree.update(data, {
-      where: { plantedTreeId: id },
-    });
+  const treeToUpdate = await PlantedTree.findByPk(plantedTreeId, { include: ['order'] });
+  if (!treeToUpdate) throw new HttpError(404, "Arbre planté non trouvé.");
 
-    if (!updated) {
-      throw new HttpError(404, "Arbre planté non trouvé.");
+  // L'utilisateur peut mettre à jour l'arbre si :
+  // 1. Il est admin (il peut tout modifier).
+  // 2. OU si la commande lui appartient ET qu'il ne tente de modifier que des champs autorisés (comme personalName).
+  if (user.role !== 'admin') {
+    if (treeToUpdate.order.userId !== user.id) {
+      throw new HttpError(403, "Accès refusé. Vous ne pouvez modifier que vos propres arbres.");
     }
-
-    const updatedTree = await PlantedTree.findByPk(id);
-    res.json(updatedTree);
-  } catch (error) {
-    res.status(error.status || 500).json({
-      message: error.message || "Erreur serveur",
-    });
+    // Sécurité : un utilisateur normal ne peut pas changer l'orderId ou le catalogTreeId.
+    // On s'assure qu'il ne modifie que les champs permis.
+    const allowedUpdates = ['personalName', 'plantingPlace']; // Ajoutez les champs que l'user peut modifier
+    for (const key in data) {
+      if (!allowedUpdates.includes(key)) {
+        throw new HttpError(403, `Vous n'êtes pas autorisé à modifier le champ '${key}'.`);
+      }
+    }
   }
+
+  const [updated] = await PlantedTree.update(data, { where: { plantedTreeId } });
+  if (!updated) throw new HttpError(404, "Mise à jour échouée.");
+  
+  res.json(await PlantedTree.findByPk(plantedTreeId));
 }
 
 
