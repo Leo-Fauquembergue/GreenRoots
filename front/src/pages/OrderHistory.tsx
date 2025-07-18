@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import api from "../services/api";
-import "../style/orderHistory.scss";
+
 
 // Importez l'interface Order depuis votre fichier de types centralisé
 import type { Order } from "../hooks/types"; 
@@ -65,7 +65,7 @@ export default function OrderHistory() {
 
   return (
     <div className=" min-h-screen  p-4 md:p-8">
-      <div className="order-container max-w-4xl mx-auto">
+      <div className="gr-container max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">Mes Commandes</h1>
         {orders.length === 0 ? (
           <p>Vous n'avez pas encore de commande finalisée.</p>
@@ -79,7 +79,7 @@ export default function OrderHistory() {
               >
                 <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                   <div>
-                    <h2 className=" font-bold text-lg">
+                    <h2 className=" font-bold text-gray-700 text-lg">
                       Commande #{order.orderId}
                     </h2>
                     <p className="text-sm text-gray-500">

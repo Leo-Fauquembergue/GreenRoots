@@ -68,7 +68,7 @@ const Checkout: React.FC = () => {
   const totalPrice = cart.plantedTrees.reduce((sum, item) => sum + parseFloat(item.catalogTree.price), 0);
 
   return (
-    <div className="checkout-page">
+    <div className="mt-40 mb-10 checkout-page">
       <div className="checkout-content">
         <h1 className="checkout-title">Finalisation de la commande</h1>
         

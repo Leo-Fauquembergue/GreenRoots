@@ -51,7 +51,8 @@ export default function PlantedTreesPage() {
   }
 
   return (
-    <div className="min-h-screen p-8 pt-28 flex flex-col items-center">
+
+    <div className="mt-40 min-h-screen p-8 flex flex-col items-center">
       <h1 className="text-4xl font-bold uppercase text-black mb-8">
         MES ARBRES PLANTÉS
       </h1>

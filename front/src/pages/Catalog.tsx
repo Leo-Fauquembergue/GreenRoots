@@ -124,11 +124,11 @@ const Catalog: React.FC = () => {
 	}
 
 	return (
-		<div className="catalog min-h-screen py-20">
+		<div className="pt-28 min-h-screen py-20">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
-				<header className="text-center mb-16">
-					<h1 className="catalog-title text-4xl md:text-5xl mb-6">Catalogue</h1>
+				<header className="text-center mt-25 mb-16 ">
+					<h1 className="catalog-title text-7xl md:text-5xl mb-10">Catalogue</h1>
 					<p className="text-lg max-w-2xl mx-auto leading-relaxed">
 						Découvrez notre sélection d'arbres exceptionnels, adaptés à
 						toutes les régions et tous les projets.

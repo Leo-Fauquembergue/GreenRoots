@@ -1,7 +1,7 @@
 import { useCart } from '../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
 import { Trash2 } from 'lucide-react';
-import "../style/cart.scss";
+
 
 export default function Cart() {
   const { cart, deleteFromCart, cartItemCount } = useCart();
@@ -14,7 +14,7 @@ export default function Cart() {
   const totalPrice = cart?.plantedTrees?.reduce((sum, item) => sum + parseFloat(item.catalogTree.price), 0) || 0;
 
 	return (
-    <div className="main container-cart">
+    <div className="main gr-container">
       <h2 className="text-3xl font-bold mb-6">Votre Panier ({cartItemCount} article(s))</h2>
       {cartItemCount === 0 ? (
         <p>Votre panier est vide.</p>

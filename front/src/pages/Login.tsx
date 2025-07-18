@@ -24,7 +24,7 @@ export default function Login() {
 	};
 
 	return (
-		<div className="container-login">
+		<div className="gr-container">
 			<h1>Connexion</h1>
 			<p className="p-login">
 				Connectez-vous pour commander, suivre vos arbres plantés et gérer votre
@@ -43,7 +43,7 @@ export default function Login() {
 
 				<label>
 					Mot de passe
-					<input
+					<input 
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
@@ -51,7 +51,7 @@ export default function Login() {
 					/>
 				</label>
 
-				<button type="submit">Se connecter</button>
+				<button className="btn-dark p-3" type="submit">Se connecter</button>
 			</form>
 
 			{error && <p className="error-message">{error}</p>}

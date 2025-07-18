@@ -76,7 +76,7 @@ export default function Contact() {
 
 					<label>
 						Email
-						<input
+						<input 
 							type="email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
@@ -94,7 +94,7 @@ export default function Contact() {
 						/>
 					</label>
 
-					<button type="submit">Envoyer</button>
+					<button className="btn-dark p-3" type="submit">Envoyer</button>
 				</form>
 
 				{success && <p className="success-message">{success}</p>}
