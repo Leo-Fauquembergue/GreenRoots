@@ -52,6 +52,21 @@ export interface Order {
   plantedTrees: PlantedTree[]; 
 }
 
+export interface Tracking {
+  trackingId: number;
+  statementDate: string; // Date ISO, peut être convertie en Date si besoin
+  condition: string;
+  currentHeight: number;
+  currentPicture: string;
+  created_at: string;
+  updated_at: string;
+  plantedTreeId: number;
+  plantedTree: {
+    plantedTreeId: number;
+    personalName: string;
+  };
+}
+
 // =====================================
 // Interfaces pour les Props des Composants
 // =====================================
