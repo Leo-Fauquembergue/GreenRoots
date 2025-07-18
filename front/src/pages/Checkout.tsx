@@ -5,6 +5,7 @@ import { Lock } from 'lucide-react';
 import { toastRef } from '../App'; // On importe la référence au Toast
 import '../style/checkout.scss';
 
+
 const Checkout: React.FC = () => {
   const { cart, checkout, cartItemCount } = useCart();
   const navigate = useNavigate();
@@ -69,13 +70,13 @@ const Checkout: React.FC = () => {
 
   return (
     <div className="mt-40 mb-10 checkout-page">
-      <div className="checkout-content">
-        <h1 className="checkout-title">Finalisation de la commande</h1>
+      <div className="max-w-4xl mx-auto" >
+        <h1 className="page-title">Finalisation de la commande</h1>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Colonne de gauche : Formulaire de paiement factice */}
           <div className="payment-form">
-            <h2 className="section-title">Informations de paiement</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6 pb-2 border-b border-gray-200">Informations de paiement</h2>
             <form onSubmit={handlePayment}>
               {/* On lie les inputs aux états React */}
               <div className="input-group">
@@ -114,7 +115,7 @@ const Checkout: React.FC = () => {
 
           {/* Colonne de droite : Récapitulatif de la commande */}
           <div className="order-summary">
-            <h2 className="section-title">Récapitulatif de votre panier</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6 pb-2 border-b border-gray-200">Récapitulatif de votre panier</h2>
             <ul className="summary-list">
               {cart.plantedTrees.map(item => (
                 <li key={item.plantedTreeId} className="summary-item">

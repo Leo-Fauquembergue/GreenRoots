@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
-import "../style/login.scss";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
@@ -25,8 +24,8 @@ export default function Login() {
 
 	return (
 		<div className="gr-container">
-			<h1>Connexion</h1>
-			<p className="p-login">
+			<h1 className="page-title">Connexion</h1>
+			<p className="mb-4">
 				Connectez-vous pour commander, suivre vos arbres plantés et gérer votre
 				espace personnel !
 			</p>
@@ -54,7 +53,7 @@ export default function Login() {
 				<button className="btn-dark p-3" type="submit">Se connecter</button>
 			</form>
 
-			{error && <p className="error-message">{error}</p>}
+			{error && <p className="text-red-500 mt-4 text-center">{error}</p>}
 		</div>
 	);
 }

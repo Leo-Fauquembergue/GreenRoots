@@ -5,7 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import api from '../services/api'; 
 import type { Order } from '../hooks/types'; 
-import "../style/orderDetails.scss";
+
 
 export default function OrderDetailPage() {
 
@@ -81,12 +81,12 @@ export default function OrderDetailPage() {
   // --- Affichage des détails ---
   return (
     <div className="min-h-screen p-4 md:p-8">
-      <div className=" order-detail-container max-w-4xl mx-auto">
-        <Link to="/orders" className="return-to-orders mb-6 inline-block">
+      <div className="gr-container max-w-4xl mx-auto">
+        <Link to="/orders" className=" color-pistachio mb-6 inline-block">
           ← Retour à l'historique
         </Link>
         
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div >
           {/* En-tête de la commande */}
           <div className="flex flex-col sm:flex-row justify-between items-start border-b border-gray-400 pb-4 mb-4">
             <div>

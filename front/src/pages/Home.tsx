@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import TreeCard from "../components/TreeCard.tsx";
 import backgroundImage from "../assets/background-tree.jpg";
 import api from "../services/api";
-import "../style/home.scss";
 import type { CatalogTree } from "../hooks/types"; // Interface de type pour un arbre
 
 export default function Home() {
@@ -31,18 +30,19 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div className="home-container">
+		<div className="pt-0 min-h-screen">
 			{/* Section principale */}
 			<section
-				className="hero"
+				className="flex flex-col justify-center items-center text-center h-screen bg-dark bg-cover bg-center text-white px-8"
 				style={{ backgroundImage: `url(${backgroundImage})` }}
 			>
-				<div className="hero-text">
-					<h1>
+				<div className="max-w-[50rem] pt-40 mt-40 mb-12 text-shadow">
+					<h1 className="text-6xl mb-4"
+					>
 						Plantez un arbre !<br />
 						Respirez demain !
 					</h1>
-					<p>
+					<p className="text-2xl mb-8">
 						Chez Greenroots, nous croyons qu'un petit geste peut avoir un grand
 						impact. Planter un arbre, c'est bien plus qu'un acte symbolique.
 						C'est lutter contre le réchauffement climatique en capturant le
@@ -56,8 +56,8 @@ export default function Home() {
 			</section>
 
 			{/* Section des 3 derniers arbres */}
-			<section className="cards-section">
-				<h2 className="text-center text-2xl font-bold mb-6">Derniers arbres ajoutés</h2>
+			<section  className="justify-around py-16 px-24">
+				<h2 className="text-center text-2xl font-bold mb-10">Derniers arbres ajoutés:</h2>
 
 				{loading && <p>Chargement...</p>}
 				{error && <p className="text-red-500">{error}</p>}

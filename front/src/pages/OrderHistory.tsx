@@ -66,7 +66,10 @@ export default function OrderHistory() {
   return (
     <div className=" min-h-screen  p-4 md:p-8">
       <div className="gr-container max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-gray-800">Mes Commandes</h1>
+      <Link to="/profile" className=" color-pistachio mb-6 inline-block">
+          ← Retour à mon profile
+        </Link>
+        <h1 className="page-title">Mes Commandes</h1>
         {orders.length === 0 ? (
           <p>Vous n'avez pas encore de commande finalisée.</p>
         ) : (

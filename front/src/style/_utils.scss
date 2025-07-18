@@ -1,8 +1,43 @@
 @use 'variables' as *;
+
 body {
     background-color: $color-bg;
-  
+    font-family: $font-main;
+    color: $color-dark;
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      
+        label {
+          display: flex;
+          flex-direction: column;
+          font-weight: 500;
+        }
+      
+        input {
+          padding: 0.5rem;
+          border-radius: 6px;
+          border: 1px solid #ccc;
+        }
+      
+      }
+
 }
+
+.color-pistachio{
+    color: $color-green-Pistachio;
+}
+
+.color-dark{
+    color: $color-dark;
+}
+
+.color-light{
+    color: $color-bg;
+}
+
 .gr-container{
     max-width: 600px;
     margin: 10rem auto 5rem;
@@ -17,7 +52,7 @@ body {
     color: white;
     border-radius: 8px;
     font-weight: bold;
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
    
     &:hover {
         background-color: $color-bg;
@@ -25,21 +60,31 @@ body {
     }
 }
 
-
-
 .btn-light{
     background-color: $color-green-Pistachio;
     color: white;
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.3s ease-in-out;
 
     &:hover{
         background-color: $color-dark;
     }
 }
 
+.btn-ultra-light{
+    background-color: $color-bg;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover{
+        background-color: $color-dark;
+    }
+}
 
 .greenroots {
     font-family: $font-title;
@@ -48,6 +93,14 @@ body {
     transition: text-shadow 0.3s ease;
 }
 
-.gr-container{
-
+.page-title{
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    color: $color-dark;
 }
+
+.text-shadow{
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+

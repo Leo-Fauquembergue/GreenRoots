@@ -40,7 +40,7 @@ export default function Contact() {
 		<div className="page-contact">
 			{/* Bloc haut : infos + carte */}
 			<div className="mt-40 text-center text-lg">
-				<h2 className="text-center mb-6  text-2xl">Contact</h2>
+				<h2 className="text-center mb-6 page-title">Contact</h2>
 				<p className="p-email">Email : contact@greenroots-fictif.fr</p>
 				<p className="p-telephone">Téléphone : +33 1 23 45 67 89</p>
 				<p className="p-adresse">Adresse : 23 Rue des Forêts, 75011 Paris</p>
