@@ -41,19 +41,27 @@ export async function createPlantedTree(req, res) {
 }
 
 export async function updatePlantedTree(req, res) {
-	const { id } = idSchema.parse(req.params);
-	const data = updatePlantedTreeSchema.parse(req.body);
+  try {
+    const { id } = idSchema.parse(req.params);
+    const data = updatePlantedTreeSchema.parse(req.body);
 
-	const [updated] = await PlantedTree.update(data, {
-		where: { plantedTreeId: id },
-	});
-	if (!updated) {
-		throw new HttpError(404, "Arbre planté non trouvé.");
-	}
+    const [updated] = await PlantedTree.update(data, {
+      where: { plantedTreeId: id },
+    });
 
-	const updatedTree = await PlantedTree.findByPk(id);
-	res.json(updatedTree);
+    if (!updated) {
+      throw new HttpError(404, "Arbre planté non trouvé.");
+    }
+
+    const updatedTree = await PlantedTree.findByPk(id);
+    res.json(updatedTree);
+  } catch (error) {
+    res.status(error.status || 500).json({
+      message: error.message || "Erreur serveur",
+    });
+  }
 }
+
 
 export async function deletePlantedTree(req, res) {
 	const { id } = idSchema.parse(req.params);
