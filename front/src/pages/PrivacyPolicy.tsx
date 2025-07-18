@@ -3,7 +3,7 @@ import '../style/legal-page.scss'; // On réutilise le même fichier de style po
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <div className="container-legal-page legal-page">
+    <div className="gr-container legal-page">
       <div className="legal-content">
         <h1>Politique de Confidentialité</h1>
         

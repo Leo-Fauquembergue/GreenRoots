@@ -51,7 +51,7 @@ export default function Home() {
 						c'est soutenir les communautés locales grâce à des projets de
 						reforestation durable.
 					</p>
-					<button type="button">En savoir plus</button>
+					<button className="btn-dark p-4 mb-20 " type="button">En savoir plus</button>
 				</div>
 			</section>
 

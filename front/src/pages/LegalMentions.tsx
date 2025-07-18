@@ -3,7 +3,7 @@ import '../style/legal-page.scss';
 
 const LegalMentions: React.FC = () => {
   return (
-    <div className="container-legal-page legal-page">
+    <div className="gr-container legal-page ">
       <div className="legal-content">
         <h1>Mentions Légales</h1>
         

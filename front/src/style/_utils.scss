@@ -1,33 +1,53 @@
 @use 'variables' as *;
 body {
     background-color: $color-bg;
-    padding-top:15rem;
+  
+}
+.gr-container{
+    max-width: 600px;
+    margin: 10rem auto 5rem;
+    padding: 2rem;
+    background-color: $color-white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+ 
 }
 .btn-dark {
     background-color: $color-dark;
-    color: $color-white; 
-    font-weight: 600; 
-    transition: background-color 0.3s, color 0.3s; 
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out;
+   
+    &:hover {
+        background-color: $color-bg;
+        color: $color-dark;
+    }
 }
 
-.btn-dark:hover {
-    background-color: $color-bg;
-    color: $color-dark;
-}
+
 
 .btn-light{
     background-color: $color-green-Pistachio;
     color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover{
+        background-color: $color-dark;
+    }
 }
 
-.btn-light:hover{
-    color: $color-bg;
-    background-color: $color-dark;
-}
 
 .greenroots {
     font-family: $font-title;
     font-weight: 700;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
     transition: text-shadow 0.3s ease;
+}
+
+.gr-container{
+
 }

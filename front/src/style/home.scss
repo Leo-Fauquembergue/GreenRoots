@@ -1,23 +1,18 @@
+
+
+@use 'variables' as *;
+@use 'utils' as *;
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
-// Variables (garde les tiennes si tu préfères)
-$font-main: 'Bebas Neue', sans-serif;
-$font-title: 'Dancing Script', cursive;
-
-$color-bg: #dff0dc;
-$color-dark: #152416;
-$color-white: #ffffff;
-$color-black: #000000;
-$color-card-shadow: rgba(0, 0, 0, 0.1);
-
-$text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 
 body {
-  font-family: $font-main;
+
+  padding-top: 0;
 }
 
+
 .home-container {
-  background-color: $color-bg;
+  
   min-height: 100vh;
 }
 
@@ -53,24 +48,8 @@ body {
   margin-bottom: 2rem;
 }
 
-.hero-text button {
-  background-color: $color-bg;
-  color: $color-black;
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-bottom: 4rem;
-  transition: transform 0.2s ease-in-out;
-}
 
-.hero-text button:hover {
-  color: $color-white;
-  background-color: $color-dark;
-  transform: scale(1.1);
 
-}
 
 .cards-section {
   justify-content: space-around;
