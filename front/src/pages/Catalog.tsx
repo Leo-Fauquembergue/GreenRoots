@@ -2,7 +2,6 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import type { CatalogTree, Category, Region } from "../hooks/types";
-import "../style/catalog.scss";
 import Pagination from "./../components/Pagination.tsx"; 
 import TreeCard from "./../components/TreeCard.tsx";
 import { AlertCircle, Search } from "lucide-react";
@@ -56,7 +55,7 @@ const useCatalogData = (categoryId: string, regionId: string, page: number) => {
 				};
 				
 				// axios gère automatiquement les paramètres undefined
-				const response = await api.get("/catalog-trees", { params }); // <-- CORRIGÉ : utilise api et l'objet params
+				const response = await api.get("/catalog-trees", { params }); 
 
 				// La réponse du backend doit être un objet { data: [...], totalCount: X }
 				setTrees(response.data.data);
@@ -75,7 +74,7 @@ const useCatalogData = (categoryId: string, regionId: string, page: number) => {
 };
 
 
-// --- Le composant Catalog mis à jour ---
+
 const Catalog: React.FC = () => {
 	const [selectedCategory, setSelectedCategory] = useState<string>("all");
 	const [selectedRegion, setSelectedRegion] = useState<string>("all");
@@ -105,7 +104,7 @@ const Catalog: React.FC = () => {
 
 	if (error) {
 		return (
-			<div className="min-h-screen bg-white flex items-center justify-center">
+			<div className="min-h-screen flex items-center justify-center">
 				<div className="text-center">
 					<div className="text-red-600 mb-4">
 						<AlertCircle className="h-16 w-16 text-red-600 mx-auto" />
@@ -128,19 +127,19 @@ const Catalog: React.FC = () => {
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				{/* Header */}
 				<header className="text-center mt-25 mb-16 ">
-					<h1 className="catalog-title text-7xl md:text-5xl mb-10">Catalogue</h1>
-					<p className="text-lg max-w-2xl mx-auto leading-relaxed">
+					<h2 className="page-title">Catalogue</h2>
+					<p className="text-lg mt-8 max-w-xl mx-auto leading-relaxed">
 						Découvrez notre sélection d'arbres exceptionnels, adaptés à
 						toutes les régions et tous les projets.
 					</p>
 				</header>
 
 				{/* Filters */}
-				<div className="filter-bar flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 p-6 rounded-lg mb-12">
+				<div className="filter-bar bg-white flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 p-6 rounded-lg mb-12">
 					<div className="flex items-center gap-3">
 						<label
 							htmlFor="category-select"
-							className="text-sm font-medium text-gray-700"
+							className="text-md font-medium text-gray-700"
 						>
 							Catégorie:
 						</label>
@@ -163,7 +162,7 @@ const Catalog: React.FC = () => {
 
 						<label
 							htmlFor="region-select"
-							className="text-sm font-medium text-gray-700"
+							className="text-md font-medium text-gray-700"
 						>
 
 
@@ -189,10 +188,7 @@ const Catalog: React.FC = () => {
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
 					{loading ? ( // Afficher un spinner léger lors du changement de page
 						<div className="col-span-full text-center py-12">
-
-
 							<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto"></div>
-
 						</div>
 					) : trees.length === 0 ? (
 						<div className="col-span-full text-center py-12">
@@ -209,7 +205,6 @@ const Catalog: React.FC = () => {
 				</div>
 
 
-				{/* Section Pagination (remplace le bouton "Voir plus") */}
 				<div className="flex justify-center mt-12">
 					<Pagination
 						currentPage={currentPage}

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import type { User } from "../hooks/types";
 
-
 export default function Profile() {
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -63,42 +62,45 @@ export default function Profile() {
   }
 
   return (
-    <div className="main min-h-screen flex items-center justify-center  px-4">
-      <div className="max-w-4xl w-full bg-white rounded-lg shadow-md p-6 flex flex-col md:flex-row gap-8">
-        {/* Section Profil */}
-        <section className="flex-1">
-          <h2 className="text-2xl font-bold mb-6 text-center md:text-left">
-            Profil utilisateur
-          </h2>
-          <div className="space-y-4 text-gray-800">
-            <p>
-              <strong>Nom :</strong> {user?.name}
-            </p>
-            <p>
-              <strong>Email :</strong> {user?.email}
-            </p>
-            <p>
-              <strong>Rôle :</strong> {user?.role}
-            </p>
-          </div>
-        </section>
+    <div className="gr-container">
+  
+        <h2 className="page-title">Profil utilisateur</h2>
+        
+        {/* Contenu principal en 2 colonnes */}
+        <div className="flex flex-col md:flex-row gap-8 my-10">
+          
+          {/* Infos utilisateur */}
+          <section className="flex-1">
+            <div className="space-y-4 text-gray-800">
+              <p>
+                <strong>Nom :</strong> {user?.name}
+              </p>
+              <p>
+                <strong>Email :</strong> {user?.email}
+              </p>
+              <p>
+                <strong>Rôle :</strong> {user?.role}
+              </p>
+            </div>
+          </section>
 
-        {/* Section Liens */}
-        <section className="flex-1 flex flex-col justify-center space-y-4">
-          <Link
-            to="/orders"
-            className="block text-center md:text-left px-4 py-3 btn-dark "
-          >
-            Mes commandes
-          </Link>
-          <Link
-            to="/planted-trees/user"
-            className="block text-center md:text-left px-4 py-3 btn-light"
-          >
-            Mes arbres plantés
-          </Link>
-        </section>
-      </div>
+          {/* Boutons de navigation */}
+          <section className="flex-1 flex flex-col justify-center space-y-4">
+            <Link
+              to="/orders"
+              className="block text-center md:text-left px-4 py-3 btn-dark"
+            >
+              Mes commandes
+            </Link>
+            <Link
+              to="/planted-trees/user"
+              className="block text-center md:text-left px-4 py-3 btn-light"
+            >
+              Mes arbres plantés
+            </Link>
+          </section>
+        </div>
     </div>
+
   );
 }
