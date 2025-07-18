@@ -66,29 +66,33 @@ export async function deletePlantedTree(req, res) {
 
 
 export async function getUserPlantedTrees(req, res) {
-  if (!req.session.user) {
-    throw new HttpError(401, "Vous devez être connecté pour voir vos arbres plantés.");
+  const userId = req.session.user?.id;
+
+  if (!userId) {
+    return res.status(401).json({ message: "Utilisateur non connecté." });
   }
 
-  const userId = req.session.user.id;
-
-  const plantedTrees = await PlantedTree.findAll({
-    include: [
-      {
-        association: "order",
-        where: {
-          userId: userId,
-          status: ['completed', 'cancelled'],
+  try {
+    const trees = await PlantedTree.findAll({
+      include: [
+        {
+          association: "order",
+          where: {
+            userId,
+            status: ['completed'], // ou ['completed', 'cancelled'] selon ton besoin
+          },
+          attributes: [], // on masque les détails de la commande
         },
-        attributes: [], // On n’a pas besoin des infos de la commande ici
-      },
-      {
-        association: "catalogTree",
-        attributes: ["catalogTreeId", "commonName", "image"], // Réduit à l'essentiel
-      },
-    ],
-    order: [["created_at", "DESC"]],
-  });
+        {
+          association: "catalogTree",
+          attributes: ["catalogTreeId", "commonName", "image"],
+        },
+      ],
+      order: [["created_at", "DESC"]],
+    });
 
-  res.json(plantedTrees);
+    res.json(trees);
+  } catch (error) {
+    res.status(500).json({ message: "Erreur serveur", error });
+  }
 }
