@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../style/contact.scss";
+
 
 export default function Contact() {
 	const [name, setName] = useState("");
@@ -39,13 +39,13 @@ export default function Contact() {
 	return (
 		<div className="page-contact">
 			{/* Bloc haut : infos + carte */}
-			<div className="map-container">
-				<h1>Contact</h1>
+			<div className="mt-40 text-center text-lg">
+				<h2 className="text-center mb-6  text-2xl">Contact</h2>
 				<p className="p-email">Email : contact@greenroots-fictif.fr</p>
 				<p className="p-telephone">Téléphone : +33 1 23 45 67 89</p>
 				<p className="p-adresse">Adresse : 23 Rue des Forêts, 75011 Paris</p>
 				<h3>Où nous trouver : ↓</h3>
-				<iframe
+				<iframe className="mt-4 w-2/5 max-w-full h-80 rounded-lg shadow-md inline-block"
 				title="Parc Monceau"
 				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5247.747477241557!2d2.306380077041797!3d48.879683471335085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66fbe98f714c3%3A0xe62425fddeddc402!2sParc%20Monceau!5e0!3m2!1sfr!2sfr!4v1752669649917!5m2!1sfr!2sfr"
 				width="600"
@@ -59,14 +59,14 @@ export default function Contact() {
 			</div>
 
 			{/* Bloc bas : formulaire */}
-			<div className="contact-container">
-				<h2>Formulaire de contact</h2>
-				<p>Une question, un retour, une idée ? Écrivez-nous !</p>
+			<div className="gr-container">
+				<h2 className="text-center text-2xl mb-4">Formulaire de contact</h2>
+				<p className="text-center mb-8 ">Une question, un retour, une idée ? Écrivez-nous !</p>
 
-				<form onSubmit={handleSubmit} className="contact-form">
-					<label>
+				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+					<label className="flex flex-col  font-bold">
 						Nom
-						<input
+						<input className="p-3 border border-gray-300 rounded-md text-base mt-2"
 							type="text"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
@@ -76,7 +76,7 @@ export default function Contact() {
 
 					<label>
 						Email
-						<input 
+						<input className="p-3 border border-gray-300 rounded-md text-base mt-2"
 							type="email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
@@ -86,7 +86,7 @@ export default function Contact() {
 
 					<label>
 						Message
-						<textarea
+						<textarea className="p-3 border border-gray-300 rounded-md text-base mt-2"
 							value={message}
 							onChange={(e) => setMessage(e.target.value)}
 							required
@@ -97,8 +97,8 @@ export default function Contact() {
 					<button className="btn-dark p-3" type="submit">Envoyer</button>
 				</form>
 
-				{success && <p className="success-message">{success}</p>}
-				{error && <p className="error-message">{error}</p>}
+				{success && <p className="text-green-500 text-center mt-4">{success}</p>}
+				{error && <p className="text-red-500 text-center mt-4">{error}</p>}
 			</div>
 		</div>
 	);
