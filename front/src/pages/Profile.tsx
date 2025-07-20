@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import type { User } from "../hooks/types";
+import "../style/style.scss";
 
 export default function Profile() {
   const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;

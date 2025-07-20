@@ -1,5 +1,6 @@
 import type React from 'react';
 import '../style/legal-page.scss';
+import "../style/style.scss";
 
 const LegalMentions: React.FC = () => {
   return (

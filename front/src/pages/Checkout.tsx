@@ -3,7 +3,7 @@ import { useCart } from '../contexts/CartContext';
 import { useNavigate, Navigate } from 'react-router-dom';
 import { Lock } from 'lucide-react';
 import { toastRef } from '../App'; // On importe la référence au Toast
-import '../style/checkout.scss';
+import "../style/style.scss";
 
 
 const Checkout: React.FC = () => {
@@ -75,7 +75,7 @@ const Checkout: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Colonne de gauche : Formulaire de paiement factice */}
-          <div className="payment-form">
+          <div className="rounded-lg shadow-lg gr-form">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6 pb-2 border-b border-gray-200">Informations de paiement</h2>
             <form onSubmit={handlePayment}>
               {/* On lie les inputs aux états React */}
@@ -114,17 +114,17 @@ const Checkout: React.FC = () => {
           </div>
 
           {/* Colonne de droite : Récapitulatif de la commande */}
-          <div className="order-summary">
+          <div className="bg-gray-50 p-8 rounded-lg border border-gray-200">
             <h2 className="text-2xl font-semibold text-gray-900 mb-6 pb-2 border-b border-gray-200">Récapitulatif de votre panier</h2>
-            <ul className="summary-list">
+            <ul className="list-none p-0 m-0">
               {cart.plantedTrees.map(item => (
-                <li key={item.plantedTreeId} className="summary-item">
+                <li key={item.plantedTreeId} className="flex justify-between py-3 border-b border-dashed border-gray-300 last:border-b-0">
                   <span>{item.catalogTree.commonName}</span>
                   <strong>{parseFloat(item.catalogTree.price).toFixed(2)} €</strong>
                 </li>
               ))}
             </ul>
-            <div className="summary-total">
+            <div className="flex justify-between text-xl font-bold mt-6 pt-6 border-t-2 text-[color:var(--color-dark)] border-[color:var(--color-dark)]">
               <span>Total à payer</span>
               <strong>{totalPrice.toFixed(2)} €</strong>
             </div>

@@ -5,6 +5,7 @@ import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import api from '../services/api'; 
 import type { Order } from '../hooks/types'; 
+import "../style/style.scss";
 
 
 export default function OrderDetailPage() {

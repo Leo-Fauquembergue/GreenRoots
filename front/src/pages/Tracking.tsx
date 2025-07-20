@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
 import type { PlantedTree, Tracking } from "../hooks/types";
+import "../style/style.scss";
 
 export default function TrackingPage() {
   const { id } = useParams();

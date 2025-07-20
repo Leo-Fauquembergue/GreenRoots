@@ -2,11 +2,11 @@ import React from "react";
 import { Phone, Mail, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logoGreenRoots.png"; //à changer:dynamique
-import "../style/footer.scss";
+import "../style/style.scss";
 
 export default function Footer() {
 	return (
-		<footer className="footer-bg text-white px-6 py-8">
+		<footer className="text-white px-6 py-8">
 			<div className="max-w-6xl mx-auto">
 				
 				{/* Section principale avec logo, slogan et contact */}
@@ -17,7 +17,7 @@ export default function Footer() {
 						to="/"
 						className="flex items-center space-x-3 justify-center md:justify-start"
 					>
-						<img src={logo} alt="Logo GreenRoots" className="logo" />
+						<img src={logo} alt="Logo GreenRoots" className="logo h-12 mr-3" />
 						<h2 className="text-2xl greenroots font-bold text-white">
 							GreenRoots
 						</h2>

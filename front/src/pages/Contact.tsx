@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../style/style.scss";
 
 
 export default function Contact() {
@@ -63,42 +64,51 @@ export default function Contact() {
 				<h2 className="text-center text-2xl mb-4">Formulaire de contact</h2>
 				<p className="text-center mb-8 ">Une question, un retour, une idée ? Écrivez-nous !</p>
 
+				<div className="gr-form">
 				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-					<label className="flex flex-col  font-bold">
-						Nom
-						<input className="p-3 border border-gray-300 rounded-md text-base mt-2"
-							type="text"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-							required
-						/>
-					</label>
+					<div className="input-group">
+						<label htmlFor="contactName">
+							Nom
+						</label>
+						<input id="contactName"
+								type="text"
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+								required
+							/>
 
-					<label>
-						Email
-						<input className="p-3 border border-gray-300 rounded-md text-base mt-2"
-							type="email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							required
-						/>
-					</label>
-
-					<label>
-						Message
-						<textarea className="p-3 border border-gray-300 rounded-md text-base mt-2"
-							value={message}
-							onChange={(e) => setMessage(e.target.value)}
-							required
-							rows={5}
-						/>
-					</label>
+					</div>
+					<div className="input-group">
+						<label htmlFor="contactMail">
+							Email
+						</label>
+						<input id="contactMail"
+								type="email"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								required
+							/>
+					</div>
+					<div className="input-group">
+						<label htmlFor="contactMessage">
+							Message
+						</label>
+						<textarea id="contactMessage" className="p-3 border border-gray-300 rounded-md text-base mt-2"
+								value={message}
+								onChange={(e) => setMessage(e.target.value)}
+								required
+								rows={5}
+							/>
+					</div>
+					
+					{success && <p className="form-success">{success}</p>}
+					{error && <p className="form-error">{error}</p>}
 
 					<button className="btn-dark p-3" type="submit">Envoyer</button>
 				</form>
+				</div>
 
-				{success && <p className="text-green-500 text-center mt-4">{success}</p>}
-				{error && <p className="text-red-500 text-center mt-4">{error}</p>}
+				
 			</div>
 		</div>
 	);

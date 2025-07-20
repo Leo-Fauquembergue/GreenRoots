@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
+import "../style/style.scss";
 
 export default function Login() {
 	const [email, setEmail] = useState("");
@@ -29,31 +30,36 @@ export default function Login() {
 				Connectez-vous pour commander, suivre vos arbres plantés et gérer votre
 				espace personnel !
 			</p>
-			<form onSubmit={handleSubmit}>
-				<label>
-					Email
-					<input
-						type="email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						required
+			<form className="gr-form" onSubmit={handleSubmit}>
+				<div className="input-group">
+					<label htmlFor="loginMail">
+						Email
+					</label>
+					<input id="loginMail"
+							type="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							required
 					/>
-				</label>
+				</div>
 
-				<label>
-					Mot de passe
-					<input 
+				<div className="input-group">
+					<label htmlFor="loginPass">
+						Mot de passe
+					</label>
+					<input id="loginPass"
 						type="password"
 						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 						required
 					/>
-				</label>
-
-				<button className="btn-dark p-3" type="submit">Se connecter</button>
+				</div>
+				{error && <p className="form-error">{error}</p>}
+				<button className="btn-dark p-3 w-full mt-4" type="submit">Se connecter</button>
+				
 			</form>
 
-			{error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+			
 		</div>
 	);
 }
