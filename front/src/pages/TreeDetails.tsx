@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Hook pour lire les paramètres de l'URL (comme :id)
 import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
-import type { CatalogTree } from "../hooks/types"; // Interface de type pour un arbre
-import { ShoppingCart } from "lucide-react"; // Icône pour le bouton
-import api from "../services/api"; // Utiliser notre instance Axios
+import type { CatalogTree } from "../hooks/types"; 
+import { ShoppingCart } from "lucide-react"; 
+import api from "../services/api"; 
 import { toastRef } from '../App';
+import "../style/style.scss";
 
 const TreeDetails: React.FC = () => {
 	// Récupère le paramètre 'id' depuis l'URL.

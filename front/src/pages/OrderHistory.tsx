@@ -1,12 +1,10 @@
-// src/pages/OrderHistory.tsx
+
 
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import api from "../services/api";
-
-
-// Importez l'interface Order depuis votre fichier de types centralisé
+import "../style/style.scss";
 import type { Order } from "../hooks/types"; 
 
 export default function OrderHistory() {

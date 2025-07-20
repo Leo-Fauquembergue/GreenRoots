@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import api from "../services/api";
 import type { PlantedTree } from "../hooks/types";
+import "../style/style.scss";
 
 export default function PlantedTreesPage() {
   const [plantedTrees, setPlantedTrees] = useState<PlantedTree[]>([]);

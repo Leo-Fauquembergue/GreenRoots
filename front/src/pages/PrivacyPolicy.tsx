@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/legal-page.scss'; // On réutilise le même fichier de style pour la cohérence
+import "../style/style.scss";
 
 const PrivacyPolicy: React.FC = () => {
   return (

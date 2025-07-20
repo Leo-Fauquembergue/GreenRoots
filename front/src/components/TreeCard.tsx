@@ -1,6 +1,7 @@
 import type React from "react";
 import { Link } from "react-router-dom";
 import type { TreeCardProps } from "../hooks/types";
+import "../style/style.scss";
 
 const TreeCard: React.FC<TreeCardProps> = ({ tree }) => {
 	return (
@@ -19,7 +20,7 @@ const TreeCard: React.FC<TreeCardProps> = ({ tree }) => {
 			</div>
 			<div className="p-6 flex flex-col flex-grow">
 				<div className="mb-3">
-					<span className="card-cat-reg text-xs italic tracking-wide">
+					<span className="color-pistachio text-xs italic tracking-wide">
 						{tree.category.name} / {tree.region.name}
 					</span>
 				</div>

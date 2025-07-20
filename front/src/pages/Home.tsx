@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import TreeCard from "../components/TreeCard.tsx";
 import backgroundImage from "../assets/background-tree.jpg";
 import api from "../services/api";
-import type { CatalogTree } from "../hooks/types"; // Interface de type pour un arbre
+import type { CatalogTree } from "../hooks/types";
+import "../style/style.scss";
 
 export default function Home() {
 	const [trees, setTrees] = useState<CatalogTree[]>([]);

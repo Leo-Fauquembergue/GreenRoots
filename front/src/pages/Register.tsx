@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import "../style/style.scss";
 
 export default function Register() {
 	const [name, setName] = useState("");
@@ -59,53 +60,62 @@ export default function Register() {
 	return (
 		<div className="gr-container">
 			<h2 className="text-center mb-6 text-dark text-2xl">Créer un compte</h2>
+			<div className="gr-form">
+				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
+					<div className="input-group">
+					<label htmlFor="signUpName">
+						Nom
+					</label>
+					<input id="signUpName"
+							type="text"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+							required
+						/>
+					</div>
+					<div className="input-group">
+						<label htmlFor="signUpMail">
+							Email
+						</label>
+						<input id="signUpMail"
+								type="email"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								required
+							/>
+					</div>
+					<div className="input-group">
+						<label htmlFor="signUpPass">
+							Mot de passe
+						</label>
+						<input id="signUpPass"
+								type="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								required
+							/>
+					</div>
+					<div className="input-group">
+						<label htmlFor="signUpPassConfirm">
+							Confirmer le mot de passe
+						</label>
+						<input id="signUpPassConfirm"
+								type="password"
+								value={confirmPassword}
+								onChange={(e) => setConfirmPassword(e.target.value)}
+								required
+							/>
+					</div>
 
-			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
-				<label>
-					Nom
-					<input
-						type="text"
-						value={name}
-						onChange={(e) => setName(e.target.value)}
-						required
-					/>
-				</label>
+					{success && <p className="form-success">Compte créé avec succès ! ✅ Vous allez être redirigé.</p>}
+					{error && <p className="form-error">{error}</p>}
 
-				<label>
-					Email
-					<input
-						type="email"
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						required
-					/>
-				</label>
+					<button className="btn-dark p-3" type="submit">S'inscrire</button>
+				</form>
+			</div>
+			
 
-				<label>
-					Mot de passe
-					<input
-						type="password"
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						required
-					/>
-				</label>
-
-				<label>
-					Confirmer le mot de passe
-					<input
-						type="password"
-						value={confirmPassword}
-						onChange={(e) => setConfirmPassword(e.target.value)}
-						required
-					/>
-				</label>
-
-				<button className="btn-dark p-3" type="submit">S'inscrire</button>
-			</form>
-
-			{success && <p className="success-message">Compte créé avec succès ! ✅ Vous allez être redirigé.</p>}
-			{error && <p className="error-message">{error}</p>}
+			
 		</div>
 	);
 }
