@@ -3,7 +3,7 @@
 // =====================================
 
 export interface User {
-  id: number;
+  userId: number;
   name: string;
   email: string;
   role: string;
@@ -100,4 +100,13 @@ export interface CartContextType {
   cartItemCount: number;
 }
 
+// --- TYPES POUR L'ADMINISTRATION ---
 
+// On peut réutiliser le type User, mais on l'exporte aussi en tant qu'AdminUser pour la clarté
+export type AdminUser = User;
+
+// Type pour une commande complète, incluant l'utilisateur associé
+export interface AdminOrder extends CartData {
+  user: User;
+  createdAt: string; // La date de création est utile pour l'admin
+}

@@ -16,8 +16,17 @@ export default function Login() {
 		setError(null);
 		try {
 			const response = await api.post('/auth/login', { email, password });
-			setUser(response.data.user); // Met à jour l'état global
-			navigate('/'); // Redirige vers la page d'accueil
+      const loggedInUser = response.data.user;
+			setUser(loggedInUser); // Met à jour l'état global
+
+      // Si l'utilisateur est un admin, on le redirige vers le panel admin.
+      // Sinon, on le redirige vers son profil.
+      if (loggedInUser.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/profile');
+      }
+
 		} catch (err: any) {
 			setError(err.response?.data?.message || "Erreur de connexion.");
 		}
