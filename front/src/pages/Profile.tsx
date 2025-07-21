@@ -1,107 +1,53 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import type { User } from "../hooks/types";
+import { useAuth } from "../contexts/AuthContext";
+import { ShieldCheck } from "lucide-react";
 import "../style/style.scss";
 
 export default function Profile() {
-  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+  // On récupère l'utilisateur directement depuis le contexte.
+  const { user } = useAuth();
 
-  // --- States ---
-  const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(true);
-
-  // --- Récupération des données de session ---
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await axios.get<{ user: User | null }>(
-          `${apiBaseUrl}/auth/me`,
-          {
-            withCredentials: true,
-          }
-        );
-        setUser(response.data.user);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Erreur lors du chargement du profil.");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserProfile();
-  }, []);
-
-  // --- Affichage ---
-  if (loading) {
-    return (
-      <p className="min-h-screen flex items-center justify-center text-gray-700">
-        Chargement du profil...
-      </p>
-    );
-  }
-
-  if (error) {
-    return (
-      <p className="min-h-screen flex items-center justify-center text-red-600">
-        Erreur : {error}
-      </p>
-    );
-  }
-
+  // Le ProtectedRoute nous garantit que `user` n'est pas null ici.
+  // S'il l'était, l'utilisateur aurait été redirigé.
   if (!user) {
     return (
-      <p className="min-h-screen flex items-center justify-center text-gray-700">
-        Aucun utilisateur connecté.
+      <p className="min-h-screen flex items-center justify-center">
+        Redirection...
       </p>
     );
   }
 
   return (
     <div className="gr-container">
-  
-        <h2 className="page-title">Profil utilisateur</h2>
+        <h2 className="page-title">Profil de {user.name}</h2>
         
-        {/* Contenu principal en 2 colonnes */}
         <div className="flex flex-col md:flex-row gap-8 my-10">
           
-          {/* Infos utilisateur */}
           <section className="flex-1">
+            <h3 className="text-xl font-semibold mb-4">Mes Informations</h3>
             <div className="space-y-4 text-gray-800">
-              <p>
-                <strong>Nom :</strong> {user?.name}
-              </p>
-              <p>
-                <strong>Email :</strong> {user?.email}
-              </p>
-              <p>
-                <strong>Rôle :</strong> {user?.role}
-              </p>
+              <p><strong>Nom :</strong> {user.name}</p>
+              <p><strong>Email :</strong> {user.email}</p>
+              <p><strong>Rôle :</strong> {user.role}</p>
             </div>
           </section>
 
-          {/* Boutons de navigation */}
           <section className="flex-1 flex flex-col justify-center space-y-4">
-            <Link
-              to="/orders"
-              className="block text-center md:text-left px-4 py-3 btn-dark"
-            >
-              Mes commandes
+            <Link to="/orders" className="block text-center px-4 py-3 btn-dark">
+              Voir mon historique de commandes
             </Link>
-            <Link
-              to="/planted-trees/user"
-              className="block text-center md:text-left px-4 py-3 btn-light"
-            >
-              Mes arbres plantés
+            <Link to="/planted-trees/user" className="block text-center px-4 py-3 btn-light">
+              Voir mes arbres plantés
             </Link>
+
+            {/* On ajoute un bouton bien visible si l'utilisateur est un admin */}
+            {user.role === 'admin' && (
+              <Link to="/admin" className="text-center px-4 py-3 bg-yellow-400 text-yellow-900 font-bold rounded-lg hover:bg-yellow-500 transition-colors flex items-center justify-center gap-2">
+                <ShieldCheck /> Accéder au Panel d'Administration
+              </Link>
+            )}
           </section>
         </div>
     </div>
-
   );
 }

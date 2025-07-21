@@ -1,0 +1,95 @@
+@use 'sass:color';
+@use 'variables' as *;
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+  background-color: $color-bg;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  max-width: 450px;
+  width: 90%;
+  animation: scaleIn 0.3s ease-out;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $color-dark;
+  }
+}
+
+.modal-body {
+  color: #4b5563;
+  margin-bottom: 2rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+// --- CLASSE DE BASE POUR LES BOUTONS DU MODAL ---
+// Elle définit la FORME et la TAILLE communes à tous les boutons
+.modal-button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// --- CLASSE MODIFICATRICE POUR LE BOUTON "ANNULER" ---
+// Elle ne définit que la COULEUR
+.is-cancel {
+  background-color: #6b7280;
+  &:hover {
+    background-color: #4b5563;
+  }
+}
+
+// --- CLASSE MODIFICATRICE POUR LE BOUTON "CONFIRMER" ---
+// Elle ne définit que la COULEUR (en rouge, car c'est une action dangereuse)
+.is-danger {
+  background-color: #ef4444;
+  &:hover {
+    background-color: #dc2626;
+  }
+}
+
+// --- CLASSE MODIFICATRICE POUR LE BOUTON "SAUVEGARDER" ---
+// Elle ne définit que la COULEUR
+.is-success {
+  background-color: $color-green-Pistachio;
+  &:hover {
+    background-color: color.adjust($color-green-Pistachio, $lightness: -10%);
+  }
+}
