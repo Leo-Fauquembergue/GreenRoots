@@ -3,7 +3,7 @@ import CommandeGestion from "../components/admin/OrderGestion";
 import UtilisateurGestion from "../components/admin/UsersGestion";
 import CatalogueGestion from "../components/admin/CatalogGestion";
 
-import { User, LogOut, ShoppingCart, Users, Tree } from "lucide-react";
+import { User, LogOut, ShoppingCart, Users, Trees } from "lucide-react";
 
 // === Types ===
 interface User {
