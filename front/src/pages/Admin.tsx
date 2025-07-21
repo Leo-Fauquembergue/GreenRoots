@@ -3,7 +3,7 @@ import CommandeGestion from "../components/admin/OrderGestion";
 import UtilisateurGestion from "../components/admin/UsersGestion";
 import CatalogueGestion from "../components/admin/CatalogGestion";
 
-import { User, LogOut, ShoppingCart, Users, Tree } from "lucide-react";
+import { User, LogOut, ShoppingCart, Users, TreePine  } from "lucide-react";
 
 // === Types ===
 interface User {
@@ -174,7 +174,7 @@ export default function AdminPage(): JSX.Element {
               : "bg-gray-200 text-gray-700 hover:bg-gray-300"
           }`}
         >
-          <Tree size={20} />
+          <TreePine size={20} />
           Catalogue
         </button>
       </nav>
