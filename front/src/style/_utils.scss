@@ -1,5 +1,8 @@
 @use 'variables' as *;
 
+header{
+    font-family: $font-main;
+}
 body {
     background-color: $color-bg;
     font-family: $font-main;
@@ -133,5 +136,9 @@ footer{
 
 .text-shadow{
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.costum-max{
+    max-width: 1000px !important;
 }
 

@@ -6,17 +6,17 @@ import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import api from '../services/api';
 import logo from "../assets/logoGreenRoots.png";
-import "../style/header.scss"; // On garde votre SCSS
-import { ShoppingCart, UserRound, LogOut, Menu, X } from "lucide-react"; // On importe Menu et X
+import "../style/header.scss";
+import { ShoppingCart, UserRound, LogOut, Menu, X } from "lucide-react"; 
 
 export default function Header() {
 	const [scrolled, setScrolled] = useState(false);
 	const [menuOpen, setMenuOpen] = useState(false);
 	const { user, setUser } = useAuth();
-  const { cartItemCount } = useCart();
-  const navigate = useNavigate();
-  
-  const handleLogout = async () => {
+    const { cartItemCount } = useCart();
+    const navigate = useNavigate();
+    
+    const handleLogout = async () => {
     await api.post('/auth/logout');
     setUser(null);
     setMenuOpen(false); // Fermer le menu après déconnexion
@@ -52,46 +52,46 @@ export default function Header() {
 
 	return (
 		<header className={`main-header ${scrolled ? "scrolled" : ""}`}>
-			<div className="container">
+			<div className="w-full m-0 flex items-center justify-between pl-0">
 				{/* --- Logo et Titre (stylé par SCSS) --- */}
-				<Link to="/" className="logo-container">
-					<img src={logo} alt="Logo GreenRoots" className="logo" />
-					<span className="title">GreenRoots</span>
+				<Link to="/" className="flex items-center no-underline text-white transition-colors duration-300 ease-in-out">
+					<img src={logo} alt="Logo GreenRoots" className=" logo h-28 mr-4" />
+					<span className="title font-[Dancing_Script] text-5xl font-bold transition-shadow duration-300 ease-in-out" style={{ textShadow: '1px 1px 4px rgba(0,0,0,0.7)' }}>GreenRoots</span>
 				</Link>
 
 				{/* --- Liens de Navigation Desktop (stylé par SCSS, caché sur mobile par Tailwind) --- */}
-				<nav className="nav-links hidden md:flex">
+				<nav className="nav-links">
 					<Link to="/">Accueil</Link>
 					<Link to="/catalog">Catalogue</Link>
-          <Link to="/contact">Contact</Link>
+                    <Link to="/contact">Contact</Link>
 					
-           {user ? (
-            <>
-             <Link to="/profile" className="profile-link">
-                <UserRound  strokeWidth={3} size={24} />
-                <span>Bonjour, {user.name.split(" ")[0]}</span>
-             </Link>
-             <Link>
-                  <button type="button" onClick={handleLogout} className="logout-button flex">
-                      <LogOut  strokeWidth={3} size={24} />
-                       <span >Déconnexion</span>
-                  </button>
-             </Link>
-             <Link to="/cart" className="relative  rounded-full hover:bg-gray-100 transition-colors">
-                <ShoppingCart />
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                    {cartItemCount}
-                  </span>
-                 )}
-             </Link>
-             </>
-            ) : (
-               <>
-             <Link to="/login">Connexion</Link>
-             <Link to="/register" className="register-link">S'inscrire</Link>
-             </>
-            )}
+                {user ? (
+                    <>
+                    <Link to="/profile" className="gap-2 flex">
+                        <UserRound  strokeWidth={3} size={24} />
+                        <span>Bonjour, {user.name.split(" ")[0]}</span>
+                    </Link>
+                    <Link>
+                        <button type="button" onClick={handleLogout} className="gap-2 flex">
+                            <LogOut  strokeWidth={3} size={24} />
+                            <span >Déconnexion</span>
+                        </button>
+                    </Link>
+                    <Link to="/cart" className="relative rounded-full hover:bg-gray-100 transition-colors">
+                        <ShoppingCart />
+                        {cartItemCount > 0 && (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                            {cartItemCount}
+                        </span>
+                        )}
+                    </Link>
+                    </>
+                    ) : (
+                    <>
+                    <Link to="/login">Connexion</Link>
+                    <Link to="/register" className="register-link">S'inscrire</Link>
+                    </>
+                    )}
                        
 				</nav>
 
