@@ -26,9 +26,9 @@ export interface CatalogTree {
   description: string;
   adultHeight: number;
   image: string;
-  price: string; // Le JSON envoie des chaînes pour les décimaux, c'est plus sûr
-  category: Category; // Utilisation de l'interface factorisée
-  region: Region;     // Utilisation de l'interface factorisée
+  price: string; 
+  category: Category;
+  region: Region;     
 }
 
 export interface PlantedTree {
@@ -52,19 +52,33 @@ export interface Order {
   plantedTrees: PlantedTree[]; 
 }
 
+
+export interface CatalogTree {
+  catalogTreeId: number;
+  commonName: string;
+  scientificName: string;
+  price: string;
+  image: string;
+}
+
 export interface Tracking {
   trackingId: number;
-  statementDate: string; // Date ISO, peut être convertie en Date si besoin
-  condition: string;
-  currentHeight: number;
-  currentPicture: string;
-  created_at: string;
-  updated_at: string;
+  statementDate: string;
+  condition?: string;
+  currentHeight?: number;
+  currentPicture?: string;
   plantedTreeId: number;
-  plantedTree: {
-    plantedTreeId: number;
-    personalName: string;
-  };
+}
+
+export interface PlantedTree {
+  plantedTreeId: number;
+  personalName?: string;
+  plantingDate?: string;
+  plantingPlace?: string;
+  catalogTreeId: number;
+  orderId: number;
+  catalogTree: CatalogTree; // Inclus via la requête API
+  trackings?: Tracking[];   // Inclus via la requête API
 }
 
 // =====================================

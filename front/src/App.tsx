@@ -15,11 +15,11 @@ import LegalMentions from "./pages/LegalMentions";
 import OrderHistory from "./pages/OrderHistory";
 import OrderDetailPage from "./pages/OrderDetail";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import PlantedTreesPage from "./pages/PlantedTree";
 import Checkout from "./pages/Checkout";
 import Toast, { type ToastHandles } from './components/Toast';
-import TrackingPage from './pages/Tracking';
 import AdminPage from './pages/Admin';
+import UserPlantedTreesPage from './pages/UserPlantedTrees';
+import TreeTrackingPage from './pages/TreeTracking';
 
 // On crée une référence globale pour le Toast
 export const toastRef = React.createRef<ToastHandles>();
@@ -41,11 +41,12 @@ function App() {
 					<Route path="/legal-mentions" element={<LegalMentions />} />
 					<Route path="/orders" element={<OrderHistory />} /> 
 					<Route path="/orders/:orderId" element={<OrderDetailPage />} />
-					<Route path="/planted-trees/user" element={<PlantedTreesPage />} />
 					<Route path="/privacy-policy" element={<PrivacyPolicy />} />
 					<Route path="/checkout" element={<Checkout />} />
-					<Route path="/tracking/:id" element={<TrackingPage />} />
 					<Route path="/admin" element={<AdminPage />} />
+
+					<Route path="/planted-trees/user" element={<UserPlantedTreesPage />} />
+					<Route path="/planted-trees/:treeId/tracking" element={<TreeTrackingPage />} />
 
 				</Routes>
 			</main>
