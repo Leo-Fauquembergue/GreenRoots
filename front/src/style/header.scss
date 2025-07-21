@@ -1,58 +1,21 @@
 @use 'variables' as *;
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Fjalla+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
-.logo-and-welcome {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
 
-}
 
 .main-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 1rem 2rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 1rem 3rem;
   z-index: 100;
-  background-color: transparent;
-
-  .container {
-    width: 100%;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 0;
-  }
-
-  .logo-container {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    transition: color 0.3s ease;
-
-    .logo {
-      height: 7rem;
-      margin-right: 1rem;
-    }
-
-    .title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3.5rem;
-      font-weight: 700;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-      transition: text-shadow 0.3s ease;
-    }
-  }
-
+ 
   .nav-links {
     display: flex;
     gap: 1rem;
 
-    a {
+    a, button {
       color: white;
       text-decoration: none;
       font-weight: 600;
@@ -61,67 +24,30 @@
       transition: color 0.3s ease, text-shadow 0.3s ease;
 
       &:hover {
-        text-decoration: underline;
+        transform: scale(1.05);
+        transition: transform 0.2s ease;
       }
     }
 
-    .logout-button {
-     
-      align-items: center;
-      background: none;
-      border: none;
-      gap: 0.5rem;
-      color: white;
-      font-weight: 600;
-      font-size: 1.2rem;
-      cursor: pointer;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-      transition: color 0.3s ease, text-shadow 0.3s ease;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    .profile-link{
-      display: flex;
-      gap: 0.5rem;
-
-    }
-   
   }
 
   &.scrolled {
     background-color: white;
-
-    .logo-container,
-    .nav-links a,
-    .nav-links .logout-button,
-    .welcome-message {
+    a, button {
       color: black;
       text-shadow: none;
     }
   }
 
   @media (max-width: 768px) {
-    padding: 1rem;
 
     .nav-links {
       display: none;
-      gap: 0;
-
-      a,
-      .logout-button {
-        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
-      }
+      gap: 0; 
     }
 
-    .burger {
-      display: flex;
-    }
-
-    .logo-container .title {
-      font-size: 2rem;
+    .logo .title {
+      font-size: 1rem;
     }
 
     .logo-container .logo {
