@@ -23,8 +23,8 @@ import Checkout from "./pages/Checkout";
 import Profile from "./pages/Profile";
 import OrderHistory from "./pages/OrderHistory";
 import OrderDetailPage from "./pages/OrderDetail";
-import PlantedTreesPage from "./pages/PlantedTree";
-import TrackingPage from './pages/Tracking';
+import UserPlantedTreesPage from './pages/UserPlantedTrees';
+import TreeTrackingPage from './pages/TreeTracking';
 import Contact from "./pages/Contact";
 import LegalMentions from "./pages/LegalMentions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -61,8 +61,8 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="orders" element={<OrderHistory />} /> 
             <Route path="orders/:orderId" element={<OrderDetailPage />} />
-            <Route path="planted-trees/user" element={<PlantedTreesPage />} />
-            <Route path="tracking/:id" element={<TrackingPage />} />
+            <Route path="planted-trees/user" element={<UserPlantedTreesPage />} />
+            <Route path="tracking/:id" element={<TreeTrackingPage />} />
           </Route>
         </Route>
         
