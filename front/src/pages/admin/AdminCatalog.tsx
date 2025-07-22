@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent, useCallback } from "react";
 import api from "../../services/api";
-import type { CatalogTree } from "../../hooks/types";
+import type { CatalogTree, Category, Region } from "../../hooks/types";
 import { toastRef, confirmModalRef } from "../../App";
 import { Trash2, TreePine } from "lucide-react";
 
@@ -13,57 +13,85 @@ export default function AdminCatalog() {
 	const [scientificName, setScientificName] = useState("");
 	const [price, setPrice] = useState("");
 
-	const fetchTrees = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await api.get("/catalog-trees");
-      setTrees(response.data.data); // L'API renvoie { data, totalCount }
-    } catch (err: any) {
-      toastRef.current?.showToast("Erreur de chargement du catalogue", 'error');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+	const [categoryId, setCategoryId] = useState<number | null>(null);
+	const [regionId, setRegionId] = useState<number | null>(null);
+	const [categories, setCategories] = useState<Category[]>([]);
+	const [regions, setRegions] = useState<Region[]>([]);
 
-  useEffect(() => {
-    fetchTrees();
-  }, [fetchTrees]);
+	const fetchTrees = useCallback(async () => {
+		try {
+			setLoading(true);
+			const response = await api.get("/catalog-trees");
+			setTrees(response.data.data);
+		} catch (err: any) {
+			toastRef.current?.showToast("Erreur de chargement du catalogue", "error");
+		} finally {
+			setLoading(false);
+		}
+	}, []);
+
+	const fetchCategoriesAndRegions = useCallback(async () => {
+		try {
+			const [catRes, regRes] = await Promise.all([
+				api.get("/categories"),
+				api.get("/regions"),
+			]);
+			setCategories(catRes.data);
+			setRegions(regRes.data);
+		} catch {
+			toastRef.current?.showToast("Erreur lors du chargement des données", "error");
+		}
+	}, []);
+
+	useEffect(() => {
+		fetchTrees();
+		fetchCategoriesAndRegions();
+	}, [fetchTrees, fetchCategoriesAndRegions]);
 
 	const handleAddTree = async (e: FormEvent) => {
-    e.preventDefault();
-    try {
-      const newTreeData = { commonName, scientificName, price: parseFloat(price), categoryId: 1, regionId: 1 };
-      await api.post("/catalog-trees", newTreeData);
-      toastRef.current?.showToast("Arbre ajouté avec succès !", 'success');
-      
-      // On rappelle la fonction pour rafraîchir la liste
-      await fetchTrees(); 
-      
-      // Vider le formulaire
-      setCommonName(""); 
-      setScientificName(""); 
-      setPrice("");
-    } catch (err: any) {
-      toastRef.current?.showToast(err.response?.data?.message || "Erreur lors de l'ajout", 'error');
-    }
-  };
+		e.preventDefault();
+		if (!categoryId || !regionId) {
+			toastRef.current?.showToast("Veuillez sélectionner une catégorie et une région", "error");
+			return;
+		}
+		try {
+			const newTreeData = {
+				commonName,
+				scientificName,
+				price: parseFloat(price),
+				categoryId,
+				regionId,
+			};
+			await api.post("/catalog-trees", newTreeData);
+			toastRef.current?.showToast("Arbre ajouté avec succès !", "success");
+			await fetchTrees();
 
-  const handleDeleteTree = (id: number, name: string) => {
-    confirmModalRef.current?.show(
-      "Confirmer la suppression",
-      `Voulez-vous vraiment supprimer "${name}" du catalogue ?`,
-      async () => {
-        try {
-          await api.delete(`/catalog-trees/${id}`);
-          toastRef.current?.showToast("Arbre supprimé avec succès.", 'success');
-          // On rafraîchit la liste complète depuis le serveur pour être sûr
-          await fetchTrees();
-        } catch (err: any) {
-          toastRef.current?.showToast(err.response?.data?.message || "Erreur de suppression", 'error');
-        }
-      }
-    );
-  };
+			// Réinitialiser le formulaire
+			setCommonName("");
+			setScientificName("");
+			setPrice("");
+			setCategoryId(null);
+			setRegionId(null);
+		} catch (err: any) {
+			toastRef.current?.showToast(err.response?.data?.message || "Erreur lors de l'ajout", "error");
+		}
+	};
+
+	const handleDeleteTree = (id: number, name: string) => {
+		confirmModalRef.current?.show(
+			"Confirmer la suppression",
+			`Voulez-vous vraiment supprimer "${name}" du catalogue ?`,
+			async () => {
+				try {
+					await api.delete(`/catalog-trees/${id}`);
+					toastRef.current?.showToast("Arbre supprimé avec succès.", "success");
+					await fetchTrees();
+				} catch (err: any) {
+					toastRef.current?.showToast(err.response?.data?.message || "Erreur de suppression", "error");
+				}
+			}
+		);
+	};
 
 	if (loading)
 		return <p className="text-center p-4">Chargement du catalogue...</p>;
@@ -106,6 +134,33 @@ export default function AdminCatalog() {
 						className="input-group"
 					/>
 				</div>
+
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<select
+						value={categoryId ?? ""}
+						onChange={(e) => setCategoryId(Number(e.target.value))}
+						required
+						className="input-group"
+					>
+						<option value="" disabled>Choisir une catégorie</option>
+						{categories.map((cat) => (
+							<option key={cat.id} value={cat.id}>{cat.name}</option>
+						))}
+					</select>
+
+					<select
+						value={regionId ?? ""}
+						onChange={(e) => setRegionId(Number(e.target.value))}
+						required
+						className="input-group"
+					>
+						<option value="" disabled>Choisir une région</option>
+						{regions.map((reg) => (
+							<option key={reg.id} value={reg.id}>{reg.name}</option>
+						))}
+					</select>
+				</div>
+
 				<button type="submit" className="btn-dark px-6 py-2">
 					Ajouter l'arbre
 				</button>
