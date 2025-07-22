@@ -5,14 +5,15 @@ import {
   TreeDeciduous,
   Gift,
 } from "lucide-react";
+import "../style/style.scss";
 
-export default function EnSavoirPlusPage() {
+export default function AboutUsPage() {
   return (
-    <div className="min-h-screen text-gray-800 px-4 pt-38 pb-20 md:px-10" style={{ backgroundColor: "#dff0dc" }}>
+    <div className="min-h-screen text-gray-800 px-4 pt-38 pb-20 md:px-10" >
       <div className="max-w-6xl mx-auto">
 
         {/* Titre principal */}
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center text-green-800">
+        <h1 className="page-title">
           GreenRoots : Plantez un arbre, suivez son impact
         </h1>
 
@@ -99,9 +100,9 @@ export default function EnSavoirPlusPage() {
             Parce que chaque arbre compte. Offrez un cadeau porteur de sens, ou
             engagez-vous pour un avenir plus vert.
           </p>
-          <Link
+          <Link className="btn-dark p-3"
             to="/catalog"
-            className="bg-green-700 hover:bg-green-800 text-white font-semibold py-3 px-6 rounded-full shadow-md transition"
+          
           >
             🌱 Découvrir les arbres à planter
           </Link>

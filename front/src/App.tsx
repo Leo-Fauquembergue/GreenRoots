@@ -29,7 +29,7 @@ import Contact from "./pages/Contact";
 import LegalMentions from "./pages/LegalMentions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdminPage from './pages/Admin';
-import EnSavoirPlusPage from './pages/EnSavoirPlusPage';
+import EnSavoirPlusPage from './pages/AboutUsPage';
 
 // On crée une référence globale pour les composants Toast et Modal.
 export const toastRef = React.createRef<ToastHandles>();
