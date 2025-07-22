@@ -56,7 +56,7 @@ export default function Header() {
 	// --- Rendu du composant (JSX) ---
 	return (
 		<header className={`main-header ${scrolled ? "scrolled" : ""}`}>
-			<div className="container">
+			<div className="header-container">
 				<Link to="/" className="logo-container">
 					<img src={logo} alt="Logo GreenRoots" className="logo" />
 					<span className="title greenroots">GreenRoots</span>
@@ -111,7 +111,7 @@ export default function Header() {
 						onClick={() => setMenuOpen(!menuOpen)}
 						aria-label="Menu"
 					>
-						{menuOpen ? <X size={28} color="white" /> : <Menu size={28} color="white" />}
+						{menuOpen ? <X size={28} color="white" /> : <Menu size={28}  />}
 					</button>
 				</div>
 			</div>

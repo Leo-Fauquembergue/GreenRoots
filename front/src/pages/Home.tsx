@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import TreeCard from "../components/TreeCard.tsx";
 import backgroundImage from "../assets/background-tree.jpg";
 import api from "../services/api";
@@ -37,8 +38,8 @@ export default function Home() {
 				className="flex flex-col justify-center items-center text-center h-screen bg-dark bg-cover bg-center text-white px-8"
 				style={{ backgroundImage: `url(${backgroundImage})` }}
 			>
-				<div className="max-w-[50rem] pt-40 mt-40 mb-12 text-shadow">
-					<h1 className="text-6xl mb-4"
+				<div className="max-w-[50rem] pt-10 mt-90 mb-12 text-shadow backdrop-blur-[0.8px]">
+					<h1 className="text-6xl mb-10 " 
 					>
 						Plantez un arbre !<br />
 						Respirez demain !
@@ -52,7 +53,10 @@ export default function Home() {
 						c'est soutenir les communautés locales grâce à des projets de
 						reforestation durable.
 					</p>
-					<button className="btn-dark p-4 mb-20 " type="button">En savoir plus</button>
+					<Link to="/en-savoir-plus" className="btn-dark p-4 mb-20 inline-block">
+  					En savoir plus
+					</Link>
+
 				</div>
 			</section>
 

@@ -5,7 +5,7 @@ import type { PlantedTree } from "../hooks/types";
 import PlantedTreeCard from "../components/PlantedTreeCard";
 import "../style/style.scss";
 
-export default function UserPlantedTreesPage() {
+export default function UserPlantedTrees() {
   const [trees, setTrees] = useState<PlantedTree[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +14,7 @@ export default function UserPlantedTreesPage() {
     const fetchUserTrees = async () => {
       try {
         setLoading(true);
-        const response = await api.get<PlantedTree[]>("/planted-trees/user");
+        const response = await api.get<PlantedTree[]>("/planted-trees");
         setTrees(response.data);
       } catch (err: any) {
         if (err.response?.status === 401) {

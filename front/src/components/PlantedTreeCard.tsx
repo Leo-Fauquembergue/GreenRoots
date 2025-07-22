@@ -34,7 +34,7 @@ export default function PlantedTreeCard({ tree }: PlantedTreeCardProps) {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md flex flex-col md:flex-row gap-4 items-center">
+    <div className="bg-white p-4 border-t border-gray-200 first:border-none flex flex-col md:flex-row gap-4 items-center">
       <img
         src={tree.catalogTree.image}
         alt={tree.catalogTree.commonName}
@@ -54,7 +54,7 @@ export default function PlantedTreeCard({ tree }: PlantedTreeCardProps) {
           <button type="submit" //pas sure
             onClick={handleSaveChanges}
             disabled={isSaving}
-            className="btn-dark px-3 py-1 w-full sm:w-auto"
+            className="btn-dark px-3 py-2 w-full sm:w-auto"
           >
             {isSaving ? "Saving..." : "Enregistrer"}
           </button>
@@ -66,10 +66,10 @@ export default function PlantedTreeCard({ tree }: PlantedTreeCardProps) {
         )}
       </div>
       
-      <div className="mt-4 md:mt-0">
+      <div className="mt-4 md:mt-0 ">
         <Link
           to={`/planted-trees/${tree.plantedTreeId}/tracking`}
-          className="btn-light block px-3 py-2 mt-3 text-center"
+          className="btn-light block px-3 py-2 full sm:w-auto "
         >
           Voir le suivi
         </Link>
