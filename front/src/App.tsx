@@ -22,9 +22,9 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Profile from "./pages/Profile";
 import OrderHistory from "./pages/OrderHistory";
-import OrderDetailPage from "./pages/OrderDetail";
-import UserPlantedTreesPage from './pages/UserPlantedTrees';
-import TreeTrackingPage from './pages/TreeTracking';
+import OrderDetail from "./pages/OrderDetail";
+import UserPlantedTrees from './pages/UserPlantedTrees';
+import TreeTracking from './pages/TreeTracking';
 import Contact from "./pages/Contact";
 import LegalMentions from "./pages/LegalMentions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -62,9 +62,9 @@ function App() {
             <Route path="checkout" element={<Checkout />} />
             <Route path="profile" element={<Profile />} />
             <Route path="orders" element={<OrderHistory />} /> 
-            <Route path="orders/:orderId" element={<OrderDetailPage />} />
-            <Route path="planted-trees/user" element={<UserPlantedTreesPage />} />
-            <Route path="tracking/:id" element={<TreeTrackingPage />} />
+            <Route path="orders/:orderId" element={<OrderDetail />} />
+            <Route path="planted-trees" element={<UserPlantedTrees />} />
+            <Route path="planted-trees/:treeId/tracking" element={<TreeTracking/>} />
           </Route>
         </Route>
         

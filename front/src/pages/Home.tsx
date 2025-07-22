@@ -38,8 +38,8 @@ export default function Home() {
 				className="flex flex-col justify-center items-center text-center h-screen bg-dark bg-cover bg-center text-white px-8"
 				style={{ backgroundImage: `url(${backgroundImage})` }}
 			>
-				<div className="max-w-[50rem] pt-40 mt-40 mb-12 text-shadow">
-					<h1 className="text-6xl mb-4"
+				<div className="max-w-[50rem] pt-10 mt-90 mb-12 text-shadow backdrop-blur-[0.8px]">
+					<h1 className="text-6xl mb-10 " 
 					>
 						Plantez un arbre !<br />
 						Respirez demain !

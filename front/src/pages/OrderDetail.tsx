@@ -8,7 +8,7 @@ import type { Order } from '../hooks/types';
 import "../style/style.scss";
 
 
-export default function OrderDetailPage() {
+export default function OrderDetail() {
 
   const { orderId } = useParams<{ orderId: string }>();
 
