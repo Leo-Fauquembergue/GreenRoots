@@ -91,9 +91,9 @@ export default function TreeTracking() {
             <div className="space-y-4">
               {tree.trackings.slice(1).map(tracking => (
                 <div key={tracking.trackingId} className="p-4 border border-gray-300 rounded-md">
-                   <p><strong>Date :</strong> {new Date(tracking.statementDate).toLocaleDateString('fr-FR')}</p>
-                   <p><strong>Condition :</strong> {tracking.condition || 'N/A'}</p>
-                   <p><strong>Hauteur :</strong> {tracking.currentHeight ? `${tracking.currentHeight} cm` : 'N/A'}</p>
+                  <p><strong>Date :</strong> {new Date(tracking.statementDate).toLocaleDateString('fr-FR')}</p>
+                  <p><strong>Condition :</strong> {tracking.condition || 'N/A'}</p>
+                  <p><strong>Hauteur :</strong> {tracking.currentHeight ? `${tracking.currentHeight} cm` : 'N/A'}</p>
                 </div>
               ))}
             </div>

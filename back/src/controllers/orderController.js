@@ -7,27 +7,39 @@ import {
 import { idSchema, orderSchema, updateOrderSchema } from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";
 
+// Fonction pour l'admin, pour voir TOUTES les commandes
 export async function getAllOrders(req, res) {
 	const orders = await Order.findAll({
-		include: [{ association: "user", attributes: ["userId", "name", "email"] }],
+    // On s'assure d'inclure les attributs et les associations
+    attributes: ['orderId', 'status', 'orderDate', 'created_at'], // On demande explicitement les champs
+		include: [
+      { 
+        association: "user", 
+        attributes: ["userId", "name", "email"] 
+      },
+      {
+        association: "plantedTrees",
+        include: [{
+          association: "catalogTree",
+          attributes: ["commonName", "scientificName", "price", "image"] // On inclut les infos nécessaires
+        }]
+      }
+    ],
+    order: [['orderDate', 'DESC']] // Trier du plus récent au plus ancien
 	});
 	res.json(orders);
 }
 
+// Fonction pour voir UNE commande (avec contrôle de permission)
 export async function getOneOrder(req, res) {
 	const { id: orderId } = idSchema.parse(req.params);
 	const user = req.session.user;
 
 	const order = await Order.findByPk(orderId, {
 		include: [
-			// Le scope par défaut du user s'applique (pas de mdp)
-			{ association: "user" }, // Relation directe : Order -> User
+			{ association: "user" },
 			{
-				// Premier niveau d'imbrication : on suit le chemin Order -> PlantedTree
 				association: "plantedTrees",
-
-				// Deuxième niveau d'imbrication :
-				// POUR CHAQUE plantedTree trouvé, on suit le chemin PlantedTree -> CatalogTree
 				include: [{ association: "catalogTree" }],
 			},
 		],
@@ -37,10 +49,6 @@ export async function getOneOrder(req, res) {
 		throw new HttpError(404, "Commande non trouvée.");
 	}
 
-	// --- CONTRÔLE D'ACCÈS CRUCIAL ---
-	// L'utilisateur peut voir la commande si :
-	// 1. Il est un admin.
-	// 2. OU si l'ID de l'utilisateur de la commande (order.userId) est le même que son ID de session.
 	if (user.role !== "admin" && order.userId !== user.id) {
 		throw new HttpError(
 			403,
@@ -51,12 +59,14 @@ export async function getOneOrder(req, res) {
 	res.json(order);
 }
 
+// Fonction pour créer une commande (utilisée par l'admin, si besoin)
 export async function createOrder(req, res) {
 	const data = orderSchema.parse(req.body);
 	const newOrder = await Order.create(data);
 	res.status(201).json(newOrder);
 }
 
+// Fonction pour mettre à jour une commande (utilisée par l'admin)
 export async function updateOrder(req, res) {
 	const { id } = idSchema.parse(req.params);
 	const data = updateOrderSchema.parse(req.body);
@@ -70,6 +80,7 @@ export async function updateOrder(req, res) {
 	res.json(updatedOrder);
 }
 
+// Fonction pour supprimer une commande (utilisée par l'admin)
 export async function deleteOrder(req, res) {
 	const { id } = idSchema.parse(req.params);
 	const deleted = await Order.destroy({ where: { orderId: id } });
@@ -79,13 +90,10 @@ export async function deleteOrder(req, res) {
 	res.status(204).end();
 }
 
+// Fonction pour un utilisateur qui veut voir SES commandes
 export async function getUserOrders(req, res) {
-	// Vérification de la session utilisateur
 	if (!req.session.user) {
-		throw new HttpError(
-			401,
-			"Vous devez être connecté pour voir vos commandes.",
-		);
+		throw new HttpError(401, "Vous devez être connecté pour voir vos commandes.");
 	}
 
 	const userId = req.session.user.id;
@@ -93,7 +101,7 @@ export async function getUserOrders(req, res) {
 	const orders = await Order.findAll({
 		where: {
 			userId: userId,
-			status: ["completed", "cancelled"], // Exclure les paniers en cours
+			status: ["completed", "cancelled"], // On exclut les paniers en cours
 		},
 		include: [
 			{
@@ -101,30 +109,12 @@ export async function getUserOrders(req, res) {
 				include: [
 					{
 						association: "catalogTree",
-						attributes: [
-							"catalogTreeId",
-							"commonName",
-							"scientificName",
-							"price",
-							"description",
-							"image",
-							"adultHeight",
-						],
-						include: [
-							{
-								association: "category",
-								attributes: ["categoryId", "name"],
-							},
-							{
-								association: "region",
-								attributes: ["regionId", "name"],
-							},
-						],
+						include: ["category", "region"],
 					},
 				],
 			},
 		],
-		order: [["orderDate", "DESC"]], // Trier par date de commande décroissante
+		order: [["orderDate", "DESC"]],
 	});
 
 	res.json(orders);
