@@ -5,7 +5,7 @@ import { isAuthenticated, isAdmin } from "../middlewares/authMiddleware.js";
 export const plantedTreeRouter = Router();
 
 // Route pour un utilisateur qui veut voir SES arbres plantés
-plantedTreeRouter.get("/user", isAuthenticated, plantedTreeController.getUserPlantedTrees);
+plantedTreeRouter.get("/", isAuthenticated, plantedTreeController.getUserPlantedTrees);
 
 // Routes admin pour la gestion globale de tous les arbres plantés
 plantedTreeRouter.get("/", isAuthenticated, isAdmin, plantedTreeController.getAllPlantedTrees);

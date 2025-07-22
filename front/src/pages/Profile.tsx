@@ -36,7 +36,7 @@ export default function Profile() {
             <Link to="/orders" className="block text-center px-4 py-3 btn-dark">
               Voir mon historique de commandes
             </Link>
-            <Link to="/planted-trees/user" className="block text-center px-4 py-3 btn-light">
+            <Link to="/planted-trees" className="block text-center px-4 py-3 btn-light">
               Voir mes arbres plantés
             </Link>
 

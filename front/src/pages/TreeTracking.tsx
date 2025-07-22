@@ -4,7 +4,7 @@ import api from '../services/api';
 import type { PlantedTree } from '../hooks/types'; 
 import "../style/style.scss";
 
-export default function TreeTrackingPage() {
+export default function TreeTracking() {
   const { treeId } = useParams<{ treeId: string }>();
   const [tree, setTree] = useState<PlantedTree | null>(null);
   const [loading, setLoading] = useState(true);
@@ -49,12 +49,12 @@ export default function TreeTrackingPage() {
   return (
     <div className="min-h-screen p-4 md:p-8">
       <div className="gr-container max-w-4xl mx-auto">
-        <Link to="/planted-trees/user" className="color-pistachio mb-6 inline-block">
+        <Link to="/planted-trees" className="color-pistachio mb-6 inline-block">
           ← Retour à mes arbres
         </Link>
         
         {/* En-tête de l'arbre */}
-        <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 p-4 bg-white rounded-lg shadow">
+        <div className="flex flex-col sm:flex-row items-center gap-6 mb-8 p-4 bg-white border-b border-gray-200">
           <img src={tree.catalogTree.image} alt={tree.catalogTree.commonName} className="w-32 h-32 object-cover rounded-full"/>
           <div>
             <h1 className="text-3xl font-bold text-gray-700 pb-4">{tree.personalName || tree.catalogTree.commonName}</h1>
