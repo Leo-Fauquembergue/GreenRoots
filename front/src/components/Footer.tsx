@@ -57,6 +57,11 @@ export default function Footer() {
 						<Link to="/privacy-policy" className="hover:underline">
 							Politique de Confidentialité
 						</Link>
+
+						<span className="mx-2">|</span>
+						<Link to="/en-savoir-plus" className="hover:underline">
+							À propos de Nous
+						</Link>
           </div>
 				</div>
 
