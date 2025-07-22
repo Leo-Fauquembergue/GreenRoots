@@ -39,7 +39,7 @@ export default function UserPlantedTreesPage() {
 
   return (
     <div className="min-h-screen p-4 md:p-8">
-      <div className="gr-container max-w-4xl mx-auto">
+      <div className="gr-container ">
         <Link to="/profile" className="color-pistachio mb-6 inline-block">
           ← Retour à mon profil
         </Link>

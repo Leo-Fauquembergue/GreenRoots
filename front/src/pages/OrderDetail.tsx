@@ -113,7 +113,7 @@ export default function OrderDetailPage() {
           </h2>
           <div className="space-y-4">
             {order.plantedTrees.map((plantedTree) => (
-              <div key={plantedTree.plantedTreeId} className="flex items-center gap-6 p-4 border border-gray-300 rounded-md">
+              <div key={plantedTree.plantedTreeId} className="flex items-center gap-6 p-4 border-t border-gray-300 first:border-none">
                 <img 
                   src={plantedTree.catalogTree.image} 
                   alt={plantedTree.catalogTree.commonName}
