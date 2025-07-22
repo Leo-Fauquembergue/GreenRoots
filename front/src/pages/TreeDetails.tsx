@@ -7,6 +7,7 @@ import { ShoppingCart } from "lucide-react";
 import api from "../services/api"; 
 import { toastRef } from '../App';
 import "../style/style.scss";
+import "../style/_utils.scss";
 
 const TreeDetails: React.FC = () => {
 	// Récupère le paramètre 'id' depuis l'URL.
@@ -85,10 +86,10 @@ const TreeDetails: React.FC = () => {
 
 	// Si tout s'est bien passé, on affiche les détails de l'arbre.
 	return (
-		<div className="catalog min-h-screen bg-white py-20">
+		<div className="catalog min-h-screen py-20">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-center mb-10">
-					<h1 className="text-4xl md:text-5xl font-bold text-gray-800">
+					<h1 className="text-4xl md:text-5xl font-bold text-gray-800 mt-35">
 						Détails de l'arbre
 					</h1>
 				</div>
