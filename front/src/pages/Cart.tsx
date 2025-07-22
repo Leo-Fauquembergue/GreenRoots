@@ -22,7 +22,7 @@ export default function Cart() {
         <>
           <ul className="space-y-4">
             {cart?.plantedTrees.map((item) => (
-              <li key={item.plantedTreeId} className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+              <li key={item.plantedTreeId} className="flex items-center justify-between p-4 bg-white border-t border-gray-200 first:border-none">
                 <div className="flex items-center gap-4">
                   <img src={item.catalogTree.image} alt={item.catalogTree.commonName} className="w-16 h-16 object-cover rounded"/>
                   <div>

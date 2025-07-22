@@ -14,14 +14,13 @@
   z-index: 1000;
   background-color: transparent;
 
-  .container {
-    max-width: 1500px;
+  .header-container {
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 100%; // S'assure que le conteneur prend toute la largeur
+
   }
 
   .logo-container {
@@ -120,6 +119,7 @@
   // --- Section Mobile ---
   .burger-icon {
     background: transparent;
+    color:white;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
@@ -218,7 +218,10 @@
     box-shadow: 0 2px 10px $color-card-shadow;
     padding: 0.5rem 2rem;
     
-    .logo-container {
+    .separator{
+      background-color: $color-dark;
+    }
+    .logo-container{
       color: $color-dark;
       
       .logo { 
@@ -265,13 +268,16 @@
     }
     
     .burger-icon {
+   
+        color: $color-dark;
+     
       &:hover {
         background-color: #f3f4f6;
       }
       
-      svg {
-        color: $color-dark !important;
-      }
+      // svg {
+      //   color: $color-dark !important;
+      // }
     }
   }
 
@@ -365,6 +371,7 @@
     .nav-links { 
       display: none; 
     }
+  
   }
 
   @media (max-width: 768px) {
