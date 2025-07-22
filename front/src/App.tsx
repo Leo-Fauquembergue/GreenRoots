@@ -29,6 +29,7 @@ import Contact from "./pages/Contact";
 import LegalMentions from "./pages/LegalMentions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdminPage from './pages/Admin';
+import EnSavoirPlusPage from './pages/EnSavoirPlusPage';
 
 // On crée une référence globale pour les composants Toast et Modal.
 export const toastRef = React.createRef<ToastHandles>();
@@ -50,6 +51,7 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="legal-mentions" element={<LegalMentions />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/en-savoir-plus" element={<EnSavoirPlusPage />} />
         </Route>
 
         {/* --- SECTION 2 : ROUTES PROTÉGÉES POUR UTILISATEURS CONNECTÉS --- */}

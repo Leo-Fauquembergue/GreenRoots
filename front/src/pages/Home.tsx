@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import TreeCard from "../components/TreeCard.tsx";
 import backgroundImage from "../assets/background-tree.jpg";
 import api from "../services/api";
@@ -52,7 +53,10 @@ export default function Home() {
 						c'est soutenir les communautés locales grâce à des projets de
 						reforestation durable.
 					</p>
-					<button className="btn-dark p-4 mb-20 " type="button">En savoir plus</button>
+					<Link to="/en-savoir-plus" className="btn-dark p-4 mb-20 inline-block">
+  					En savoir plus
+					</Link>
+
 				</div>
 			</section>
 
