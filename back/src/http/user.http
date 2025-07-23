@@ -4,20 +4,8 @@ GET http://localhost:3000/api/users
 ###
 
 ###
-# GET one user
+# GET one user by ID
 GET http://localhost:3000/api/users/1
-###
-
-###
-# POST create user
-POST http://localhost:3000/api/users
-Content-Type: application/json
-
-{
-  "username": "john_doe",
-  "email": "john@example.com",
-  "password": "secret123"
-}
 ###
 
 ###
@@ -26,11 +14,19 @@ PATCH http://localhost:3000/api/users/1
 Content-Type: application/json
 
 {
-  "email": "john.new@example.com"
+  "email": "jane.doe.new@example.com"
 }
+
+# Exemple de mise à jour du rôle :
+# PATCH http://localhost:3000/api/users/1
+# Content-Type: application/json
+#
+# {
+#   "role": "admin"
+# }
 ###
 
 ###
-# DELETE user
+# DELETE one user
 DELETE http://localhost:3000/api/users/1
 ###

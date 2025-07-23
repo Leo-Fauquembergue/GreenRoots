@@ -9,28 +9,31 @@ GET http://localhost:3000/api/trackings/1
 ###
 
 ###
-# POST create tracking
+# POST a new tracking
 POST http://localhost:3000/api/trackings
 Content-Type: application/json
 
 {
-  "plantedTreeId": 123,
-  "status": "en cours",
-  "updatedAt": "2025-07-09T10:00:00Z"
+  "plantedTreeId": 1,
+  "statementDate": "2025-07-11T10:30:00Z",
+  "condition": "En pleine croissance, semble en bonne santé.",
+  "currentHeight": 1.5,
+  "currentPicture": "http://example.com/images/tree_1_jul_2025.jpg"
 }
 ###
 
 ###
-# PATCH update tracking
+# PATCH (update) a tracking
 PATCH http://localhost:3000/api/trackings/1
 Content-Type: application/json
 
 {
-  "status": "terminé"
+  "condition": "A bien grandi, quelques feuilles jaunissent.",
+  "currentHeight": 1.8
 }
 ###
 
 ###
-# DELETE tracking
+# DELETE a tracking
 DELETE http://localhost:3000/api/trackings/1
 ###

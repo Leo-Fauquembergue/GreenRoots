@@ -1,12 +1,17 @@
 // ======================
 // 🎨 Variables Globales
 // ======================
-$font-main: 'Bebas Neue', sans-serif;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Oswald:wght@200..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+$font-main: 'Oswald', sans-serif;
 $font-title: 'Dancing Script', cursive;
 
 $color-bg: #dff0dc;
 $color-dark: #152416;
-$color-white: #ffffff;
-$color-black: #000000;
 $color-card-shadow: rgba(0, 0, 0, 0.1);
 $color-footer-icon: #fdffb2;
+$color-green-Pistachio: #85af61;
+
+$text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);

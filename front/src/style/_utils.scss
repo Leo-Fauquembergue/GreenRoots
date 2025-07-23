@@ -1,24 +1,145 @@
 @use 'variables' as *;
 
-.btn-dark{
-    background-color: $color-dark;
+header{
+    font-family: $font-main;
 }
-.btn-dark:hover{
+body {
     background-color: $color-bg;
+    font-family: $font-main;
+    color: $color-dark;
+}
+footer{
+    background-color: $color-dark;
+    font-family: $font-main;
+}
+
+.gr-form{
+    background-color: white;
+    padding: 2rem;
+    
+    .form-error {
+        color: #ef4444;
+        background-color: #fee2e2;
+        padding: 0.75rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 1rem;
+        border: 1px solid #fca5a5;
+      }
+      .form-success {
+        color: #567938;
+        background-color: #c8f3c2;
+        padding: 0.75rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        text-align: center;
+        margin-top: 1rem;
+        border: 1px solid  #567938;
+      }
+      .input-group {
+        margin-bottom: 1rem;
+        label {
+          display: block;
+          font-size: 0.9rem;
+          font-weight: 500;
+          margin-bottom: 0.5rem;
+          color: #4b5563;
+        }
+        input, textarea {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid #d1d5db;
+          border-radius: 6px;
+          transition: border-color 0.2s, box-shadow 0.2s;
+          &:focus {
+            outline: none;
+            border-color: $color-green-Pistachio;
+            box-shadow: 0 0 0 2px rgba($color-green-Pistachio, 0.5);
+          }
+        }
+      }
+}
+.color-pistachio{
+    color: $color-green-Pistachio;
+}
+
+.color-dark{
     color: $color-dark;
 }
 
-.btn-light{
-    background-color: $color-bg;
-}
-.btn-light:hover{
+.color-light{
     color: $color-bg;
-    background-color: $color-dark;
 }
+
+.gr-container{
+    max-width: 50rem;
+    margin: 10rem auto 5rem;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+ 
+}
+.btn-dark {
+    background-color: $color-dark;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+   
+    &:hover {
+        background-color: $color-bg;
+        color: $color-dark;
+    }
+}
+
+.btn-light{
+    background-color: $color-green-Pistachio;
+    color: white;
+    
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover{
+        background-color: $color-dark;
+    }
+}
+
+.btn-ultra-light{
+    background-color: $color-bg;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover{
+        background-color: $color-dark;
+    }
+}
+
 .greenroots {
     font-family: $font-title;
-   
     font-weight: 700;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
     transition: text-shadow 0.3s ease;
-  }
+}
+
+.page-title{
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 2.5rem;
+    color: $color-dark;
+}
+
+.text-shadow{
+    text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.costum-max{
+    max-width: 1000px !important;
+}
+
