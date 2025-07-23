@@ -38,13 +38,13 @@ export default function Home() {
 				className="flex flex-col justify-center items-center text-center h-screen bg-dark bg-cover bg-center text-white px-8"
 				style={{ backgroundImage: `url(${backgroundImage})` }}
 			>
-				<div className="max-w-[50rem] pt-10 mt-90 mb-12 text-shadow backdrop-blur-[0.8px]">
-					<h1 className="text-6xl mb-10 " 
+				<div className="max-w-[55rem] pt-10 mt-90 mb-12 text-shadow">
+					<h1 className="text-7xl mb-10"
 					>
 						Plantez un arbre !<br />
 						Respirez demain !
 					</h1>
-					<p className="text-2xl mb-8">
+					<p className="text-3xl mb-8">
 						Chez Greenroots, nous croyons qu'un petit geste peut avoir un grand
 						impact. Planter un arbre, c'est bien plus qu'un acte symbolique.
 						C'est lutter contre le réchauffement climatique en capturant le

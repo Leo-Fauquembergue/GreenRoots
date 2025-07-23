@@ -193,6 +193,7 @@
         align-items: center;
         gap: 1rem;
         transition: all 0.2s ease;
+        justify-content: center;
         
         &:hover {
           transform: translateY(-2px);
