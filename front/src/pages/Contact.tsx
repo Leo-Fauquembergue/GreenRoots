@@ -61,7 +61,7 @@ export default function Contact() {
 				<h3 className="mt-6 mb-2 text-lg font-semibold">Où nous trouver :</h3>
 
 				<div className="flex justify-center mt-4">
-					<div className="bg-white rounded-xl shadow-lg p-1 transition hover:shadow-2xl w-4/5 md:w-2/3 lg:w-2/5">
+					<div className="bg-white rounded-xl shadow-lg transition hover:shadow-2xl w-4/5 md:w-2/3 lg:w-2/5">
 						<iframe
 							className="w-full h-80 rounded-lg"
 							title="Parc Monceau"
