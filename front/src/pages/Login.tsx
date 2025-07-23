@@ -35,7 +35,7 @@ export default function Login() {
 	return (
 		<div className="gr-container">
 			<h1 className="page-title">Connexion</h1>
-			<p className="mb-4">
+			<p className="mb-4 text-center">
 				Connectez-vous pour commander, suivre vos arbres plantés et gérer votre
 				espace personnel !
 			</p>
