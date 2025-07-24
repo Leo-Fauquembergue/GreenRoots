@@ -8,5 +8,5 @@ export const orderSchema = z.object({
 
 // Pour la mise à jour de l'Order
 export const updateOrderSchema = z.object({
-  status: z.enum(["cart", "completed", "cancelled"]),
+	status: z.enum(["cart", "completed", "cancelled"]),
 });

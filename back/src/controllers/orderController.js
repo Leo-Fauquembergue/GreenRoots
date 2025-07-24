@@ -10,22 +10,24 @@ import { HttpError } from "../errors/http-error.js";
 // Fonction pour l'admin, pour voir TOUTES les commandes
 export async function getAllOrders(req, res) {
 	const orders = await Order.findAll({
-    // On s'assure d'inclure les attributs et les associations
-    attributes: ['orderId', 'status', 'orderDate', 'created_at'], // On demande explicitement les champs
+		// On s'assure d'inclure les attributs et les associations
+		attributes: ["orderId", "status", "orderDate", "created_at"], // On demande explicitement les champs
 		include: [
-      { 
-        association: "user", 
-        attributes: ["userId", "name", "email"] 
-      },
-      {
-        association: "plantedTrees",
-        include: [{
-          association: "catalogTree",
-          attributes: ["commonName", "scientificName", "price", "image"] // On inclut les infos nécessaires
-        }]
-      }
-    ],
-    order: [['orderDate', 'DESC']] // Trier du plus récent au plus ancien
+			{
+				association: "user",
+				attributes: ["userId", "name", "email"],
+			},
+			{
+				association: "plantedTrees",
+				include: [
+					{
+						association: "catalogTree",
+						attributes: ["commonName", "scientificName", "price", "image"], // On inclut les infos nécessaires
+					},
+				],
+			},
+		],
+		order: [["orderDate", "DESC"]], // Trier du plus récent au plus ancien
 	});
 	res.json(orders);
 }
@@ -93,7 +95,10 @@ export async function deleteOrder(req, res) {
 // Fonction pour un utilisateur qui veut voir SES commandes
 export async function getUserOrders(req, res) {
 	if (!req.session.user) {
-		throw new HttpError(401, "Vous devez être connecté pour voir vos commandes.");
+		throw new HttpError(
+			401,
+			"Vous devez être connecté pour voir vos commandes.",
+		);
 	}
 
 	const userId = req.session.user.id;

@@ -78,7 +78,9 @@ export default function Contact() {
 			{/* Bloc bas : formulaire */}
 			<div className="gr-container" style={{ marginTop: "2rem" }}>
 				<h2 className="text-center text-2xl mb-4">Formulaire de contact</h2>
-				<p className="text-center mb-8">Une question, un retour, une idée ? Écrivez-nous !</p>
+				<p className="text-center mb-8">
+					Une question, un retour, une idée ? Écrivez-nous !
+				</p>
 
 				<div className="gr-form">
 					<form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -114,10 +116,15 @@ export default function Contact() {
 							/>
 						</div>
 
-						{success && <p className="form-success text-green-600">{success}</p>}
+						{success && (
+							<p className="form-success text-green-600">{success}</p>
+						)}
 						{error && <p className="form-error text-red-600">{error}</p>}
 
-						<button type="submit"  className="btn-dark p-3 bg-green-700 text-white rounded-md hover:bg-green-800 transition">
+						<button
+							type="submit"
+							className="btn-dark p-3 bg-green-700 text-white rounded-md hover:bg-green-800 transition"
+						>
 							Envoyer
 						</button>
 					</form>

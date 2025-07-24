@@ -2,8 +2,17 @@
 // "Exécute le fichier associations.js pour t'assurer que tous les modèles
 // (CatalogTree, Category, Region, etc.) sont bien définis et liés entre eux,
 // PUIS, donne-moi accès aux variables exportées dont j'ai besoin."
-import { CatalogTree, PlantedTree, Category, Region } from "./../models/associations.js";
-import { idSchema, catalogTreeSchema, updateCatalogTreeSchema } from "../schemas/index.js";
+import {
+	CatalogTree,
+	PlantedTree,
+	Category,
+	Region,
+} from "./../models/associations.js";
+import {
+	idSchema,
+	catalogTreeSchema,
+	updateCatalogTreeSchema,
+} from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";
 
 export async function getAllCatalogTrees(req, res) {
@@ -27,8 +36,6 @@ export async function getAllCatalogTrees(req, res) {
 		offset: offset,
 	};
 
-
-
 	// On récupère les filtres potentiels depuis les paramètres de l'URL (query parameters).
 	const { categoryId, regionId } = req.query;
 
@@ -45,8 +52,6 @@ export async function getAllCatalogTrees(req, res) {
 			options.where.regionId = numericRegionId;
 		}
 	}
-
-
 
 	//  On vérifie la présence du paramètre 'order' et on le sécurise.
 	const orderDirection = req.query.order?.toUpperCase();
@@ -68,7 +73,7 @@ export async function getAllCatalogTrees(req, res) {
 	// Le frontend a besoin de `{ totalCount, data }`
 	res.json({
 		totalCount: count, // Le nombre total pour calculer le nombre de pages
-		data: rows,        // Les arbres de la page actuelle
+		data: rows, // Les arbres de la page actuelle
 	});
 }
 
