@@ -12,21 +12,23 @@ export const app = express();
 // --- Configuration du stockage des sessions en BDD ---
 const SessionStore = SequelizeStore(session.Store);
 const sessionStore = new SessionStore({
-  db: sequelize, // On dit au store d'utiliser notre connexion BDD
+	db: sequelize, // On dit au store d'utiliser notre connexion BDD
 });
 
 // --- Configuration du middleware de session ---
-app.use(session({
-  secret: process.env.SESSION_SECRET, // Une phrase secrète à mettre dans votre .env
-  store: sessionStore, // On utilise notre stockage en BDD.
-  resave: false, // Ne pas sauvegarder les sessions qui n'ont pas été modifiées.
-  saveUninitialized: false, // Ne pas créer de session pour les visiteurs non authentifiés.
-  cookie: {
-    httpOnly: true, // Le cookie ne peut pas être lu par du JavaScript côté client (protection XSS).
-    secure: process.env.NODE_ENV === "production", // Le cookie ne sera envoyé que sur des connexions HTTPS en production.
-    maxAge: 7 * 24 * 60 * 60 * 1000, // Durée de vie du cookie (ex: 7 jours).
-  }
-}));
+app.use(
+	session({
+		secret: process.env.SESSION_SECRET, // Une phrase secrète à mettre dans votre .env
+		store: sessionStore, // On utilise notre stockage en BDD.
+		resave: false, // Ne pas sauvegarder les sessions qui n'ont pas été modifiées.
+		saveUninitialized: false, // Ne pas créer de session pour les visiteurs non authentifiés.
+		cookie: {
+			httpOnly: true, // Le cookie ne peut pas être lu par du JavaScript côté client (protection XSS).
+			secure: process.env.NODE_ENV === "production", // Le cookie ne sera envoyé que sur des connexions HTTPS en production.
+			maxAge: 7 * 24 * 60 * 60 * 1000, // Durée de vie du cookie (ex: 7 jours).
+		},
+	}),
+);
 
 // Middleware CORS
 app.use(

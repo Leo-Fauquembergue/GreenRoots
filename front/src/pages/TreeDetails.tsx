@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Hook pour lire les paramètres de l'URL (comme :id)
-import { useAuth } from '../contexts/AuthContext';
-import { useCart } from '../contexts/CartContext';
-import type { CatalogTree } from "../hooks/types"; 
-import { ShoppingCart } from "lucide-react"; 
-import api from "../services/api"; 
-import { toastRef } from '../App';
+import { useAuth } from "../contexts/AuthContext";
+import { useCart } from "../contexts/CartContext";
+import type { CatalogTree } from "../hooks/types";
+import { ShoppingCart } from "lucide-react";
+import api from "../services/api";
+import { toastRef } from "../App";
 import "../style/style.scss";
 import "../style/_utils.scss";
 
@@ -19,8 +19,8 @@ const TreeDetails: React.FC = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	const { user } = useAuth();
-  const { addToCart } = useCart();
-  const navigate = useNavigate();
+	const { addToCart } = useCart();
+	const navigate = useNavigate();
 
 	// Ce hook s'exécute une fois que le composant est monté, ou si l'ID dans l'URL change.
 	useEffect(() => {
@@ -44,20 +44,23 @@ const TreeDetails: React.FC = () => {
 	}, [id]); // Dépendance : ce code se ré-exécute si l'ID change
 
 	const handleAddToCart = async () => {
-    if (!user) {
-      alert("Vous devez être connecté pour ajouter un article au panier.");
-      navigate('/login');
-      return;
-    }
-    if (tree) {
-      try {
-        await addToCart(tree.catalogTreeId);
-        toastRef.current?.showToast(`${tree.commonName} a été ajouté au panier !`, 'success');
-      } catch (error) {
-        toastRef.current?.showToast("Une erreur est survenue.", 'error');
-      }
-    }
-  };
+		if (!user) {
+			alert("Vous devez être connecté pour ajouter un article au panier.");
+			navigate("/login");
+			return;
+		}
+		if (tree) {
+			try {
+				await addToCart(tree.catalogTreeId);
+				toastRef.current?.showToast(
+					`${tree.commonName} a été ajouté au panier !`,
+					"success",
+				);
+			} catch (error) {
+				toastRef.current?.showToast("Une erreur est survenue.", "error");
+			}
+		}
+	};
 
 	// Pendant le chargement, on affiche un spinner.
 	if (loading) {

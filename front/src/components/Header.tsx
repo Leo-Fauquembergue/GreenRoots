@@ -5,7 +5,14 @@ import { useCart } from "../contexts/CartContext";
 import api from "../services/api";
 import logo from "../assets/logoGreenRoots.png";
 import "../style/header.scss"; // On importe notre fichier de style
-import { ShoppingCart, UserRound, LogOut, Menu, X, ShieldCheck } from "lucide-react";
+import {
+	ShoppingCart,
+	UserRound,
+	LogOut,
+	Menu,
+	X,
+	ShieldCheck,
+} from "lucide-react";
 
 export default function Header() {
 	// --- États du composant ---
@@ -50,7 +57,9 @@ export default function Header() {
 	// Effet pour bloquer le scroll du corps de la page quand le menu mobile est ouvert
 	useEffect(() => {
 		document.body.style.overflow = menuOpen ? "hidden" : "auto";
-		return () => { document.body.style.overflow = "auto"; }; // Nettoyage
+		return () => {
+			document.body.style.overflow = "auto";
+		}; // Nettoyage
 	}, [menuOpen]);
 
 	// --- Rendu du composant (JSX) ---
@@ -81,20 +90,30 @@ export default function Header() {
 								<UserRound size={20} />
 								<span>Bonjour, {user.name.split(" ")[0]}</span>
 							</Link>
-							<button type="button" onClick={handleLogout} className="logout-button">
+							<button
+								type="button"
+								onClick={handleLogout}
+								className="logout-button"
+							>
 								<LogOut size={20} />
 								<span>Déconnexion</span>
 							</button>
 						</>
 					) : (
 						<>
-							<Link to="/login" className="btn-light px-4 py-2">Connexion</Link>
-							<Link to="/register" className="btn-dark px-4 py-2">S'inscrire</Link>
+							<Link to="/login" className="btn-light px-4 py-2">
+								Connexion
+							</Link>
+							<Link to="/register" className="btn-dark px-4 py-2">
+								S'inscrire
+							</Link>
 						</>
 					)}
 					<Link to="/cart" className="cart-link">
 						<ShoppingCart size={24} />
-						{cartItemCount > 0 && <span className="cart-badge">{cartItemCount}</span>}
+						{cartItemCount > 0 && (
+							<span className="cart-badge">{cartItemCount}</span>
+						)}
 					</Link>
 				</nav>
 
@@ -103,7 +122,9 @@ export default function Header() {
 				<div className="flex items-center gap-4 lg:hidden">
 					<Link to="/cart" className="cart-link-mobile">
 						<ShoppingCart size={28} />
-						{cartItemCount > 0 && <span className="cart-badge-mobile">{cartItemCount}</span>}
+						{cartItemCount > 0 && (
+							<span className="cart-badge-mobile">{cartItemCount}</span>
+						)}
 					</Link>
 					<button
 						type="button"
@@ -111,7 +132,7 @@ export default function Header() {
 						onClick={() => setMenuOpen(!menuOpen)}
 						aria-label="Menu"
 					>
-						{menuOpen ? <X size={28} color="white" /> : <Menu size={28}  />}
+						{menuOpen ? <X size={28} color="white" /> : <Menu size={28} />}
 					</button>
 				</div>
 			</div>
@@ -127,17 +148,27 @@ export default function Header() {
 					{user ? (
 						<>
 							{user.role === "admin" && (
-								<Link to="/admin" className="mobile-admin-link"><ShieldCheck /> Panel Admin</Link>
+								<Link to="/admin" className="mobile-admin-link">
+									<ShieldCheck /> Panel Admin
+								</Link>
 							)}
 							<Link to="/profile">Mon Profil</Link>
-							<button type="button" onClick={handleLogout} className="mobile-logout-button">
+							<button
+								type="button"
+								onClick={handleLogout}
+								className="mobile-logout-button"
+							>
 								<LogOut /> Déconnexion
 							</button>
 						</>
 					) : (
 						<div className="flex flex-col gap-4 w-full items-center">
-							<Link to="/login" className="btn-light w-3/4 text-center py-3">Connexion</Link>
-							<Link to="/register" className="btn-dark w-3/4 text-center py-3">S'inscrire</Link>
+							<Link to="/login" className="btn-light w-3/4 text-center py-3">
+								Connexion
+							</Link>
+							<Link to="/register" className="btn-dark w-3/4 text-center py-3">
+								S'inscrire
+							</Link>
 						</div>
 					)}
 				</nav>

@@ -39,7 +39,10 @@ export default function AdminCatalog() {
 			setCategories(catRes.data);
 			setRegions(regRes.data);
 		} catch {
-			toastRef.current?.showToast("Erreur lors du chargement des données", "error");
+			toastRef.current?.showToast(
+				"Erreur lors du chargement des données",
+				"error",
+			);
 		}
 	}, []);
 
@@ -51,7 +54,10 @@ export default function AdminCatalog() {
 	const handleAddTree = async (e: FormEvent) => {
 		e.preventDefault();
 		if (!categoryId || !regionId) {
-			toastRef.current?.showToast("Veuillez sélectionner une catégorie et une région", "error");
+			toastRef.current?.showToast(
+				"Veuillez sélectionner une catégorie et une région",
+				"error",
+			);
 			return;
 		}
 		try {
@@ -73,7 +79,10 @@ export default function AdminCatalog() {
 			setCategoryId(null);
 			setRegionId(null);
 		} catch (err: any) {
-			toastRef.current?.showToast(err.response?.data?.message || "Erreur lors de l'ajout", "error");
+			toastRef.current?.showToast(
+				err.response?.data?.message || "Erreur lors de l'ajout",
+				"error",
+			);
 		}
 	};
 
@@ -87,9 +96,12 @@ export default function AdminCatalog() {
 					toastRef.current?.showToast("Arbre supprimé avec succès.", "success");
 					await fetchTrees();
 				} catch (err: any) {
-					toastRef.current?.showToast(err.response?.data?.message || "Erreur de suppression", "error");
+					toastRef.current?.showToast(
+						err.response?.data?.message || "Erreur de suppression",
+						"error",
+					);
 				}
-			}
+			},
 		);
 	};
 
@@ -142,9 +154,13 @@ export default function AdminCatalog() {
 						required
 						className="input-group"
 					>
-						<option value="" disabled>Choisir une catégorie</option>
+						<option value="" disabled>
+							Choisir une catégorie
+						</option>
 						{categories.map((cat) => (
-							<option key={cat.id} value={cat.id}>{cat.name}</option>
+							<option key={cat.id} value={cat.id}>
+								{cat.name}
+							</option>
 						))}
 					</select>
 
@@ -154,9 +170,13 @@ export default function AdminCatalog() {
 						required
 						className="input-group"
 					>
-						<option value="" disabled>Choisir une région</option>
+						<option value="" disabled>
+							Choisir une région
+						</option>
 						{regions.map((reg) => (
-							<option key={reg.id} value={reg.id}>{reg.name}</option>
+							<option key={reg.id} value={reg.id}>
+								{reg.name}
+							</option>
 						))}
 					</select>
 				</div>
@@ -178,7 +198,9 @@ export default function AdminCatalog() {
 						</div>
 						<button
 							type="button"
-							onClick={() => handleDeleteTree(tree.catalogTreeId, tree.commonName)}
+							onClick={() =>
+								handleDeleteTree(tree.catalogTreeId, tree.commonName)
+							}
 							className="p-2 text-red-500 rounded-full hover:bg-red-100 hover:text-red-700 transition-colors"
 						>
 							<Trash2 size={18} />

@@ -9,40 +9,46 @@ export default function AdminUsers() {
 	const [loading, setLoading] = useState(true);
 
 	// La fonction ne sera recréée que si ses dépendances (ici, aucune) changent.
-  const fetchUsers = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await api.get("/users");
-      setUsers(response.data);
-    } catch (err: any) {
-      toastRef.current?.showToast(err.response?.data?.message || "Erreur de chargement", 'error');
-    } finally {
-      setLoading(false);
-    }
-  }, []); // Le tableau de dépendances de useCallback est vide, car fetchUsers n'utilise aucune prop ou état.
+	const fetchUsers = useCallback(async () => {
+		try {
+			setLoading(true);
+			const response = await api.get("/users");
+			setUsers(response.data);
+		} catch (err: any) {
+			toastRef.current?.showToast(
+				err.response?.data?.message || "Erreur de chargement",
+				"error",
+			);
+		} finally {
+			setLoading(false);
+		}
+	}, []); // Le tableau de dépendances de useCallback est vide, car fetchUsers n'utilise aucune prop ou état.
 
-  useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+	useEffect(() => {
+		fetchUsers();
+	}, [fetchUsers]);
 
 	const handleDeleteUser = (userId: number, name: string) => {
-    // Affiche le modal de confirmation
-    confirmModalRef.current?.show(
-      "Confirmer la suppression",
-      `Êtes-vous sûr de vouloir supprimer l'utilisateur "${name}" ? Cette action est irréversible.`,
-      // Ceci est la fonction qui sera exécutée si l'utilisateur clique sur "Confirmer"
-      async () => {
-        try {
-          await api.delete(`/users/${userId}`);
-          toastRef.current?.showToast("Utilisateur supprimé.", 'success');
-          // Après la suppression, on rafraîchit la liste en appelant la fonction mémorisée
-          fetchUsers();
-        } catch (err: any) {
-          toastRef.current?.showToast(err.response?.data?.message || "Erreur de suppression", 'error');
-        }
-      }
-    );
-  };
+		// Affiche le modal de confirmation
+		confirmModalRef.current?.show(
+			"Confirmer la suppression",
+			`Êtes-vous sûr de vouloir supprimer l'utilisateur "${name}" ? Cette action est irréversible.`,
+			// Ceci est la fonction qui sera exécutée si l'utilisateur clique sur "Confirmer"
+			async () => {
+				try {
+					await api.delete(`/users/${userId}`);
+					toastRef.current?.showToast("Utilisateur supprimé.", "success");
+					// Après la suppression, on rafraîchit la liste en appelant la fonction mémorisée
+					fetchUsers();
+				} catch (err: any) {
+					toastRef.current?.showToast(
+						err.response?.data?.message || "Erreur de suppression",
+						"error",
+					);
+				}
+			},
+		);
+	};
 
 	if (loading)
 		return <p className="text-center p-4">Chargement des utilisateurs...</p>;

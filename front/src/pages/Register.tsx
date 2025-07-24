@@ -50,7 +50,6 @@ export default function Register() {
 			setTimeout(() => {
 				navigate("/login");
 			}, 2000);
-
 		} catch (err: any) {
 			// La gestion d'erreur d'axios est un peu plus directe
 			setError(err.response?.data?.message || "Une erreur est survenue.");
@@ -63,10 +62,9 @@ export default function Register() {
 			<div className="gr-form">
 				<form onSubmit={handleSubmit} className="flex flex-col gap-4">
 					<div className="input-group">
-					<label htmlFor="signUpName">
-						Nom
-					</label>
-					<input id="signUpName"
+						<label htmlFor="signUpName">Nom</label>
+						<input
+							id="signUpName"
 							type="text"
 							value={name}
 							onChange={(e) => setName(e.target.value)}
@@ -74,48 +72,48 @@ export default function Register() {
 						/>
 					</div>
 					<div className="input-group">
-						<label htmlFor="signUpMail">
-							Email
-						</label>
-						<input id="signUpMail"
-								type="email"
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-								required
-							/>
+						<label htmlFor="signUpMail">Email</label>
+						<input
+							id="signUpMail"
+							type="email"
+							value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							required
+						/>
 					</div>
 					<div className="input-group">
-						<label htmlFor="signUpPass">
-							Mot de passe
-						</label>
-						<input id="signUpPass"
-								type="password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								required
-							/>
+						<label htmlFor="signUpPass">Mot de passe</label>
+						<input
+							id="signUpPass"
+							type="password"
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
+							required
+						/>
 					</div>
 					<div className="input-group">
-						<label htmlFor="signUpPassConfirm">
-							Confirmer le mot de passe
-						</label>
-						<input id="signUpPassConfirm"
-								type="password"
-								value={confirmPassword}
-								onChange={(e) => setConfirmPassword(e.target.value)}
-								required
-							/>
+						<label htmlFor="signUpPassConfirm">Confirmer le mot de passe</label>
+						<input
+							id="signUpPassConfirm"
+							type="password"
+							value={confirmPassword}
+							onChange={(e) => setConfirmPassword(e.target.value)}
+							required
+						/>
 					</div>
 
-					{success && <p className="form-success">Compte créé avec succès ! ✅ Vous allez être redirigé.</p>}
+					{success && (
+						<p className="form-success">
+							Compte créé avec succès ! ✅ Vous allez être redirigé.
+						</p>
+					)}
 					{error && <p className="form-error">{error}</p>}
 
-					<button className="btn-dark p-3" type="submit">S'inscrire</button>
+					<button className="btn-dark p-3" type="submit">
+						S'inscrire
+					</button>
 				</form>
 			</div>
-			
-
-			
 		</div>
 	);
 }
