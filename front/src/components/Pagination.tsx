@@ -2,7 +2,6 @@
 import React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-
 const Pagination: React.FC<PaginationProps> = ({
 	currentPage,
 	totalPages,
@@ -70,7 +69,10 @@ const Pagination: React.FC<PaginationProps> = ({
 	}
 
 	return (
-		<nav className="flex items-center justify-center gap-2" aria-label="Pagination">
+		<nav
+			className="flex items-center justify-center gap-2"
+			aria-label="Pagination"
+		>
 			<button
 				type="button"
 				onClick={handlePrevious}

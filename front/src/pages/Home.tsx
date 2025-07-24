@@ -18,11 +18,11 @@ export default function Home() {
 				const response = await api.get("/catalog-trees?limit=3");
 				setTrees(response.data.data); //`data` est un objet,
 			} catch (err: unknown) {
-          if (err instanceof Error) {
-            setError(err.message);
-          } else {
-            setError("Erreur de chargement");
-          }
+				if (err instanceof Error) {
+					setError(err.message);
+				} else {
+					setError("Erreur de chargement");
+				}
 			} finally {
 				setLoading(false);
 			}
@@ -39,30 +39,33 @@ export default function Home() {
 				style={{ backgroundImage: `url(${backgroundImage})` }}
 			>
 				<div className="max-w-[55rem] pt-10 mt-90 mb-12 text-shadow">
-					<h1 className="text-7xl mb-10"
-					>
+					<h1 className="text-7xl mb-10">
 						Plantez un arbre !<br />
 						Respirez demain !
 					</h1>
 					<p className="text-3xl mb-8">
 						Chez Greenroots, nous croyons qu'un petit geste peut avoir un grand
 						impact. Planter un arbre, c'est bien plus qu'un acte symbolique.
-						C'est lutter contre le réchauffement climatique en capturant le
-						CO2, c'est restaurer la biodiversité en créant des habitats pour
-						la faune, c'est préserver les sols et les ressources en eau,
-						c'est soutenir les communautés locales grâce à des projets de
+						C'est lutter contre le réchauffement climatique en capturant le CO2,
+						c'est restaurer la biodiversité en créant des habitats pour la
+						faune, c'est préserver les sols et les ressources en eau, c'est
+						soutenir les communautés locales grâce à des projets de
 						reforestation durable.
 					</p>
-					<Link to="/en-savoir-plus" className="btn-dark p-4 mb-20 inline-block">
-  					En savoir plus
+					<Link
+						to="/en-savoir-plus"
+						className="btn-dark p-4 mb-20 inline-block"
+					>
+						En savoir plus
 					</Link>
-
 				</div>
 			</section>
 
 			{/* Section des 3 derniers arbres */}
-			<section  className="justify-around py-16 px-24">
-				<h2 className="text-center text-2xl font-bold mb-10">Derniers arbres ajoutés:</h2>
+			<section className="justify-around py-16 px-24">
+				<h2 className="text-center text-2xl font-bold mb-10">
+					Derniers arbres ajoutés:
+				</h2>
 
 				{loading && <p>Chargement...</p>}
 				{error && <p className="text-red-500">{error}</p>}

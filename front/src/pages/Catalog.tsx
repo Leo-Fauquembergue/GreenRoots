@@ -2,7 +2,7 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import api from "../services/api";
 import type { CatalogTree, Category, Region } from "../hooks/types";
-import Pagination from "./../components/Pagination.tsx"; 
+import Pagination from "./../components/Pagination.tsx";
 import TreeCard from "./../components/TreeCard.tsx";
 import { AlertCircle, Search } from "lucide-react";
 
@@ -53,15 +53,17 @@ const useCatalogData = (categoryId: string, regionId: string, page: number) => {
 					categoryId: categoryId !== "all" ? categoryId : undefined,
 					regionId: regionId !== "all" ? regionId : undefined,
 				};
-				
+
 				// axios gère automatiquement les paramètres undefined
-				const response = await api.get("/catalog-trees", { params }); 
+				const response = await api.get("/catalog-trees", { params });
 
 				// La réponse du backend doit être un objet { data: [...], totalCount: X }
 				setTrees(response.data.data);
 				setTotalPages(Math.ceil(response.data.totalCount / ITEMS_PER_PAGE));
 			} catch (err: any) {
-				setError(err.response?.data?.message || "Erreur de chargement des arbres.");
+				setError(
+					err.response?.data?.message || "Erreur de chargement des arbres.",
+				);
 			} finally {
 				setLoading(false);
 			}
@@ -72,8 +74,6 @@ const useCatalogData = (categoryId: string, regionId: string, page: number) => {
 
 	return { trees, categories, regions, loading, error, totalPages };
 };
-
-
 
 const Catalog: React.FC = () => {
 	const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -86,12 +86,13 @@ const Catalog: React.FC = () => {
 
 	// Réinitialiser à la page 1 si les filtres changent
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <Je veux que cet effet se déclenche quand selectedCategory OU selectedRegion change, afin de réinitialiser la page à 1.>
-		useEffect(() => {
+	useEffect(() => {
 		setCurrentPage(1);
 	}, [selectedCategory, selectedRegion]);
 
 	// gestion du chargement et des erreurs
-	if (loading && trees.length === 0) { // On affiche le spinner global que lors du premier chargement
+	if (loading && trees.length === 0) {
+		// On affiche le spinner global que lors du premier chargement
 		return (
 			<div className="min-h-screen bg-white flex items-center justify-center">
 				<div className="text-center">
@@ -129,8 +130,8 @@ const Catalog: React.FC = () => {
 				<header className="text-center mt-25 mb-16 ">
 					<h2 className="page-title">Catalogue</h2>
 					<p className="text-lg mt-8 max-w-xl mx-auto leading-relaxed">
-						Découvrez notre sélection d'arbres exceptionnels, adaptés à
-						toutes les régions et tous les projets.
+						Découvrez notre sélection d'arbres exceptionnels, adaptés à toutes
+						les régions et tous les projets.
 					</p>
 				</header>
 
@@ -159,13 +160,10 @@ const Catalog: React.FC = () => {
 					</div>
 
 					<div className="flex items-center gap-3">
-
 						<label
 							htmlFor="region-select"
 							className="text-md font-medium text-gray-700"
 						>
-
-
 							Région:
 						</label>
 						<select
@@ -204,15 +202,15 @@ const Catalog: React.FC = () => {
 					)}
 				</div>
 
-
 				<div className="flex justify-center mt-12">
 					<Pagination
 						currentPage={currentPage}
 						totalPages={totalPages}
-						onPageChange={(page: React.SetStateAction<number>) => setCurrentPage(page)}
+						onPageChange={(page: React.SetStateAction<number>) =>
+							setCurrentPage(page)
+						}
 					/>
 				</div>
-
 			</div>
 		</div>
 	);

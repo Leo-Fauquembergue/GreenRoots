@@ -23,14 +23,14 @@ export async function getAllTrackings(req, res) {
 
 export async function getOneTracking(req, res) {
 	const { id: trackingId } = idSchema.parse(req.params);
-  const user = req.session.user;
+	const user = req.session.user;
 
 	const tracking = await Tracking.findByPk(trackingId, {
 		include: [
 			{
 				association: "plantedTree",
-        // On doit inclure la commande pour connaître le propriétaire !
-				include: ["catalogTree", "order"], 
+				// On doit inclure la commande pour connaître le propriétaire !
+				include: ["catalogTree", "order"],
 			},
 		],
 	});
@@ -40,12 +40,15 @@ export async function getOneTracking(req, res) {
 	}
 
 	// --- LOGIQUE DE PERMISSION FINE ---
-  // L'utilisateur peut voir cette entrée de suivi si :
-  // 1. Il est admin.
-  // 2. OU si la commande associée à l'arbre suivi lui appartient.
-  if (user.role !== 'admin' && tracking.plantedTree.order.userId !== user.id) {
-    throw new HttpError(403, "Accès refusé. Vous ne pouvez voir que le suivi de vos propres arbres.");
-  }
+	// L'utilisateur peut voir cette entrée de suivi si :
+	// 1. Il est admin.
+	// 2. OU si la commande associée à l'arbre suivi lui appartient.
+	if (user.role !== "admin" && tracking.plantedTree.order.userId !== user.id) {
+		throw new HttpError(
+			403,
+			"Accès refusé. Vous ne pouvez voir que le suivi de vos propres arbres.",
+		);
+	}
 
 	res.json(tracking);
 }

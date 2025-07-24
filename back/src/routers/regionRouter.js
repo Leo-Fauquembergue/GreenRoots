@@ -10,5 +10,15 @@ regionRouter.get("/:id", regionController.getOneRegion);
 
 // Seuls les admins peuvent gérer les régions
 regionRouter.post("/", isAuthenticated, isAdmin, regionController.createRegion);
-regionRouter.patch("/:id", isAuthenticated, isAdmin, regionController.updateRegion);
-regionRouter.delete("/:id", isAuthenticated, isAdmin, regionController.deleteRegion);
+regionRouter.patch(
+	"/:id",
+	isAuthenticated,
+	isAdmin,
+	regionController.updateRegion,
+);
+regionRouter.delete(
+	"/:id",
+	isAuthenticated,
+	isAdmin,
+	regionController.deleteRegion,
+);
