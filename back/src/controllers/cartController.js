@@ -1,8 +1,7 @@
 import {
 	Order,
 	PlantedTree,
-	CatalogTree,
-	User,
+	CatalogTree
 } from "./../models/associations.js";
 import { idSchema } from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";

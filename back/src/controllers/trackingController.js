@@ -1,7 +1,6 @@
 import {
 	Tracking,
-	PlantedTree,
-	CatalogTree,
+	PlantedTree
 } from "./../models/associations.js";
 import {
 	idSchema,

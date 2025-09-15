@@ -4,9 +4,7 @@
 // PUIS, donne-moi accès aux variables exportées dont j'ai besoin."
 import {
 	CatalogTree,
-	PlantedTree,
-	Category,
-	Region,
+	PlantedTree
 } from "./../models/associations.js";
 import {
 	idSchema,
