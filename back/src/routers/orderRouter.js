@@ -14,15 +14,5 @@ orderRouter.get("/my-orders", isAuthenticated, orderController.getUserOrders);
 orderRouter.get("/:id", isAuthenticated, orderController.getOneOrder);
 
 // Routes admin pour modifier ou supprimer une commande
-orderRouter.patch(
-	"/:id",
-	isAuthenticated,
-	isAdmin,
-	orderController.updateOrder,
-);
-orderRouter.delete(
-	"/:id",
-	isAuthenticated,
-	isAdmin,
-	orderController.deleteOrder,
-);
+orderRouter.patch("/:id", isAuthenticated, isAdmin, orderController.updateOrder);
+orderRouter.delete("/:id", isAuthenticated, isAdmin, orderController.deleteOrder);

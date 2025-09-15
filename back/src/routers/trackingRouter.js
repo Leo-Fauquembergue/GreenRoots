@@ -10,21 +10,6 @@ trackingRouter.get("/", isAuthenticated, trackingController.getAllTrackings);
 trackingRouter.get("/:id", isAuthenticated, trackingController.getOneTracking);
 
 // Seuls les admins peuvent ajouter/modifier/supprimer des entrées de suivi
-trackingRouter.post(
-	"/",
-	isAuthenticated,
-	isAdmin,
-	trackingController.createTracking,
-);
-trackingRouter.patch(
-	"/:id",
-	isAuthenticated,
-	isAdmin,
-	trackingController.updateTracking,
-);
-trackingRouter.delete(
-	"/:id",
-	isAuthenticated,
-	isAdmin,
-	trackingController.deleteTracking,
-);
+trackingRouter.post("/", isAuthenticated, isAdmin, trackingController.createTracking);
+trackingRouter.patch("/:id", isAuthenticated, isAdmin, trackingController.updateTracking);
+trackingRouter.delete("/:id", isAuthenticated, isAdmin, trackingController.deleteTracking);

@@ -9,21 +9,6 @@ categoryRouter.get("/", categoryController.getAllCategories);
 categoryRouter.get("/:id", categoryController.getOneCategory);
 
 // Seuls les admins peuvent gérer les catégories
-categoryRouter.post(
-	"/",
-	isAuthenticated,
-	isAdmin,
-	categoryController.createCategory,
-);
-categoryRouter.patch(
-	"/:id",
-	isAuthenticated,
-	isAdmin,
-	categoryController.updateCategory,
-);
-categoryRouter.delete(
-	"/:id",
-	isAuthenticated,
-	isAdmin,
-	categoryController.deleteCategory,
-);
+categoryRouter.post("/", isAuthenticated, isAdmin, categoryController.createCategory);
+categoryRouter.patch("/:id", isAuthenticated, isAdmin, categoryController.updateCategory);
+categoryRouter.delete("/:id", isAuthenticated, isAdmin, categoryController.deleteCategory);

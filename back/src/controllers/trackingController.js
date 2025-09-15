@@ -1,12 +1,5 @@
-import {
-	Tracking,
-	PlantedTree
-} from "./../models/associations.js";
-import {
-	idSchema,
-	trackingSchema,
-	updateTrackingSchema,
-} from "../schemas/index.js";
+import { Tracking, PlantedTree } from "./../models/associations.js";
+import { idSchema, trackingSchema, updateTrackingSchema } from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";
 
 export async function getAllTrackings(req, res) {
