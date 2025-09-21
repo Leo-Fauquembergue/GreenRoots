@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "../style/style.scss";
 import { Mail, User, MapPin, Phone } from "lucide-react";
+import api from "../services/api";
 
 export default function Contact() {
 	const [name, setName] = useState("");
@@ -15,25 +16,17 @@ export default function Contact() {
 		setSuccess("");
 
 		try {
-			const response = await fetch("http://localhost:3000/api/contact", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ name, email, message }),
-			});
-
-			if (!response.ok) {
-				const data = await response.json();
-				throw new Error(data.message || "Erreur lors de l'envoi.");
-			}
+			// Axios gère automatiquement la sérialisation en JSON et les headers.
+			// Vous n'appelez que l'endpoint, car la baseURL est déjà configurée.
+			await api.post("/contact", { name, email, message });
 
 			setSuccess("Votre message a bien été envoyé !");
 			setName("");
 			setEmail("");
 			setMessage("");
 		} catch (err: any) {
-			setError(err.message);
+			// Axios renvoie les erreurs dans err.response.data
+			setError(err.response?.data?.message || "Erreur lors de l'envoi.");
 		}
 	};
 
