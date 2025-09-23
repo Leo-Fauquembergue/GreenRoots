@@ -29,7 +29,7 @@ export default function AdminTreeTracking() {
 
 			// Trier les suivis du plus récent au plus ancien
 			fetchedTree.trackings?.sort(
-				(a, b) =>
+				(a: Tracking, b: Tracking) =>
 					new Date(b.statementDate).getTime() -
 					new Date(a.statementDate).getTime(),
 			);

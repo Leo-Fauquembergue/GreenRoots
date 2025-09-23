@@ -12,7 +12,7 @@ export interface ConfirmationModalHandles {
 	show: (title: string, message: string, onConfirm: () => void) => void;
 }
 
-const ConfirmationModal = forwardRef<ConfirmationModalHandles>((props, ref) => {
+const ConfirmationModal = forwardRef<ConfirmationModalHandles>((_props, ref) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [title, setTitle] = useState("");
 	const [message, setMessage] = useState("");

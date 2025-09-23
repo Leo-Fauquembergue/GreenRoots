@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../style/style.scss";
-import { Mail, User, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import api from "../services/api";
 
 export default function Contact() {

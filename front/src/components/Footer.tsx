@@ -1,4 +1,3 @@
-import React from "react";
 import { Phone, Mail, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logoGreenRoots.png"; //à changer:dynamique

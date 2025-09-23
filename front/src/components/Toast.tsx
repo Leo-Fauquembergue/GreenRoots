@@ -1,6 +1,5 @@
-import React, {
+import {
 	useState,
-	useEffect,
 	useImperativeHandle,
 	forwardRef,
 } from "react";
@@ -11,7 +10,7 @@ export interface ToastHandles {
 	showToast: (message: string, type?: "success" | "error") => void;
 }
 
-const Toast = forwardRef<ToastHandles>((props, ref) => {
+const Toast = forwardRef<ToastHandles>((_props, ref) => {
 	const [visible, setVisible] = useState(false);
 	const [message, setMessage] = useState("");
 	const [type, setType] = useState<"success" | "error">("success");
