@@ -1,4 +1,4 @@
-import { User, Order } from "./../models/associations.js";
+import { User } from "./../models/associations.js";
 import { idSchema, updateUserSchema } from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";
 import argon2 from "argon2";

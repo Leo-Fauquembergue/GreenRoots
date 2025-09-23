@@ -4,7 +4,7 @@ import api from "../services/api";
 import type { CatalogTree, Category, Region } from "../hooks/types";
 import Pagination from "./../components/Pagination.tsx";
 import TreeCard from "./../components/TreeCard.tsx";
-import { AlertCircle, Search } from "lucide-react";
+import { AlertCircle } from "lucide-react";
 
 const ITEMS_PER_PAGE = 6; // Nombre d'arbres par page
 

@@ -1,13 +1,4 @@
-// Cette ligne dit :
-// "Exécute le fichier associations.js pour t'assurer que tous les modèles
-// (CatalogTree, Category, Region, etc.) sont bien définis et liés entre eux,
-// PUIS, donne-moi accès aux variables exportées dont j'ai besoin."
-import {
-	CatalogTree,
-	PlantedTree,
-	Category,
-	Region,
-} from "./../models/associations.js";
+import { CatalogTree, PlantedTree } from "./../models/associations.js";
 import {
 	idSchema,
 	catalogTreeSchema,
@@ -16,7 +7,7 @@ import {
 import { HttpError } from "../errors/http-error.js";
 
 export async function getAllCatalogTrees(req, res) {
-	// Récupération et validation des paramètres de pagination ---
+	// Récupération et validation des paramètres de pagination
 	// On récupère 'page' et 'limit' depuis la requête.
 	// On utilise parseInt pour les convertir en nombres.
 	// On définit des valeurs par défaut si elles ne sont pas fournies.
@@ -27,7 +18,7 @@ export async function getAllCatalogTrees(req, res) {
 	// Pour la page 1, offset = 0. Pour la page 2, on saute les 6 premiers, etc.
 	const offset = (page - 1) * limit;
 
-	//Construction des options de la requête Sequelize ---
+	// Construction des options de la requête Sequelize
 	const options = {
 		include: ["category", "region"],
 		where: {}, // Objet pour les filtres (catégorie, région)/On initialise un objet `where` vide. si cet objet reste vide, Sequelize n'appliquera aucun filtre.
@@ -53,7 +44,7 @@ export async function getAllCatalogTrees(req, res) {
 		}
 	}
 
-	//  On vérifie la présence du paramètre 'order' et on le sécurise.
+	// On vérifie la présence du paramètre 'order' et on le sécurise.
 	const orderDirection = req.query.order?.toUpperCase();
 	if (orderDirection === "ASC" || orderDirection === "DESC") {
 		// On trie par date de création.
@@ -63,13 +54,13 @@ export async function getAllCatalogTrees(req, res) {
 		options.order = [["created_at", "DESC"]];
 	}
 
-	// ---Exécution de la requête avec findAndCountAll ---
+	// Exécution de la requête avec findAndCountAll
 	// `findAndCountAll` retourne un objet avec deux propriétés :
 	// - `count`: Le nombre TOTAL d'enregistrements qui correspondent aux filtres `where`, en ignorant `limit` et `offset`.
 	// - `rows`: Un tableau des enregistrements pour la page actuelle, en respectant `limit` et `offset`.
 	const { count, rows } = await CatalogTree.findAndCountAll(options);
 
-	// ---Envoi de la réponse au format attendu par le frontend ---
+	// Envoi de la réponse au format attendu par le frontend
 	// Le frontend a besoin de `{ totalCount, data }`
 	res.json({
 		totalCount: count, // Le nombre total pour calculer le nombre de pages

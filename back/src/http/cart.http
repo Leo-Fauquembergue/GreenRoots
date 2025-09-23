@@ -1,0 +1,42 @@
+###
+# @name loginAlice
+# D'ABORD, se connecter en tant qu'Alice pour obtenir le cookie de session
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "alice@example.com",
+  "password": "PasswordUser123!"
+}
+
+###
+# @name loginCharlie
+# ENSUITE, se connecter en tant que Charlie (panier initialement vide)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "charlie@example.com",
+  "password": "PasswordCharlie123!"
+}
+
+###
+# TEST 1 (SUCCÈS) : Ajouter un article au panier d'Alice
+# Prérequis : Exécutez d'abord la requête "loginAlice" ci-dessus.
+POST http://localhost:3000/api/cart/items
+Content-Type: application/json
+
+{
+  "catalogTreeId": 3
+}
+
+###
+# TEST 2 (ERREUR) : Tenter de valider le panier vide de Charlie
+# Prérequis : Exécutez d'abord la requête "loginCharlie" ci-dessus.
+POST http://localhost:3000/api/cart/checkout
+Content-Type: application/json
+
+###
+# GET - Consulter le panier
+# Prérequis : Exécutez une des requêtes de login avant.
+GET http://localhost:3000/api/cart

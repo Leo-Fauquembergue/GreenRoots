@@ -2,13 +2,13 @@ import { Category, CatalogTree } from "../models/associations.js";
 import { idSchema, categorySchema } from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";
 
-// 🔎 GET /categories - Récupérer toutes les catégories
+// GET /categories - Récupérer toutes les catégories
 export async function getAllCategories(req, res) {
 	const categories = await Category.findAll();
 	res.json(categories);
 }
 
-// 🔎 GET /categories/:id - Détails d'une catégorie
+// GET /categories/:id - Détails d'une catégorie
 export async function getOneCategory(req, res) {
 	const { id } = idSchema.parse(req.params);
 	const category = await Category.findByPk(id);
@@ -16,14 +16,14 @@ export async function getOneCategory(req, res) {
 	res.json(category);
 }
 
-// ➕ POST /categories - Créer une nouvelle catégorie
+// POST /categories - Créer une nouvelle catégorie
 export async function createCategory(req, res) {
 	const data = categorySchema.parse(req.body);
 	const newCategory = await Category.create(data);
 	res.status(201).json(newCategory);
 }
 
-// ✏️ PATCH /categories/:id - Modifier une catégorie
+// PATCH /categories/:id - Modifier une catégorie
 export async function updateCategory(req, res) {
 	const { id } = idSchema.parse(req.params);
 	const data = categorySchema.parse(req.body);
@@ -33,7 +33,7 @@ export async function updateCategory(req, res) {
 	res.json(updatedCategory);
 }
 
-// 🗑 DELETE /categories/:id - Supprimer une catégorie (si inutilisée)
+// DELETE /categories/:id - Supprimer une catégorie (si inutilisée)
 export async function deleteCategory(req, res) {
 	// 1. On valide l'ID de la requête
 	const { id } = idSchema.parse(req.params);

@@ -1,9 +1,4 @@
-import {
-	PlantedTree,
-	Order,
-	CatalogTree,
-	Tracking,
-} from "./../models/associations.js";
+import { PlantedTree } from "./../models/associations.js";
 import {
 	idSchema,
 	plantedTreeSchema,

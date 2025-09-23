@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Cookie } from "lucide-react";
 import "../style/style.scss";
 

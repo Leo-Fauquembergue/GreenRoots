@@ -18,11 +18,24 @@ import {
 	try {
 		// --- UTILISATEURS ---
 		// On crée plusieurs utilisateurs avec des rôles différents pour les tests.
-		// Les mots de passe sont hachés avec Argon2 pour simuler un environnement de production.
 		console.log("🚧 Ajout des utilisateurs...");
-		const hashedPasswordUser = await argon2.hash("PasswordUser123!");
-		const hashedPasswordAdmin = await argon2.hash("PasswordAdmin123!");
-		const hashedPasswordCharlie = await argon2.hash("PasswordCharlie123!");
+
+		// On récupère les mots de passe depuis les variables d'environnement.
+		const userPassword = process.env.SEED_USER_PASSWORD;
+		const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+		const charliePassword = process.env.SEED_CHARLIE_PASSWORD;
+
+		// On vérifie que les variables sont bien présentes pour éviter les erreurs.
+		if (!userPassword || !adminPassword || !charliePassword) {
+			throw new Error(
+				"Les mots de passe pour le seeding ne sont pas définis dans le fichier .env",
+			);
+		}
+
+		// Les mots de passe sont hachés avec Argon2 pour simuler un environnement de production.
+		const hashedPasswordUser = await argon2.hash(userPassword);
+		const hashedPasswordAdmin = await argon2.hash(adminPassword);
+		const hashedPasswordCharlie = await argon2.hash(charliePassword);
 
 		const [alice, bob, charlie] = await Promise.all([
 			User.create({

@@ -46,7 +46,7 @@ const Checkout: React.FC = () => {
 		await new Promise((resolve) => setTimeout(resolve, 2000));
 
 		try {
-			const data = await checkout();
+			await checkout();
 
 			// --- CORRECTION : Utilisation du Toast et redirection ---
 			// On affiche un message de succès personnalisé

@@ -1,9 +1,4 @@
-import {
-	Order,
-	PlantedTree,
-	CatalogTree,
-	User,
-} from "./../models/associations.js";
+import { Order, PlantedTree, CatalogTree } from "./../models/associations.js";
 import { idSchema } from "../schemas/index.js";
 import { HttpError } from "../errors/http-error.js";
 
@@ -16,7 +11,7 @@ async function findOrCreateCart(userId) {
 	return cartOrder;
 }
 
-// GET /api/cart - Récupère le contenu du panier de l'utilisateur connecté(
+// GET /api/cart - Récupère le contenu du panier de l'utilisateur connecté
 export async function getCart(req, res) {
 	if (!req.session.user) {
 		throw new HttpError(

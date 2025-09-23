@@ -158,7 +158,7 @@ export default function AdminCatalog() {
 							Choisir une catégorie
 						</option>
 						{categories.map((cat) => (
-							<option key={cat.id} value={cat.id}>
+							<option key={cat.categoryId} value={cat.categoryId}>
 								{cat.name}
 							</option>
 						))}
@@ -174,7 +174,7 @@ export default function AdminCatalog() {
 							Choisir une région
 						</option>
 						{regions.map((reg) => (
-							<option key={reg.id} value={reg.id}>
+							<option key={reg.regionId} value={reg.regionId}>
 								{reg.name}
 							</option>
 						))}
