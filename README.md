@@ -6,7 +6,7 @@ GreenRoots est une plateforme web full-stack conçue pour connecter les utilisat
 
 Ce projet a été réalisé dans le cadre de l'Apothéose de l'école O'clock.
 
-**[🔗 Lien vers le site déployé](https://greenroots-app.vercel.app/)** | **[🔗 Lien vers l'API déployée](https://greenroots-api.onrender.com/)**
+**[🔗 Lien vers le site déployé](https://green-roots-bay.vercel.app)** | **[🔗 Lien vers l'API déployée](https://greenroots-api-ghjf.onrender.com)**
 
 ---
 
