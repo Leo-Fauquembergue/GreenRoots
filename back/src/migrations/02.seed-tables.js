@@ -19,7 +19,7 @@ import {
 		// --- UTILISATEURS ---
 		// On crée plusieurs utilisateurs avec des rôles différents pour les tests.
 		console.log("🚧 Ajout des utilisateurs...");
-		
+
 		// On récupère les mots de passe depuis les variables d'environnement.
 		const userPassword = process.env.SEED_USER_PASSWORD;
 		const adminPassword = process.env.SEED_ADMIN_PASSWORD;
@@ -27,7 +27,9 @@ import {
 
 		// On vérifie que les variables sont bien présentes pour éviter les erreurs.
 		if (!userPassword || !adminPassword || !charliePassword) {
-				throw new Error("Les mots de passe pour le seeding ne sont pas définis dans le fichier .env");
+			throw new Error(
+				"Les mots de passe pour le seeding ne sont pas définis dans le fichier .env",
+			);
 		}
 
 		// Les mots de passe sont hachés avec Argon2 pour simuler un environnement de production.

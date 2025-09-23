@@ -1,8 +1,4 @@
-import {
-	useState,
-	useImperativeHandle,
-	forwardRef,
-} from "react";
+import { useState, useImperativeHandle, forwardRef } from "react";
 import { CheckCircle, XCircle } from "lucide-react";
 import "../style/toast.scss";
 
