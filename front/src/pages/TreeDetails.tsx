@@ -44,11 +44,19 @@ const TreeDetails: React.FC = () => {
 	}, [id]); // Dépendance : ce code se ré-exécute si l'ID change
 
 	const handleAddToCart = async () => {
+		// Si l'utilisateur n'est pas connecté...
 		if (!user) {
-			alert("Vous devez être connecté pour ajouter un article au panier.");
+			// On affiche un toast d'information au lieu d'une alerte bloquante
+			toastRef.current?.showToast(
+				"Vous devez être connecté pour ajouter un article.",
+				"error", // On peut utiliser un style "info" ou "error"
+			);
+			// Puis on le redirige vers la page de connexion
 			navigate("/login");
 			return;
 		}
+
+		// Si l'utilisateur est connecté et que l'arbre existe...
 		if (tree) {
 			try {
 				await addToCart(tree.catalogTreeId);
@@ -57,7 +65,10 @@ const TreeDetails: React.FC = () => {
 					"success",
 				);
 			} catch (error) {
-				toastRef.current?.showToast("Une erreur est survenue.", "error");
+				toastRef.current?.showToast(
+					"Une erreur est survenue lors de l'ajout au panier.",
+					"error",
+				);
 			}
 		}
 	};
