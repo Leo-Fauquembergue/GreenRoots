@@ -9,6 +9,13 @@ import { xss } from "express-xss-sanitizer";
 
 export const app = express();
 
+// --- Configuration de la confiance au proxy pour la production ---
+// Cette ligne doit être placée AVANT la configuration de la session.
+// Elle est nécessaire pour que les cookies `secure: true` fonctionnent derrière Render.
+if (process.env.NODE_ENV === "production") {
+    app.set('trust proxy', 1);
+}
+
 // --- Configuration du stockage des sessions en BDD ---
 const SessionStore = SequelizeStore(session.Store);
 const sessionStore = new SessionStore({
@@ -26,6 +33,10 @@ app.use(
 			httpOnly: true, // Le cookie ne peut pas être lu par du JavaScript côté client (protection XSS).
 			secure: process.env.NODE_ENV === "production", // Le cookie ne sera envoyé que sur des connexions HTTPS en production.
 			maxAge: 7 * 24 * 60 * 60 * 1000, // Durée de vie du cookie (7 jours).
+			// --- Configuration `sameSite` pour les cookies cross-domain ---
+			// 'none' est requis en production pour que le cookie soit envoyé de Vercel à Render.
+			// 'lax' est la valeur par défaut sécurisée pour le développement local.
+			sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax',
 		},
 	}),
 );
