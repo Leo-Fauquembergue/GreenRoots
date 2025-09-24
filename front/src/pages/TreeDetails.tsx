@@ -49,7 +49,7 @@ const TreeDetails: React.FC = () => {
 			// On affiche un toast d'information au lieu d'une alerte bloquante
 			toastRef.current?.showToast(
 				"Vous devez être connecté pour ajouter un article.",
-				"error", // On peut utiliser un style "info" ou "error"
+				"error",
 			);
 			// Puis on le redirige vers la page de connexion
 			navigate("/login");

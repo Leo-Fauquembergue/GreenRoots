@@ -47,12 +47,9 @@ const Checkout: React.FC = () => {
 
 		try {
 			await checkout();
-
-			// --- CORRECTION : Utilisation du Toast et redirection ---
-			// On affiche un message de succès personnalisé
 			toastRef.current?.showToast("Commande passée avec succès !", "success");
 
-			// On redirige vers la page de profil/historique des commandes.
+			// On redirige vers la page "Historique de commandes".
 			// C'est ici que l'utilisateur verra sa nouvelle commande "completed".
 			navigate(`/orders`);
 		} catch (error: any) {

@@ -57,7 +57,7 @@ export default function PlantedTreeCard({ tree }: PlantedTreeCardProps) {
 						placeholder="Donnez-lui un nom !"
 					/>
 					<button
-						type="submit" //pas sure
+						type="submit"
 						onClick={handleSaveChanges}
 						disabled={isSaving}
 						className="btn-dark px-3 py-2 w-full sm:w-auto"
