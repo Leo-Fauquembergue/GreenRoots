@@ -35,7 +35,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const value = { user, setUser, isLoading };
 
 	if (isLoading) {
-		return <div>Chargement de la session...</div>; // Ou un spinner global
+		// On remplace le simple texte par un spinner visuel
+		return (
+			<div className="flex items-center justify-center h-screen">
+				<div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600"></div>
+			</div>
+		);
 	}
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
