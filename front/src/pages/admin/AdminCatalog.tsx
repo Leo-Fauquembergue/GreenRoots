@@ -21,7 +21,13 @@ export default function AdminCatalog() {
 	const fetchTrees = useCallback(async () => {
 		try {
 			setLoading(true);
-			const response = await api.get("/catalog-trees");
+			// --- CORRECTION POUR L'ADMIN ---
+			// On fait l'appel à l'API en ajoutant le paramètre `limit=-1`.
+			// Cela indique au back-end que nous souhaitons récupérer TOUS les arbres,
+			// sans appliquer la pagination par défaut.
+			const response = await api.get("/catalog-trees", {
+                params: { limit: -1 }
+            });
 			setTrees(response.data.data);
 		} catch (err: any) {
 			toastRef.current?.showToast("Erreur de chargement du catalogue", "error");

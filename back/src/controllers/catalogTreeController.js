@@ -8,23 +8,27 @@ import { HttpError } from "../errors/http-error.js";
 
 export async function getAllCatalogTrees(req, res) {
 	// Récupération et validation des paramètres de pagination
-	// On récupère 'page' et 'limit' depuis la requête.
-	// On utilise parseInt pour les convertir en nombres.
-	// On définit des valeurs par défaut si elles ne sont pas fournies.
 	const page = parseInt(req.query.page, 10) || 1;
-	const limit = parseInt(req.query.limit, 10) || 6; // 6 correspond au ITEMS_PER_PAGE du front
+	// On récupère la limite, avec 6 par défaut.
+	let limit = parseInt(req.query.limit, 10) || 6; 
 
-	// On calcule l'offset (le nombre d'éléments à "sauter" pour arriver à la bonne page).
-	// Pour la page 1, offset = 0. Pour la page 2, on saute les 6 premiers, etc.
-	const offset = (page - 1) * limit;
+    // --- CORRECTION POUR L'ADMIN ---
+	// Si le client demande une limite de -1, cela signifie qu'il veut tous les résultats.
+	// On désactive alors la pagination en mettant la limite à `null`.
+	if (limit === -1) {
+		limit = null;
+	}
+
+	// On calcule l'offset. Si la pagination est désactivée, on commence à 0.
+	const offset = limit ? (page - 1) * limit : 0;
 
 	// Construction des options de la requête Sequelize
 	const options = {
 		include: ["category", "region"],
-		where: {}, // Objet pour les filtres (catégorie, région)/On initialise un objet `where` vide. si cet objet reste vide, Sequelize n'appliquera aucun filtre.
-		// On ajoute les options de pagination directement ici
+		where: {},
+		// On ajoute les options de pagination. Sequelize ignore `limit` et `offset` s'ils sont `null`.
 		limit: limit,
-		offset: offset,
+		offset: limit ? offset : null, // Si pas de limite, pas d'offset.
 	};
 
 	// On récupère les filtres potentiels depuis les paramètres de l'URL (query parameters).
