@@ -60,7 +60,7 @@ export default function OrderHistory() {
 		<div className=" min-h-screen  p-4 md:p-8">
 			<div className="gr-container max-w-4xl mx-auto">
 				<Link to="/profile" className=" color-pistachio mb-6 inline-block">
-					← Retour à mon profile
+					← Retour à mon profil
 				</Link>
 				<h1 className="page-title">Mes Commandes</h1>
 				{orders.length === 0 ? (
